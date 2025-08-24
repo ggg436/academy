@@ -1,6 +1,8 @@
 "use client";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
-export const Quiz = ({ lessonTitle }: { lessonTitle: string }) => {
+export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   return (
     <div className="flex-1">
       <div className="h-full flex items-center justify-center">
@@ -43,6 +45,31 @@ export const Quiz = ({ lessonTitle }: { lessonTitle: string }) => {
                 🚧 Course content coming soon!
               </p>
             </div>
+          </div>
+          
+          {/* Navigation Button */}
+          <div className="flex justify-end mt-auto pt-8">
+            {currentStep === 1 ? (
+              <Button
+                variant="default"
+                className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3"
+                asChild
+              >
+                <Link href="/lesson/lesson-1/step-2-basics">
+                  Next: HTML Basics →
+                </Link>
+              </Button>
+            ) : (
+              <Button
+                variant="default"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3"
+                asChild
+              >
+                <Link href="/learn">
+                  Finish Lesson 🎉
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </div>

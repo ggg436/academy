@@ -12,48 +12,29 @@
           "lessons": [
             {
               "id": "lesson-1",
-              "title": "Basics 1",
+              "title": "HTML Introduction",
               "order": 1
             },
             {
               "id": "lesson-2",
-              "title": "Basics 2",
+              "title": "HTML Basics",
               "order": 2
             },
             {
               "id": "lesson-3",
-              "title": "Greetings",
+              "title": "HTML Elements",
               "order": 3
             },
             {
-              "id": "lesson-6",
-              "title": "Phrases 1",
+              "id": "lesson-4",
+              "title": "HTML Attributes",
               "order": 4
             },
             {
-              "id": "lesson-7",
-              "title": "Phrases 2",
+              "id": "lesson-5",
+              "title": "HTML Structure",
               "order": 5
             }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "nepali",
-      "title": "Python",
-      "imageSrc": "/jp.svg",
-      "units": [
-        {
-          "id": "np-unit-1",
-          "title": "Unit 1",
-          "order": 1,
-          "lessons": [
-            { "id": "np-lesson-1", "title": "Basics 1", "order": 1 },
-            { "id": "np-lesson-2", "title": "Basics 2", "order": 2 },
-            { "id": "np-lesson-3", "title": "Greetings", "order": 3 },
-            { "id": "np-lesson-4", "title": "Phrases 1", "order": 4 },
-            { "id": "np-lesson-5", "title": "Phrases 2", "order": 5 }
           ]
         }
       ]

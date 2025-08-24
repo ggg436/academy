@@ -16,6 +16,7 @@ type Props = {
   locked?: boolean;
   current?: boolean;
   percentage: number;
+  stepName: string;
 };
 
 export const LessonButton = ({
@@ -24,7 +25,8 @@ export const LessonButton = ({
   totalCount,
   locked,
   current,
-  percentage
+  percentage,
+  stepName
 }: Props) => {
   const cycleLength = 8;
   const cycleIndex = index % cycleLength;
@@ -45,11 +47,11 @@ export const LessonButton = ({
 
   const isFirst = index === 0;
   const isLast = index === totalCount;
-  const isCompleted = !current && !locked;
+  const isCompleted = false; // Force all lessons to show stars
 
   const Icon = isCompleted ? Check : isLast ? Crown : Star;
 
-  const href = isCompleted ? `/lesson/${id}` : "/lesson";
+  const href = `/lesson/${id}/${encodeURIComponent(stepName)}`;
 
   return (
     <Link 

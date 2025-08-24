@@ -18,14 +18,14 @@ type Props = {
   lessonId: string;
 };
 
-export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
+export const Lesson2Sidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
   
-  // Extract step number from URL like /lesson/lesson-1/step-1-intro
+  // Extract step number from URL like /lesson/lesson-2/step-1-hi
   let currentStep = 1;
-  if (pathname.includes("step-1-intro") || pathname.includes("step-1")) {
+  if (pathname.includes("step-1-hi") || pathname.includes("step-1")) {
     currentStep = 1;
-  } else if (pathname.includes("step-2-basics") || pathname.includes("step-2")) {
+  } else if (pathname.includes("step-2-hlo") || pathname.includes("step-2")) {
     currentStep = 2;
   } else {
     // Default to step 1 for any unrecognized URLs
@@ -52,7 +52,7 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
           className="justify-start h-[52px] w-full"
           asChild
         >
-          <Link href="/lesson/lesson-1/step-1-intro">
+          <Link href="/lesson/lesson-2/step-1-hi">
             <Image
               src="/learn.svg"
               alt="Step 1"
@@ -60,7 +60,7 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
               height={32}
               width={32}
             />
-            Step 1: HTML Introduction
+            1. hi
           </Link>
         </Button>
         {/* Step 2 */}
@@ -69,7 +69,7 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
           className="justify-start h-[52px] w-full"
           asChild
         >
-          <Link href="/lesson/lesson-1/step-2-basics">
+          <Link href="/lesson/lesson-2/step-2-hlo">
             <Image
               src="/quests.svg"
               alt="Step 2"
@@ -77,7 +77,7 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
               height={32}
               width={32}
             />
-            Step 2: HTML Basics
+            2. hlo
           </Link>
         </Button>
       </div>
@@ -91,4 +91,4 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
       </div>
     </div>
   );
-};
+}; 

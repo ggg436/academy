@@ -29,7 +29,21 @@ export const Unit = ({
       <div className="flex items-center flex-col relative">
         {lessons.map((lesson, index) => {
           const isCurrent = lesson.id === activeLesson?.id;
-          const isLocked = !lesson.completed && !isCurrent;
+          const isLocked = false; // All lessons unlocked for now
+          
+          // Create descriptive step names based on lesson
+          let stepName = "";
+          if (lesson.id === "lesson-1") {
+            stepName = index === 0 ? "step-1-intro" : "step-2-basics";
+          } else if (lesson.id === "lesson-2") {
+            // Lesson 2 should always start at step 1, regardless of index
+            stepName = "step-1-hi";
+          } else if (lesson.id === "lesson-3") {
+            // Lesson 3 should always start at step 1, regardless of index
+            stepName = "step-1-we";
+          } else {
+            stepName = `step-${index + 1}-${lesson.title.toLowerCase().replace(/\s+/g, '-')}`;
+          }
 
           return (
             <LessonButton
@@ -40,6 +54,7 @@ export const Unit = ({
               current={isCurrent}
               locked={isLocked}
               percentage={activeLessonPercentage}
+              stepName={stepName}
             />
           );
         })}
