@@ -2,7 +2,7 @@
   "courses": [
     {
       "id": "spanish",
-      "title": "Spanish",
+      "title": "HTML",
       "imageSrc": "/es.svg",
       "units": [
         {
@@ -41,7 +41,7 @@
     },
     {
       "id": "nepali",
-      "title": "Nepali",
+      "title": "Python",
       "imageSrc": "/jp.svg",
       "units": [
         {

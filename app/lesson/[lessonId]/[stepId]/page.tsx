@@ -1,17 +1,16 @@
 import { redirect } from "next/navigation";
-
 import { getUserProgress } from "@/actions/user-progress";
 import { getCourses, getCourseById } from "@/lib/data";
-
-import { Quiz } from "../quiz";
+import { Quiz } from "../../quiz";
 
 type Props = {
   params: {
     lessonId: string;
+    stepId: string;
   };
 };
 
-const LessonIdPage = async ({
+const StepPage = async ({
   params,
 }: Props) => {
   const userProgress = await getUserProgress();
@@ -33,8 +32,12 @@ const LessonIdPage = async ({
     }
   }
 
-  // Server-side redirect to first step
-  redirect(`/lesson/${params.lessonId}/step-1`);
+  // Extract step number from stepId (e.g., "step-1" -> 1)
+  const stepNumber = parseInt(params.stepId.replace('step-', ''));
+
+  return (
+    <Quiz lessonTitle={lessonTitle} currentStep={stepNumber} />
+  );
 };
 
-export default LessonIdPage;
+export default StepPage;

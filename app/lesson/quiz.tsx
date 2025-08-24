@@ -1,13 +1,13 @@
 "use client";
 
-export const Quiz = () => {
+export const Quiz = ({ lessonTitle }: { lessonTitle: string }) => {
   return (
     <div className="flex-1">
       <div className="h-full flex items-center justify-center">
         <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-8">
           <div className="text-center">
             <h1 className="text-2xl lg:text-4xl font-bold text-neutral-700 mb-4">
-              HTML Introduction
+              {lessonTitle}
             </h1>
             <p className="text-lg text-neutral-600 mb-8">
               Learn the basics of HTML markup language
