@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CongratulationPage } from "@/components/congratulation-page";
 
-export const Lesson3Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
+export const Lesson5Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
 
   const handleFinishLesson = () => {
@@ -19,7 +19,7 @@ export const Lesson3Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
   const handlePracticeAgain = () => {
     setShowCongratulations(false);
     // Reset to first step
-    window.location.href = "/lesson/lesson-3/we";
+    window.location.href = "/lesson/lesson-5/html-structure";
   };
 
   // Show congratulation page when lesson is completed
@@ -29,12 +29,12 @@ export const Lesson3Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
         <div className="h-full flex flex-col">
           <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col ml-4 h-full relative">
             <CongratulationPage
-              points={18}
+              points={24}
               hearts={3}
               onContinue={handleContinue}
               onPracticeAgain={handlePracticeAgain}
-              title="Congratulations! You've completed HTML Elements!"
-              lessonTitle="HTML Elements"
+              title="Congratulations! You've completed HTML Structure!"
+              lessonTitle="HTML Structure"
               showHearts={true}
             />
           </div>
@@ -49,7 +49,7 @@ export const Lesson3Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
         <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col ml-4 h-full relative">
           <div className="text-left mt-4 ml-1">
             <h1 className="text-2xl lg:text-4xl font-bold text-neutral-700">
-              {currentStep === 1 ? "1. we" : "2. gue"}
+              {currentStep === 1 ? "1. HTML Structure" : "2. Advanced Structure"}
             </h1>
           </div>
           
@@ -61,8 +61,8 @@ export const Lesson3Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
                 className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3"
                 asChild
               >
-                <a href="/lesson/lesson-3/gue">
-                  Next: gue →
+                <a href="/lesson/lesson-5/html-structure-advanced">
+                  Next: Advanced Structure →
                 </a>
               </Button>
             ) : (

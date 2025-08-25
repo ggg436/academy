@@ -18,19 +18,15 @@ type Props = {
   lessonId: string;
 };
 
-export const Lesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
+export const Lesson5Sidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
   
-  // Extract step number from URL like /lesson/lesson-1/weare
+  // Extract step number from URL like /lesson/lesson-5/html-structure
   let currentStep = 1;
-  if (pathname.includes("/weare") || pathname.includes("step-1")) {
-    currentStep = 1;
-  } else if (pathname.includes("/html-basics") || pathname.includes("step-2")) {
+  if (pathname.includes("/html-structure-advanced") || pathname.includes("step-2")) {
     currentStep = 2;
-  } else if (pathname.includes("/uuiuui") || pathname.includes("step-3")) {
-    currentStep = 3;
-  } else if (pathname.includes("/sanjok") || pathname.includes("step-4")) {
-    currentStep = 4;
+  } else if (pathname.includes("/html-structure") || pathname.includes("step-1")) {
+    currentStep = 1;
   } else {
     // Default to step 1 for any unrecognized URLs
     currentStep = 1;
@@ -56,8 +52,8 @@ export const Lesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
           className="justify-start h-[32px] w-full text-xs"
           asChild
         >
-          <Link href="/lesson/lesson-1/weare">
-            Weare
+          <Link href="/lesson/lesson-5/html-structure">
+            HTML Structure
           </Link>
         </Button>
         {/* Step 2 */}
@@ -66,28 +62,8 @@ export const Lesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
           className="justify-start h-[32px] w-full text-xs"
           asChild
         >
-          <Link href="/lesson/lesson-1/html-basics">
-            HTML Basics
-          </Link>
-        </Button>
-        {/* Step 3 */}
-        <Button
-          variant={currentStep === 3 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[32px] w-full text-xs"
-          asChild
-        >
-          <Link href="/lesson/lesson-1/uuiuui">
-            Uuiuui
-          </Link>
-        </Button>
-        {/* Step 4 */}
-        <Button
-          variant={currentStep === 4 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[32px] w-full text-xs"
-          asChild
-        >
-          <Link href="/lesson/lesson-1/sanjok">
-            Sanjok
+          <Link href="/lesson/lesson-5/html-structure-advanced">
+            Advanced Structure
           </Link>
         </Button>
       </div>

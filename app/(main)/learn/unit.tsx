@@ -34,13 +34,15 @@ export const Unit = ({
           // Create descriptive step names based on lesson
           let stepName = "";
           if (lesson.id === "lesson-1") {
-            stepName = index === 0 ? "weare" : index === 1 ? "html-basics" : "uuiuui";
+            stepName = index === 0 ? "weare" : index === 1 ? "html-basics" : index === 2 ? "uuiuui" : "sanjok";
           } else if (lesson.id === "lesson-2") {
-            // Lesson 2 should always start at step 1, regardless of index
             stepName = index === 0 ? "hi" : "hlo";
           } else if (lesson.id === "lesson-3") {
-            // Lesson 3 should always start at step 1, regardless of index
             stepName = index === 0 ? "we" : "gue";
+          } else if (lesson.id === "lesson-4") {
+            stepName = index === 0 ? "html-attributes" : "html-attributes-advanced";
+          } else if (lesson.id === "lesson-5") {
+            stepName = index === 0 ? "html-structure" : "html-structure-advanced";
           } else {
             stepName = `step-${index + 1}-${lesson.title.toLowerCase().replace(/\s+/g, '-')}`;
           }

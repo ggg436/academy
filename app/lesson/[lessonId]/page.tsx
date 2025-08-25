@@ -14,6 +14,10 @@ const LessonPage = async ({ params }: Props) => {
     redirect(`/lesson/${params.lessonId}/hi`);
   } else if (params.lessonId === "lesson-3") {
     redirect(`/lesson/${params.lessonId}/we`);
+  } else if (params.lessonId === "lesson-4") {
+    redirect(`/lesson/${params.lessonId}/html-attributes`);
+  } else if (params.lessonId === "lesson-5") {
+    redirect(`/lesson/${params.lessonId}/html-structure`);
   } else {
     redirect(`/lesson/${params.lessonId}/step-1`);
   }
