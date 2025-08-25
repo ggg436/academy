@@ -24,7 +24,9 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
   
   // Get lesson data to determine steps
   const course = getCourseById(courseId);
-  const lesson = course?.units[0]?.lessons.find((l: any) => l.id === lessonId);
+  const lesson = course
+    ? course.units.flatMap((u: any) => u.lessons || []).find((l: any) => l.id === lessonId)
+    : undefined;
   
   // Generate step names based on lesson
   const getStepNames = () => {

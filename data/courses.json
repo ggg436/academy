@@ -36,6 +36,18 @@
               "order": 5
             }
           ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6",  "title": "HTML Semantics",   "order": 1 },
+            { "id": "lesson-7",  "title": "Forms Advanced",  "order": 2 },
+            { "id": "lesson-8",  "title": "Tables Advanced", "order": 3 },
+            { "id": "lesson-9",  "title": "Multimedia",      "order": 4 },
+            { "id": "lesson-10", "title": "SEO Basics",      "order": 5 }
+          ]
         }
       ]
     }

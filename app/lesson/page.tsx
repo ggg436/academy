@@ -11,11 +11,13 @@ const LessonPage = async () => {
   }
 
   const course = getCourseById(userProgress.activeCourseId);
-  if (!course || !course.units.length || !course.units[0].lessons.length) {
+  if (!course || !course.units.length) {
     redirect("/courses");
   }
 
-  const firstLessonId = course.units[0].lessons[0].id;
+  const allLessons = course.units.flatMap((u) => u.lessons || []);
+  const firstLessonId = allLessons[0]?.id;
+  if (!firstLessonId) redirect("/courses");
   redirect(`/lesson/${firstLessonId}`);
 };
 
