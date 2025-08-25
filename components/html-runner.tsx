@@ -8,7 +8,7 @@ type Props = {
   height?: number;
 };
 
-export default function HtmlRunner({ initialHtml, height = 520 }: Props) {
+export default function HtmlRunner({ initialHtml, height = 560 }: Props) {
   const [html, setHtml] = useState<string>(initialHtml);
   const [srcDoc, setSrcDoc] = useState<string>(wrapDoc(initialHtml));
 
