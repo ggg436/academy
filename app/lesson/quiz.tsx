@@ -377,9 +377,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                       ))}
                   </p>
                 </div>
-                <div className="mt-3">
-                                     <HtmlRunner initialHtml={sampleHtmlIntro} />
-                </div>
+
                 
                 <p className="text-neutral-600 leading-relaxed mt-4">
                   {language === "ne"
