@@ -23,10 +23,10 @@ export const Lesson4Sidebar = ({ className, courseId, lessonId }: Props) => {
   
   // Extract step number from URL like /lesson/lesson-4/html-attributes
   let currentStep = 1;
-  if (pathname.includes("/html-attributes-advanced") || pathname.includes("step-2")) {
-    currentStep = 2;
-  } else if (pathname.includes("/html-attributes") || pathname.includes("step-1")) {
+  if (pathname.includes("/html-attributes") || pathname.includes("step-1")) {
     currentStep = 1;
+  } else if (pathname.includes("/html-attributes-advanced") || pathname.includes("step-2")) {
+    currentStep = 2;
   } else {
     // Default to step 1 for any unrecognized URLs
     currentStep = 1;
@@ -34,7 +34,7 @@ export const Lesson4Sidebar = ({ className, courseId, lessonId }: Props) => {
 
   return (
     <div className={cn(
-      "flex h-full lg:w-[200px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
+      "flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
       className,
     )}>
       <Link href="/learn">
@@ -45,29 +45,29 @@ export const Lesson4Sidebar = ({ className, courseId, lessonId }: Props) => {
           </h1>
         </div>
       </Link>
-      <div className="flex flex-col gap-y-2 flex-1">
+      <div className="flex flex-col gap-y-3 flex-1 px-2">
         {/* Step 1 */}
         <Button
           variant={currentStep === 1 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[32px] w-full text-xs"
+          className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
           <Link href="/lesson/lesson-4/html-attributes">
-            HTML Attributes
+            1. HTML Attributes
           </Link>
         </Button>
         {/* Step 2 */}
         <Button
           variant={currentStep === 2 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[32px] w-full text-xs"
+          className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
           <Link href="/lesson/lesson-4/html-attributes-advanced">
-            Advanced Attributes
+            2. Advanced Attributes
           </Link>
         </Button>
       </div>
-      <div className="p-4">
+      <div className="p-6">
         <ClerkLoading>
           <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
         </ClerkLoading>

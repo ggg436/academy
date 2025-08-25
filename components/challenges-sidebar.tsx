@@ -34,7 +34,7 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
 
   return (
     <div className={cn(
-      "flex h-full lg:w-[200px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
+      "flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
       className,
     )}>
       <Link href="/learn">
@@ -45,11 +45,11 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
           </h1>
         </div>
       </Link>
-      <div className="flex flex-col gap-y-2 flex-1">
+      <div className="flex flex-col gap-y-3 flex-1 px-2">
         {/* Step 1 */}
         <Button
           variant={currentStep === 1 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[32px] w-full text-xs"
+          className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
           <Link href="/lesson/lesson-1/weare">
@@ -59,7 +59,7 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
         {/* Step 2 */}
         <Button
           variant={currentStep === 2 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[32px] w-full text-xs"
+          className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
           <Link href="/lesson/lesson-1/html-basics">
@@ -67,7 +67,7 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
           </Link>
         </Button>
       </div>
-      <div className="p-4">
+      <div className="p-6">
         <ClerkLoading>
           <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
         </ClerkLoading>
