@@ -336,13 +336,6 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                       ))}
                   </p>
                 </div>
-                <div className="mt-3">
-                  <Button variant="secondary" size="sm" asChild>
-                    <Link href="/runner/python">
-                      Try Now
-                    </Link>
-                  </Button>
-                </div>
                 
                 <p className="text-neutral-600 leading-relaxed mt-4">
                   {language === "ne"
@@ -1750,8 +1743,12 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
           {/* Navigation Button */}
           <div className="fixed bottom-6 right-6 z-50">
             <Button
-              variant="secondary"
-              size="lg"
+              variant="default"
+              className={`font-semibold px-6 py-3 ${
+                isLastStep 
+                  ? "bg-blue-600 hover:bg-blue-700 text-white" 
+                  : "bg-green-600 hover:bg-green-700 text-white"
+              }`}
               onClick={isLastStep && (isLesson1 || isLesson2 || isLesson3 || isLesson4 || isLesson5) ? handleFinishLesson : undefined}
               asChild={!isLastStep || !(isLesson1 || isLesson2 || isLesson3 || isLesson4 || isLesson5)}
             >
