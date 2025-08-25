@@ -140,6 +140,20 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
   const nextButton = getNextButton();
   const isLastStep = nextButton.href === "/learn";
 
+  // Helper: open snippet in a sandbox (CodePen-like) using data URL
+  const openInSandbox = (html: string) => {
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
+  };
+
+  // First snippet content for quick "Try Now"
+  const sampleHtmlIntro = (language === "ne"
+    ? "<h1>यो एउटा शीर्षक हो</h1>\n<p>यो एउटा अनुच्छेद हो</p>\n<a href=\"...\">यो एउटा लिंक हो</a>"
+    : language === "new"
+    ? "<h1>द्ये एँक शीर्षक छ</h1>\n<p>द्ये एँक अनुच्छेद छ</p>\n<a href=\"...\">द्ये एँक लिङ्क छ</a>"
+    : "<h1>This is a heading</h1>\n<p>This is a paragraph</p>\n<a href=\"#\">This is a link</a>");
+
   // Show congratulations screen for all lessons
   if (showCongratulations && (isLesson1 || isLesson2 || isLesson3 || isLesson4 || isLesson5)) {
     return (
@@ -326,7 +340,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                       ? "<h1>यो एउटा शीर्षक हो</h1>\n<p>यो एउटा अनुच्छेद हो</p>\n<a href=\"...\">यो एउटा लिंक हो</a>"
                       : language === "new"
                       ? "<h1>द्ये एँक शीर्षक छ</h1>\n<p>द्ये एँक अनुच्छेद छ</p>\n<a href=\"...\">द्ये एँक लिङ्क छ</a>"
-                      : "<h1>This is a heading</h1>\n<p>This is a paragraph</p>\n<a href=\"...\">This is a link</a>")
+                      : "<h1>This is a heading</h1>\n<p>This is a paragraph</p>\n<a href=\"#\">This is a link</a>")
                       .split('\n')
                       .map((line: string, index: number, arr: string[]) => (
                         <span key={index}>
@@ -335,6 +349,15 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                         </span>
                       ))}
                   </p>
+                </div>
+                <div className="mt-3">
+                  <Button
+                    variant="secondary"
+                    size="lg"
+                    onClick={() => openInSandbox(`<!doctype html>\n<html>\n<head><meta charset=\"utf-8\"><title>Try Now</title></head>\n<body>\n${sampleHtmlIntro}\n</body>\n</html>`)}
+                  >
+                    Try Now
+                  </Button>
                 </div>
                 
                 <p className="text-neutral-600 leading-relaxed mt-4">
