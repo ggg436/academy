@@ -1806,7 +1806,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
         </div>
       </div>
       <Dialog open={runnerOpen} onOpenChange={setRunnerOpen}>
-        <DialogContent className="w-full sm:max-w-5xl">
+                 <DialogContent className="w-[95vw] sm:max-w-6xl p-2 sm:p-4">
           <DialogTitle>{language === "ne" ? "यो कोड चलाउनुहोस्" : language === "new" ? "यो कोड चलाउनुहोस्" : "Run this code"}</DialogTitle>
           <HtmlRunner initialHtml={runnerHtml} />
         </DialogContent>
