@@ -29,7 +29,10 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
     nodes.forEach((p) => {
       const container = p.parentElement as HTMLElement | null;
       if (!container) return;
-      if (container.querySelector('[data-try-now]')) return;
+      // Prevent duplicates (React strict mode can double-invoke effects)
+      if (container.getAttribute('data-try-now-attached') === '1') return;
+      container.setAttribute('data-try-now-attached', '1');
+
       const btn = document.createElement('button');
       btn.setAttribute('data-try-now', '1');
       btn.textContent = 'Try Now';
