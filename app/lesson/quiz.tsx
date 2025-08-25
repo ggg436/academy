@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { CongratulationPage } from "@/components/congratulation-page";
 import { useLanguage } from "@/contexts/language-context";
+import { TryNow } from "@/components/try-now";
 
 export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
@@ -351,13 +352,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                   </p>
                 </div>
                 <div className="mt-3">
-                  <Button
-                    variant="secondary"
-                    size="lg"
-                    onClick={() => openInSandbox(`<!doctype html>\n<html>\n<head><meta charset=\"utf-8\"><title>Try Now</title></head>\n<body>\n${sampleHtmlIntro}\n</body>\n</html>`)}
-                  >
-                    Try Now
-                  </Button>
+                  <TryNow initialHtml={sampleHtmlIntro} />
                 </div>
                 
                 <p className="text-neutral-600 leading-relaxed mt-4">
