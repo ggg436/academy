@@ -34,7 +34,7 @@ export const Unit = ({
           // Create descriptive step names based on lesson
           let stepName = "";
           if (lesson.id === "lesson-1") {
-            stepName = index === 0 ? "weare" : index === 1 ? "html-basics" : index === 2 ? "uuiuui" : "sanjok";
+            stepName = index === 0 ? "html-introduction" : index === 1 ? "html-element" : index === 2 ? "web-browsers" : index === 3 ? "html-page-structure" : index === 4 ? "html-history" : index === 5 ? "html-forms" : index === 6 ? "html-tables" : index === 7 ? "html-lists" : index === 8 ? "html-media" : "html-best-practices";
           } else if (lesson.id === "lesson-2") {
             stepName = index === 0 ? "hi" : "hlo";
           } else if (lesson.id === "lesson-3") {

@@ -29,7 +29,7 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
   // Generate step names based on lesson
   const getStepNames = () => {
     if (lessonId === "lesson-1") {
-      return ["weare", "html-basics", "uuiuui", "sanjok"];
+      return ["html-introduction", "html-element", "web-browsers", "html-page-structure", "html-history", "html-forms", "html-tables", "html-lists", "html-media", "html-best-practices"];
     } else if (lessonId === "lesson-2") {
       return ["hi", "hlo"];
     } else if (lessonId === "lesson-3") {
@@ -59,7 +59,7 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
   // Generate step labels
   const getStepLabels = () => {
     if (lessonId === "lesson-1") {
-      return ["Weare", "HTML Basics", "Uuiuui", "Sanjok"];
+      return ["HTML Introduction", "HTML Element", "Web Browsers", "HTML Page Structure", "HTML History", "HTML Forms", "HTML Tables", "HTML Lists", "HTML Media", "Best Practices"];
     } else if (lessonId === "lesson-2") {
       return ["1. hi", "2. hlo"];
     } else if (lessonId === "lesson-3") {

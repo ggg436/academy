@@ -9,7 +9,7 @@ type Props = {
 const LessonPage = async ({ params }: Props) => {
   // Redirect to the first step of the lesson with descriptive name
   if (params.lessonId === "lesson-1") {
-    redirect(`/lesson/${params.lessonId}/weare`);
+    redirect(`/lesson/${params.lessonId}/html-introduction`);
   } else if (params.lessonId === "lesson-2") {
     redirect(`/lesson/${params.lessonId}/hi`);
   } else if (params.lessonId === "lesson-3") {

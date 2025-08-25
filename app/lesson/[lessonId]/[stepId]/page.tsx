@@ -36,15 +36,21 @@ const StepPage = async ({
     }
   }
 
-  // Extract step number from stepId (e.g., "weare" -> 1, "html-basics" -> 2, "step-1-intro" -> 1)
+  // Extract step number from stepId (e.g., "html-introduction" -> 1, "html-element" -> 2, "web-browsers" -> 3, "html-page-structure" -> 4, "html-history" -> 5)
   let stepNumber = 1;
   
   // Handle new clean URLs
   if (params.lessonId === "lesson-1") {
-    if (params.stepId === "weare") stepNumber = 1;
-    else if (params.stepId === "html-basics") stepNumber = 2;
-    else if (params.stepId === "uuiuui") stepNumber = 3;
-    else if (params.stepId === "sanjok") stepNumber = 4;
+    if (params.stepId === "html-introduction") stepNumber = 1;
+    else if (params.stepId === "html-element") stepNumber = 2;
+    else if (params.stepId === "web-browsers") stepNumber = 3;
+    else if (params.stepId === "html-page-structure") stepNumber = 4;
+    else if (params.stepId === "html-history") stepNumber = 5;
+    else if (params.stepId === "html-forms") stepNumber = 6;
+    else if (params.stepId === "html-tables") stepNumber = 7;
+    else if (params.stepId === "html-lists") stepNumber = 8;
+    else if (params.stepId === "html-media") stepNumber = 9;
+    else if (params.stepId === "html-best-practices") stepNumber = 10;
   } else if (params.lessonId === "lesson-2") {
     if (params.stepId === "hi") stepNumber = 1;
     else if (params.stepId === "hlo") stepNumber = 2;
