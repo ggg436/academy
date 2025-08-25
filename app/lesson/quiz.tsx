@@ -338,7 +338,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 </div>
                 <div className="mt-3">
                   <Button variant="secondary" size="sm" asChild>
-                    <Link href="#">
+                    <Link href="/runner/python">
                       Try Now
                     </Link>
                   </Button>
