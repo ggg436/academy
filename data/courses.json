@@ -38,6 +38,109 @@
           ]
         }
       ]
+    },
+    {
+      "id": "python",
+      "title": "Python",
+      "imageSrc": "/python.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Python Fundamentals",
+          "order": 1,
+          "lessons": [
+            {
+              "id": "lesson-1",
+              "title": "Python Introduction",
+              "order": 1
+            },
+            {
+              "id": "lesson-2",
+              "title": "Variables & Data Types",
+              "order": 2
+            },
+            {
+              "id": "lesson-3",
+              "title": "Control Flow",
+              "order": 3
+            },
+            {
+              "id": "lesson-4",
+              "title": "Functions",
+              "order": 4
+            },
+            {
+              "id": "lesson-5",
+              "title": "Lists & Tuples",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Intermediate Python",
+          "order": 2,
+          "lessons": [
+            {
+              "id": "lesson-6",
+              "title": "Dictionaries & Sets",
+              "order": 1
+            },
+            {
+              "id": "lesson-7",
+              "title": "File Handling",
+              "order": 2
+            },
+            {
+              "id": "lesson-8",
+              "title": "Error Handling",
+              "order": 3
+            },
+            {
+              "id": "lesson-9",
+              "title": "Modules & Packages",
+              "order": 4
+            },
+            {
+              "id": "lesson-10",
+              "title": "Object-Oriented Programming",
+              "order": 5
+            }
+          ]
+        },
+        {
+          "id": "unit-3",
+          "title": "Advanced Python",
+          "order": 3,
+          "lessons": [
+            {
+              "id": "lesson-11",
+              "title": "Decorators & Generators",
+              "order": 1
+            },
+            {
+              "id": "lesson-12",
+              "title": "Context Managers",
+              "order": 2
+            },
+            {
+              "id": "lesson-13",
+              "title": "Testing & Debugging",
+              "order": 3
+            },
+            {
+              "id": "lesson-14",
+              "title": "Web Development",
+              "order": 4
+            },
+            {
+              "id": "lesson-15",
+              "title": "Data Analysis",
+              "order": 5
+            }
+          ]
+        }
+      ]
     }
   ]
 }
