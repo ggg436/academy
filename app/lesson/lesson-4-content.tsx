@@ -27,7 +27,7 @@ export const Lesson4Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
     return (
       <div className="flex-1">
         <div className="h-full flex flex-col">
-          <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col ml-4 h-full relative">
+          <div className="lg:min-h-[350px] lg:w-[1200px] w-full px-6 lg:px-0 flex flex-col ml-4 h-full relative">
             <CongratulationPage
               points={22}
               hearts={3}
@@ -46,7 +46,7 @@ export const Lesson4Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
   return (
     <div className="flex-1">
       <div className="h-full flex flex-col">
-        <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col ml-4 h-full relative">
+        <div className="lg:min-h-[350px] lg:w-[1200px] w-full px-6 lg:px-0 flex flex-col ml-4 h-full relative">
           <div className="text-left mt-4 ml-1">
             <h1 className="text-2xl lg:text-4xl font-bold text-neutral-700">
               {currentStep === 1 ? "1. HTML Attributes" : "2. Advanced Attributes"}

@@ -4,56 +4,56 @@ import Image from "next/image";
 export const Footer = () => {
   return (
     <footer className="hidden lg:block h-20 w-full border-t-2 border-slate-200 p-2">
-      <div className="max-w-screen-lg mx-auto flex items-center justify-evenly h-full">
+      <div className="max-w-screen-lg mx-auto flex items-center justify-center gap-6 h-full">
         <Button size="lg" variant="ghost" className="w-full">
           <Image 
-            src="/hr.svg" 
-            alt="Croatian" 
+            src="/html.svg" 
+            alt="HTML" 
             height={32} 
             width={40}
             className="mr-4 rounded-md"
           />
-          Croatian
+          HTML
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image 
-            src="/es.svg" 
-            alt="Spanish" 
+            src="/css.svg" 
+            alt="CSS" 
             height={32} 
             width={40}
             className="mr-4 rounded-md"
           />
-          Spanish
+          CSS
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image 
-            src="/fr.svg" 
-            alt="French" 
+            src="/javascript.svg" 
+            alt="JavaScript" 
             height={32} 
             width={40}
             className="mr-4 rounded-md"
           />
-          French
+          JavaScript
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image 
-            src="/it.svg" 
-            alt="Italian" 
+            src="/python.svg" 
+            alt="Python" 
             height={32} 
             width={40}
             className="mr-4 rounded-md"
           />
-          Italian
+          Python
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image 
-            src="/jp.svg" 
-            alt="Japanese" 
+            src="/react.svg" 
+            alt="React" 
             height={32} 
             width={40}
             className="mr-4 rounded-md"
           />
-          Japanese
+          React
         </Button>
       </div>
     </footer>

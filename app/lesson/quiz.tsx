@@ -189,7 +189,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
     return (
       <div className="flex-1">
         <div className="h-full flex flex-col">
-          <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col ml-12 h-full relative">
+          <div className="lg:min-h-[350px] lg:w-[1200px] w-full px-6 lg:px-0 flex flex-col ml-12 h-full relative">
             <CongratulationPage
               points={
                 isLesson1 ? 25 : 
@@ -242,7 +242,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
   return (
     <div className="flex-1">
       <div className="h-full flex flex-col">
-        <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col ml-12 h-full relative">
+        <div className="lg:min-h-[350px] lg:w-[1200px] w-full px-6 lg:px-0 flex flex-col ml-12 h-full relative">
           <div className="text-left mt-4 ml-1">
             <h1 className="text-2xl lg:text-4xl font-bold text-neutral-700">
               {getStepHeading()}
@@ -251,7 +251,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML Introduction Content */}
             {isLesson1 && currentStep === 1 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "HTML वेब पेजहरू बनाउन प्रयोग हुने मानक मार्कअप भाषा हो।"
                     : language === "new"
@@ -443,7 +443,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML Element Content */}
             {isLesson1 && currentStep === 2 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "HTML तत्वहरू HTML पेजहरूका बिल्डिङ ब्लकहरू हुन्। प्रत्येक तत्वले विभिन्न प्रकारको सामग्री प्रतिनिधित्व गर्छ र ब्राउजरलाई यसलाई कसरी देखाउने भनेर बताउँछ।"
                     : language === "new"
@@ -634,7 +634,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* Web Browsers Content */}
             {isLesson1 && currentStep === 3 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "वेब ब्राउजरहरू सफ्टवेयर अनुप्रयोगहरू हुन् जसले वर्ल्ड वाइड वेबमा जानकारी पुनर्प्राप्त, प्रदर्शन, र नेभिगेट गर्छन्। तिनीहरू HTML कोड व्याख्या गर्छन् र दृश्य वेब पेजहरूमा रेन्डर गर्छन्।"
                     : language === "new"
@@ -807,12 +807,12 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML Page Structure Content */}
             {isLesson1 && currentStep === 4 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "HTML पेज संरचनाले HTML डकुमेन्टहरू कसरी संगठित र संरचित गरिन्छ भन्ने कुरालाई जनाउँछ। हरेक HTML पेजले ब्राउजरहरूले हेर्ने अपेक्षा गरेको मानक संरचना पालना गर्छ।"
                     : language === "new"
-                    ? "HTML पेजय् संरचना भनीन्या ले HTML डकुमेन्ट कसरी सजाय् र बनाय् नाय् देखाँ। जेकै वेब पेजय् ब्राउजरया अपेक्षा गरियेक निजाम (standard) संरचन पालना जाय्।"
-                    : "HTML page structure refers to the way HTML documents are organized and structured. Every HTML page follows a standard structure that browsers expect to see."}
+                    ? "HTML पेज संरचना HTML डकुमेन्टय् कत्तेक संगठित नाय् संरचित गछ नि भनंछ। हरेक HTML पेजय् ब्राउजरये आशा करिगत मानक संरचना पालना गय्।"
+                    : "HTML page structure refers to how HTML documents are organized and structured. Every HTML page follows a standard structure that browsers expect to see."}
                 </p>
                 
                 <hr className="border-gray-300" />
@@ -970,7 +970,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML History Content */}
             {isLesson1 && currentStep === 5 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "HTML ले 1990 को दशकको सुरुवातमा यसको सिर्जनादेखि धेरै विकास गरेको छ। यसको इतिहास बुझ्नाले वेब मापदण्डहरू कसरी विकसित भएका छन् र आज केही प्रथाहरू किन अवस्थित छन् भनेर बुझ्न मद्दत गर्छ।"
                     : language === "new"
@@ -1147,7 +1147,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML Forms Content */}
             {isLesson1 && currentStep === 6 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "HTML फारमहरू वेबसाइटहरूमा प्रयोगकर्ता इनपुट संकलन गर्न आवश्यक छन्। तिनीहरूले प्रयोगकर्तालाई डाटा पेश गर्न, छनौट गर्न, र वेब अनुप्रयोगहरूसँग अन्तरक्रिया गर्न अनुमति दिन्छन्।"
                     : language === "new"
@@ -1245,7 +1245,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML Tables Content */}
             {isLesson1 && currentStep === 7 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "HTML तालिकाहरू पङ्क्ति र स्तम्भहरूमा डेटा देखाउन प्रयोग गरिन्छ। यी तालिकाहरू समयतालिका, तथ्याङ्क, र तुलना जस्ता संरचित जानकारी प्रस्तुत गर्न उपयुक्त हुन्छन्।" : "HTML tables are used to display data in rows and columns. They're perfect for presenting structured information like schedules, statistics, and comparisons."}
                 </p>
@@ -1375,7 +1375,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML Lists Content */}
             {isLesson1 && currentStep === 8 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "HTML सूचीहरू सामग्रीलाई संरचित तरिकाले व्यवस्थित र प्रस्तुत गर्न प्रयोग गरिन्छ। सूचीहरूले पढ्न सजिलो बनाउँछ र सामग्रीमा स्पष्ट श्रेणीक्रम सिर्जना गर्छ।"
                     : language === "new"
@@ -1507,7 +1507,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML Media Content */}
             {isLesson1 && currentStep === 9 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne"
                     ? "HTML ले छवि, भिडियो, अडियो, र बाह्य सामग्री लगायतका विभिन्न प्रकारका मिडिया सामग्री समावेश र प्रदर्शन गर्न शक्तिशाली तत्वहरू प्रदान गर्दछ।"
                     : language === "new"
@@ -1652,7 +1652,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {/* HTML Best Practices Content */}
             {isLesson1 && currentStep === 10 && (
               <div className="mt-8 space-y-8">
-                <p className="text-lg text-neutral-600 leading-relaxed">
+                <p className="text-xl text-neutral-600 leading-relaxed">
                   {language === "ne" ? "HTML का सर्वोत्तम प्रथाहरू पालना गर्दा तपाईंको कोड सफा, पहुँचयोग्य, मर्मतयोग्य, र वेब मापदण्डहरू अनुरूप हुन्छ। राम्रो HTML अभ्यासले राम्रो प्रयोगकर्ता अनुभव र सजिलो विकासतर्फ लैजान्छ।" : "Following HTML best practices ensures your code is clean, accessible, maintainable, and follows web standards. Good HTML practices lead to better user experience and easier development."}
                 </p>
                 

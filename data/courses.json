@@ -3,38 +3,18 @@
     {
       "id": "spanish",
       "title": "HTML",
-      "imageSrc": "/es.svg",
+      "imageSrc": "/html.svg",
       "units": [
         {
           "id": "unit-1",
           "title": "Unit 1",
           "order": 1,
           "lessons": [
-            {
-              "id": "lesson-1",
-              "title": "HTML Introduction",
-              "order": 1
-            },
-            {
-              "id": "lesson-2",
-              "title": "HTML Basics",
-              "order": 2
-            },
-            {
-              "id": "lesson-3",
-              "title": "HTML Elements",
-              "order": 3
-            },
-            {
-              "id": "lesson-4",
-              "title": "HTML Attributes",
-              "order": 4
-            },
-            {
-              "id": "lesson-5",
-              "title": "HTML Structure",
-              "order": 5
-            }
+            { "id": "lesson-1", "title": "HTML Introduction", "order": 1 },
+            { "id": "lesson-2", "title": "HTML Basics", "order": 2 },
+            { "id": "lesson-3", "title": "HTML Elements", "order": 3 },
+            { "id": "lesson-4", "title": "HTML Attributes", "order": 4 },
+            { "id": "lesson-5", "title": "HTML Structure", "order": 5 }
           ]
         },
         {
@@ -47,6 +27,215 @@
             { "id": "lesson-8",  "title": "Tables Advanced", "order": 3 },
             { "id": "lesson-9",  "title": "Multimedia",      "order": 4 },
             { "id": "lesson-10", "title": "SEO Basics",      "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "python",
+      "title": "Python",
+      "imageSrc": "/python.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "Python Introduction", "order": 1 },
+            { "id": "lesson-2", "title": "Syntax & Variables",   "order": 2 },
+            { "id": "lesson-3", "title": "Control Flow",         "order": 3 },
+            { "id": "lesson-4", "title": "Functions",            "order": 4 },
+            { "id": "lesson-5", "title": "Data Structures",      "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "javascript",
+      "title": "JavaScript",
+      "imageSrc": "/javascript.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "JS Introduction",   "order": 1 },
+            { "id": "lesson-2", "title": "Basics & Variables", "order": 2 },
+            { "id": "lesson-3", "title": "Control Flow",       "order": 3 },
+            { "id": "lesson-4", "title": "Functions",          "order": 4 },
+            { "id": "lesson-5", "title": "DOM & Events",       "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "css",
+      "title": "CSS",
+      "imageSrc": "/css.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "CSS Introduction",   "order": 1 },
+            { "id": "lesson-2", "title": "Selectors & Specificity", "order": 2 },
+            { "id": "lesson-3", "title": "Box Model & Layout",      "order": 3 },
+            { "id": "lesson-4", "title": "Flexbox & Grid",          "order": 4 },
+            { "id": "lesson-5", "title": "Responsive Design",       "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "react",
+      "title": "React",
+      "imageSrc": "/react.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "React Introduction",  "order": 1 },
+            { "id": "lesson-2", "title": "JSX & Components",    "order": 2 },
+            { "id": "lesson-3", "title": "Props & State",       "order": 3 },
+            { "id": "lesson-4", "title": "Effects & Lifecycle",  "order": 4 },
+            { "id": "lesson-5", "title": "Routing & Context",    "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "node",
+      "title": "Node.js",
+      "imageSrc": "/node.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "Node Intro & Setup", "order": 1 },
+            { "id": "lesson-2", "title": "Modules & NPM",      "order": 2 },
+            { "id": "lesson-3", "title": "File System & Paths", "order": 3 },
+            { "id": "lesson-4", "title": "HTTP & Express",     "order": 4 },
+            { "id": "lesson-5", "title": "APIs & Middleware",  "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "flutter",
+      "title": "Flutter",
+      "imageSrc": "/flutter.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "Flutter Introduction",  "order": 1 },
+            { "id": "lesson-2", "title": "Widgets & Layout",      "order": 2 },
+            { "id": "lesson-3", "title": "State Management Basics", "order": 3 },
+            { "id": "lesson-4", "title": "Navigation & Routing",  "order": 4 },
+            { "id": "lesson-5", "title": "Networking & APIs",     "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ai",
+      "title": "Artificial Intelligence",
+      "imageSrc": "/ai.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "AI Fundamentals",     "order": 1 },
+            { "id": "lesson-2", "title": "Search & Planning",   "order": 2 },
+            { "id": "lesson-3", "title": "Probability & Bayes", "order": 3 },
+            { "id": "lesson-4", "title": "Neural Networks",     "order": 4 },
+            { "id": "lesson-5", "title": "ML & Evaluation",     "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "typescript",
+      "title": "TypeScript",
+      "imageSrc": "/typescript.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "TS Introduction",  "order": 1 },
+            { "id": "lesson-2", "title": "Types & Interfaces","order": 2 },
+            { "id": "lesson-3", "title": "Generics",         "order": 3 },
+            { "id": "lesson-4", "title": "Modules",          "order": 4 },
+            { "id": "lesson-5", "title": "Tooling",          "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "title": "C",
+      "imageSrc": "/c.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "C Basics",          "order": 1 },
+            { "id": "lesson-2", "title": "Pointers",          "order": 2 },
+            { "id": "lesson-3", "title": "Memory & Arrays",    "order": 3 },
+            { "id": "lesson-4", "title": "Structs & Enums",    "order": 4 },
+            { "id": "lesson-5", "title": "File I/O",          "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cpp",
+      "title": "C++",
+      "imageSrc": "/cpp.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "OOP Basics",       "order": 1 },
+            { "id": "lesson-2", "title": "STL & Templates",  "order": 2 },
+            { "id": "lesson-3", "title": "Memory Management","order": 3 },
+            { "id": "lesson-4", "title": "Exceptions",       "order": 4 },
+            { "id": "lesson-5", "title": "Build Systems",    "order": 5 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "csharp",
+      "title": "C#",
+      "imageSrc": "/csharp.svg",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "Unit 1",
+          "order": 1,
+          "lessons": [
+            { "id": "lesson-1", "title": "C# Basics",           "order": 1 },
+            { "id": "lesson-2", "title": "OOP & LINQ",          "order": 2 },
+            { "id": "lesson-3", "title": "Collections & async", "order": 3 },
+            { "id": "lesson-4", "title": "ASP.NET Intro",       "order": 4 },
+            { "id": "lesson-5", "title": "Entity Framework",    "order": 5 }
           ]
         }
       ]

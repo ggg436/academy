@@ -6,6 +6,7 @@ import { ExitModal } from "@/components/modals/exit-modal";
 import { HeartsModal } from "@/components/modals/hearts-modal";
 import { PracticeModal } from "@/components/modals/practice-modal";
 import { LanguageProvider } from "@/contexts/language-context";
+import Chatbot from "@/components/chatbot";
 import "./globals.css";
 
 const font = Nunito({ subsets: ["latin"] });
@@ -30,6 +31,7 @@ export default function RootLayout({
             <HeartsModal />
             <PracticeModal />
             {children}
+            <Chatbot />
           </LanguageProvider>
         </body>
       </html>
