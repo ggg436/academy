@@ -21,7 +21,7 @@ export const Lesson2Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
                 className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3"
                 asChild
               >
-                <Link href="/lesson/lesson-2/step-2-hlo">
+                <Link href="/lesson/lesson-2/hlo">
                   Next: hlo →
                 </Link>
               </Button>

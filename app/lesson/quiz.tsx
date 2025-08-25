@@ -9,7 +9,9 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
         <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col">
           <div className="text-left mt-8 ml-8">
             <h1 className="text-2xl lg:text-4xl font-bold text-neutral-700">
-              {currentStep === 1 ? "STEP 1: HTML INTRODUCTION" : "STEP 2: HTML BASICS"}
+              {currentStep === 1 ? "STEP 1: WEARE" : 
+               currentStep === 2 ? "STEP 2: HTML BASICS" : 
+               "STEP 3: UUIUUI"}
             </h1>
           </div>
           
@@ -21,8 +23,18 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3"
                 asChild
               >
-                <Link href="/lesson/lesson-1/step-2-basics">
+                <Link href="/lesson/lesson-1/html-basics">
                   Next: HTML Basics →
+                </Link>
+              </Button>
+            ) : currentStep === 2 ? (
+              <Button
+                variant="default"
+                className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3"
+                asChild
+              >
+                <Link href="/lesson/lesson-1/uuiuui">
+                  Next: Uuiuui →
                 </Link>
               </Button>
             ) : (

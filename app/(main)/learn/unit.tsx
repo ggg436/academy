@@ -34,13 +34,13 @@ export const Unit = ({
           // Create descriptive step names based on lesson
           let stepName = "";
           if (lesson.id === "lesson-1") {
-            stepName = index === 0 ? "step-1-intro" : "step-2-basics";
+            stepName = index === 0 ? "weare" : index === 1 ? "html-basics" : "uuiuui";
           } else if (lesson.id === "lesson-2") {
             // Lesson 2 should always start at step 1, regardless of index
-            stepName = "step-1-hi";
+            stepName = index === 0 ? "hi" : "hlo";
           } else if (lesson.id === "lesson-3") {
             // Lesson 3 should always start at step 1, regardless of index
-            stepName = "step-1-we";
+            stepName = index === 0 ? "we" : "gue";
           } else {
             stepName = `step-${index + 1}-${lesson.title.toLowerCase().replace(/\s+/g, '-')}`;
           }

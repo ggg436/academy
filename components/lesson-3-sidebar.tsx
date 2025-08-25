@@ -21,11 +21,11 @@ type Props = {
 export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
   
-  // Extract step number from URL like /lesson/lesson-3/step-1-we
+  // Extract step number from URL like /lesson/lesson-3/we
   let currentStep = 1;
-  if (pathname.includes("step-1-we") || pathname.includes("step-1")) {
+  if (pathname.includes("/we") || pathname.includes("step-1")) {
     currentStep = 1;
-  } else if (pathname.includes("step-2-gue") || pathname.includes("step-2")) {
+  } else if (pathname.includes("/gue") || pathname.includes("step-2")) {
     currentStep = 2;
   } else {
     // Default to step 1 for any unrecognized URLs
@@ -49,34 +49,20 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
         {/* Step 1 */}
         <Button
           variant={currentStep === 1 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[52px] w-full"
+          className="justify-start h-[32px] w-full text-xs"
           asChild
         >
-          <Link href="/lesson/lesson-3/step-1-we">
-            <Image
-              src="/learn.svg"
-              alt="Step 1"
-              className="mr-5"
-              height={32}
-              width={32}
-            />
+          <Link href="/lesson/lesson-3/we">
             1. we
           </Link>
         </Button>
         {/* Step 2 */}
         <Button
           variant={currentStep === 2 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[52px] w-full"
+          className="justify-start h-[32px] w-full text-xs"
           asChild
         >
-          <Link href="/lesson/lesson-3/step-2-gue">
-            <Image
-              src="/quests.svg"
-              alt="Step 2"
-              className="mr-5"
-              height={32}
-              width={32}
-            />
+          <Link href="/lesson/lesson-3/gue">
             2. gue
           </Link>
         </Button>

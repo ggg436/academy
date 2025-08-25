@@ -21,11 +21,11 @@ type Props = {
 export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
   
-  // Extract step number from URL like /lesson/lesson-1/step-1-intro
+  // Extract step number from URL like /lesson/lesson-1/weare
   let currentStep = 1;
-  if (pathname.includes("step-1-intro") || pathname.includes("step-1")) {
+  if (pathname.includes("/weare") || pathname.includes("step-1")) {
     currentStep = 1;
-  } else if (pathname.includes("step-2-basics") || pathname.includes("step-2")) {
+  } else if (pathname.includes("/html-basics") || pathname.includes("step-2")) {
     currentStep = 2;
   } else {
     // Default to step 1 for any unrecognized URLs
@@ -49,35 +49,21 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
         {/* Step 1 */}
         <Button
           variant={currentStep === 1 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[52px] w-full"
+          className="justify-start h-[32px] w-full text-xs"
           asChild
         >
-          <Link href="/lesson/lesson-1/step-1-intro">
-            <Image
-              src="/learn.svg"
-              alt="Step 1"
-              className="mr-5"
-              height={32}
-              width={32}
-            />
-            Step 1: HTML Introduction
+          <Link href="/lesson/lesson-1/weare">
+            Weare
           </Link>
         </Button>
         {/* Step 2 */}
         <Button
           variant={currentStep === 2 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[52px] w-full"
+          className="justify-start h-[32px] w-full text-xs"
           asChild
         >
-          <Link href="/lesson/lesson-1/step-2-basics">
-            <Image
-              src="/quests.svg"
-              alt="Step 2"
-              className="mr-5"
-              height={32}
-              width={32}
-            />
-            Step 2: HTML Basics
+          <Link href="/lesson/lesson-1/html-basics">
+            HTML Basics
           </Link>
         </Button>
       </div>
