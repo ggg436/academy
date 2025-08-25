@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 
 type Props = {
@@ -12,11 +12,26 @@ export default function HtmlRunner({ initialHtml, height = 520 }: Props) {
   const [html, setHtml] = useState<string>(initialHtml);
   const [srcDoc, setSrcDoc] = useState<string>(wrapDoc(initialHtml));
 
-  const run = () => setSrcDoc(wrapDoc(html));
+  const run = () => {
+    setSrcDoc(wrapDoc(html));
+  };
+
   const reset = () => {
     setHtml(initialHtml);
     setSrcDoc(wrapDoc(initialHtml));
   };
+
+  // Allow Ctrl+Enter to run
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "enter") {
+        e.preventDefault();
+        run();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [html]);
 
   return (
     <div className="w-full">
@@ -26,7 +41,7 @@ export default function HtmlRunner({ initialHtml, height = 520 }: Props) {
             HTML
           </div>
           <textarea
-            className="w-full h-full min-h-[200px] font-mono text-sm p-3 outline-none resize-vertical"
+            className="w-full h-full min-h[200px] font-mono text-sm p-3 outline-none resize-vertical"
             style={{ height }}
             value={html}
             onChange={(e) => setHtml(e.target.value)}
@@ -46,10 +61,10 @@ export default function HtmlRunner({ initialHtml, height = 520 }: Props) {
         </div>
       </div>
       <div className="mt-4 flex gap-2 justify-end">
-        <Button variant="secondaryOutline" onClick={reset}>
+        <Button variant="secondaryOutline" type="button" onClick={reset}>
           Reset
         </Button>
-        <Button variant="secondary" onClick={run}>
+        <Button variant="secondary" type="button" onClick={run}>
           Run
         </Button>
       </div>
