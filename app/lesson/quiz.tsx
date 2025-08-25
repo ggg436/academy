@@ -336,6 +336,13 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                       ))}
                   </p>
                 </div>
+                <div className="mt-3">
+                  <Button variant="secondary" size="sm" asChild>
+                    <Link href="#">
+                      Try Now
+                    </Link>
+                  </Button>
+                </div>
                 
                 <p className="text-neutral-600 leading-relaxed mt-4">
                   {language === "ne"
