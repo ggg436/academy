@@ -4,12 +4,15 @@ import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { CongratulationPage } from "@/components/congratulation-page";
 import { useLanguage } from "@/contexts/language-context";
-import { TryNow } from "@/components/try-now";
+import HtmlRunner from "@/components/html-runner";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
   const [playSound, setPlaySound] = useState(false);
   const { language } = useLanguage();
+  const [runnerOpen, setRunnerOpen] = useState(false);
+  const [runnerHtml, setRunnerHtml] = useState<string>("");
   
 
 
@@ -19,6 +22,29 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
   const isLesson3 = lessonTitle === "HTML Elements";
   const isLesson4 = lessonTitle === "HTML Attributes";
   const isLesson5 = lessonTitle === "HTML Structure";
+
+  // Enhance all code snippets with a Try Now button (for HTML course)
+  useEffect(() => {
+    const nodes = Array.from(document.querySelectorAll('div.bg-gray-50 p.font-mono')) as HTMLElement[];
+    nodes.forEach((p) => {
+      const container = p.parentElement as HTMLElement | null;
+      if (!container) return;
+      if (container.querySelector('[data-try-now]')) return;
+      const btn = document.createElement('button');
+      btn.setAttribute('data-try-now', '1');
+      btn.textContent = 'Try Now';
+      btn.className = 'mt-3 inline-flex items-center justify-center rounded-xl text-sm font-bold uppercase tracking-wide bg-green-500 text-white border-b-4 border-green-600 hover:bg-green-500/90 active:border-b-0 px-6 h-12';
+      btn.onclick = () => {
+        const code = (p.innerText || '').trim();
+        setRunnerHtml(code);
+        setRunnerOpen(true);
+      };
+      const wrapper = document.createElement('div');
+      wrapper.className = 'mt-3';
+      wrapper.appendChild(btn);
+      container.insertAdjacentElement('afterend', wrapper);
+    });
+  }, [lessonTitle, currentStep]);
 
   // Play sound effect when congratulations screen shows
   useEffect(() => {
@@ -352,7 +378,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                   </p>
                 </div>
                 <div className="mt-3">
-                  <TryNow initialHtml={sampleHtmlIntro} />
+                                     <HtmlRunner initialHtml={sampleHtmlIntro} />
                 </div>
                 
                 <p className="text-neutral-600 leading-relaxed mt-4">
@@ -1778,6 +1804,12 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
           </div>
         </div>
       </div>
+      <Dialog open={runnerOpen} onOpenChange={setRunnerOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogTitle>{language === "ne" ? "यो कोड चलाउनुहोस्" : language === "new" ? "यो कोड चलाउनुहोस्" : "Run this code"}</DialogTitle>
+          <HtmlRunner initialHtml={runnerHtml} />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
