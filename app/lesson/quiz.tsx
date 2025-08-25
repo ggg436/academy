@@ -3,10 +3,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { CongratulationPage } from "@/components/congratulation-page";
+import { useLanguage } from "@/contexts/language-context";
 
 export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
   const [playSound, setPlaySound] = useState(false);
+  const { language } = useLanguage();
+  
+
 
   // Determine which lesson this is based on the lessonTitle
   const isLesson1 = lessonTitle === "HTML Introduction";
@@ -204,80 +208,114 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {isLesson1 && currentStep === 1 && (
               <div className="mt-8 space-y-8">
                 <p className="text-lg text-neutral-600 leading-relaxed">
-                  HTML is the standard markup language for creating Web pages.
+                  {language === "ne" ? "HTML वेब पेजहरू बनाउन प्रयोग हुने मानक मार्कअप भाषा हो।" : "HTML is the standard markup language for creating Web pages."}
                 </p>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-6">
-                  What is HTML?
+                  {language === "ne" ? "HTML भनेको के हो?" : "What is HTML?"}
                 </h2>
                 
                 <ul className="space-y-3 text-neutral-600 leading-relaxed">
-                  <li>• HTML stands for Hyper Text Markup Language</li>
-                  <li>• HTML is the standard markup language for creating Web pages</li>
-                  <li>• HTML describes the structure of a Web page</li>
-                  <li>• HTML consists of a series of elements</li>
-                  <li>• HTML elements tell the browser how to display the content</li>
-                  <li>• HTML elements label pieces of content such as "this is a heading", "this is a paragraph", "this is a link", etc.</li>
+                  {(language === "ne" ? [
+                    "HTML को पुरा रूप Hyper Text Markup Language हो।",
+                    "HTML वेब पेजहरू बनाउन प्रयोग हुने मानक मार्कअप भाषा हो।",
+                    "HTML ले वेब पेजको संरचना वर्णन गर्छ।",
+                    "HTML विभिन्न तत्वहरूको श्रृंखलाबाट बनेको हुन्छ।",
+                    "HTML तत्वहरूले ब्राउजरलाई सामग्री कसरी देखाउने भनेर बताउँछन्।",
+                    "HTML तत्वहरूले सामग्रीका भागहरूलाई लेबल गर्छन्, जस्तै \"यो एउटा शीर्षक हो\", \"यो एउटा अनुच्छेद हो\", \"यो एउटा लिंक हो\" आदि।"
+                  ] : [
+                    "HTML stands for Hyper Text Markup Language",
+                    "HTML is the standard markup language for creating Web pages",
+                    "HTML describes the structure of a Web page",
+                    "HTML consists of a series of elements",
+                    "HTML elements tell the browser how to display the content",
+                    "HTML elements label pieces of content such as \"this is a heading\", \"this is a paragraph\", \"this is a link\", etc."
+                  ]).map((item: string, index: number) => (
+                    <li key={index}>• {item}</li>
+                  ))}
                 </ul>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Why Learn HTML?
+                  {language === "ne" ? "किन HTML सिक्ने?" : "Why Learn HTML?"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  HTML is the foundation of web development. Every website you visit is built with HTML. Learning HTML gives you the power to:
+                  {language === "ne" ? "HTML वेब विकासको आधार हो। तपाईंले हेर्ने हरेक वेबसाइट HTML बाट बनेको हुन्छ। HTML सिक्दा तपाईंले निम्न गर्न सक्नुहुन्छ:" : "HTML is the foundation of web development. Every website you visit is built with HTML. Learning HTML gives you the power to:"}
                 </p>
                 
                 <ul className="space-y-3 text-neutral-600 leading-relaxed">
-                  <li>• Create your own websites from scratch</li>
-                  <li>• Understand how web pages are structured</li>
-                  <li>• Customize existing websites and templates</li>
-                  <li>• Build a strong foundation for learning CSS and JavaScript</li>
-                  <li>• Pursue a career in web development</li>
+                  {(language === "ne" ? [
+                    "आफ्नै वेबसाइट सुरु देखि बनाउन",
+                    "वेब पेजहरू कसरी संरचित हुन्छन् भनेर बुझ्न",
+                    "पहिले बनाइएका वेबसाइट र टेम्प्लेटलाई परिमार्जन गर्न",
+                    "CSS र JavaScript सिक्नको लागि बलियो आधार बनाउन",
+                    "वेब विकास क्षेत्रमा करिअर बनाउन"
+                  ] : [
+                    "Create your own websites from scratch",
+                    "Understand how web pages are structured",
+                    "Customize existing websites and templates",
+                    "Build a strong foundation for learning CSS and JavaScript",
+                    "Pursue a career in web development"
+                  ]).map((item: string, index: number) => (
+                    <li key={index}>• {item}</li>
+                  ))}
                 </ul>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  How HTML Works
+                  {language === "ne" ? "HTML कसरी काम गर्छ" : "How HTML Works"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  HTML works by using tags to mark up content. These tags tell web browsers how to display the information. For example:
+                  {language === "ne" ? "HTML ले सामग्रीलाई ट्याग (tags) मार्फत चिन्ह लगाएर काम गर्छ। यी ट्यागहरूले वेब ब्राउजरलाई सूचना कसरी देखाउने भनेर बताउँछन्। उदाहरणका लागि:" : "HTML works by using tags to mark up content. These tags tell web browsers how to display the information. For example:"}
                 </p>
                 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <p className="font-mono text-sm text-gray-700">
-                    &lt;h1&gt;This is a heading&lt;/h1&gt;<br/>
-                    &lt;p&gt;This is a paragraph&lt;/p&gt;<br/>
-                    &lt;a href="..."&gt;This is a link&lt;/a&gt;
+                    {(language === "ne" ? "<h1>यो एउटा शीर्षक हो</h1>\n<p>यो एउटा अनुच्छेद हो</p>\n<a href=\"...\">यो एउटा लिंक हो</a>" : "<h1>This is a heading</h1>\n<p>This is a paragraph</p>\n<a href=\"...\">This is a link</a>").split('\n').map((line: string, index: number) => (
+                      <span key={index}>
+                        {line}
+                        {index < (language === "ne" ? "<h1>यो एउटा शीर्षक हो</h1>\n<p>यो एउटा अनुच्छेद हो</p>\n<a href=\"...\">यो एउटा लिंक हो</a>" : "<h1>This is a heading</h1>\n<p>This is a paragraph</p>\n<a href=\"...\">This is a link</a>").split('\n').length - 1 && <br/>}
+                      </span>
+                    ))}
                   </p>
                 </div>
                 
                 <p className="text-neutral-600 leading-relaxed mt-4">
-                  When a browser reads this HTML, it knows to display the first line as a large heading, the second as a paragraph, and the third as a clickable link.
+                  {language === "ne" ? "जब ब्राउजरले यो HTML पढ्छ, उसले पहिलो लाइनलाई ठूलो शीर्षक, दोस्रोलाई अनुच्छेद, र तेस्रोलाई क्लिक गर्न मिल्ने लिंकको रूपमा देखाउँछ।" : "When a browser reads this HTML, it knows to display the first line as a large heading, the second as a paragraph, and the third as a clickable link."}
                 </p>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  What You'll Learn
+                  {language === "ne" ? "तपाईं के सिक्नुहुनेछ" : "What You'll Learn"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  In this course, you'll learn how to:
+                  {language === "ne" ? "यस कोर्समा, तपाईंले निम्न कुरा सिक्नुहुनेछ:" : "In this course, you'll learn how to:"}
                 </p>
                 
                 <ul className="space-y-3 text-neutral-600 leading-relaxed">
-                  <li>• Write clean, semantic HTML code</li>
-                  <li>• Structure web pages with proper headings and sections</li>
-                  <li>• Create lists, links, and images</li>
-                  <li>• Build forms for user input</li>
-                  <li>• Understand HTML best practices and accessibility</li>
+                  {(language === "ne" ? [
+                    "सफा र अर्थपूर्ण (semantic) HTML कोड लेख्न",
+                    "उचित शीर्षक र खण्डहरूसँग वेब पेज संरचना बनाउन",
+                    "सूची, लिंक, र छविहरू बनाउन",
+                    "प्रयोगकर्ताको इनपुटका लागि फाराम बनाउन",
+                    "HTML का उत्कृष्ट अभ्यास (best practices) र पहुँचयोग्यता (accessibility) बुझ्न"
+                  ] : [
+                    "Write clean, semantic HTML code",
+                    "Structure web pages with proper headings and sections",
+                    "Create lists, links, and images",
+                    "Build forms for user input",
+                    "Understand HTML best practices and accessibility"
+                  ]).map((item: string, index: number) => (
+                    <li key={index}>• {item}</li>
+                  ))}
                 </ul>
                 
                 <hr className="border-gray-300" />
@@ -288,17 +326,17 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {isLesson1 && currentStep === 2 && (
               <div className="mt-8 space-y-8">
                 <p className="text-lg text-neutral-600 leading-relaxed">
-                  HTML elements are the building blocks of HTML pages. Each element represents a different type of content and tells the browser how to display it.
+                  {language === "ne" ? "HTML तत्वहरू HTML पेजहरूका बिल्डिङ ब्लकहरू हुन्। प्रत्येक तत्वले विभिन्न प्रकारको सामग्री प्रतिनिधित्व गर्छ र ब्राउजरलाई यसलाई कसरी देखाउने भनेर बताउँछ।" : "HTML elements are the building blocks of HTML pages. Each element represents a different type of content and tells the browser how to display it."}
                 </p>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-6">
-                  What is an HTML Element?
+                  {language === "ne" ? "HTML तत्व भनेको के हो?" : "What is an HTML Element?"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  An HTML element is defined by a start tag, some content, and an end tag. Elements can contain other elements, text, or be empty.
+                  {language === "ne" ? "एउटा HTML तत्वलाई सुरु ट्याग, केही सामग्री, र अन्त्य ट्यागले परिभाषित गरिन्छ। तत्वहरूले अन्य तत्वहरू, टेक्स्ट, वा खाली हुन सक्छन्।" : "An HTML element is defined by a start tag, some content, and an end tag. Elements can contain other elements, text, or be empty."}
                 </p>
                 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -310,87 +348,153 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Basic HTML Elements
+                  {language === "ne" ? "आधारभूत HTML तत्वहरू" : "Basic HTML Elements"}
                 </h2>
                 
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-medium text-neutral-700 mb-2">Heading Elements</h3>
-                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <p className="font-mono text-sm text-gray-700">
-                        &lt;h1&gt;Main Heading&lt;/h1&gt;<br/>
-                        &lt;h2&gt;Sub Heading&lt;/h2&gt;<br/>
-                        &lt;h3&gt;Section Heading&lt;/h3&gt;
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "शीर्षक तत्वहरू" : "Heading Elements"}
+                    </h3>
+                    <p className="text-neutral-600 text-sm mb-2">
+                      {language === "ne" ? "h1 देखि h6 सम्मका शीर्षक तत्वहरू" : "Heading elements from h1 to h6"}
+                    </p>
+                    <div className="bg-gray-50 p-3 rounded border">
+                      <p className="font-mono text-xs text-gray-700">
+                        &lt;h1&gt;{language === "ne" ? "मुख्य शीर्षक" : "Main Heading"}&lt;/h1&gt;<br/>
+                        &lt;h2&gt;{language === "ne" ? "उप-शीर्षक" : "Sub Heading"}&lt;/h2&gt;<br/>
+                        &lt;h3&gt;{language === "ne" ? "खण्ड शीर्षक" : "Section Heading"}&lt;/h3&gt;
                       </p>
                     </div>
-                    <p className="text-sm text-neutral-500 mt-2">h1 is the most important, h6 is the least important</p>
+                    <p className="text-neutral-600 text-xs mt-2">
+                      {language === "ne" ? "h1 सबैभन्दा महत्वपूर्ण हो, h6 सबैभन्दा कम महत्वपूर्ण हो" : "h1 is the most important, h6 is the least important"}
+                    </p>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-medium text-neutral-700 mb-2">Paragraph Element</h3>
-                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <p className="font-mono text-sm text-gray-700">
-                        &lt;p&gt;This is a paragraph of text. It can contain multiple sentences and will be displayed as a block of text with proper spacing.&lt;/p&gt;
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "पैराग्राफ तत्व" : "Paragraph Element"}
+                    </h3>
+                    <p className="text-neutral-600 text-sm mb-2">
+                      {language === "ne" ? "टेक्स्ट सामग्रीको लागि प्रयोग गरिने तत्व" : "Element used for text content"}
+                    </p>
+                    <div className="bg-gray-50 p-3 rounded border">
+                      <p className="font-mono text-xs text-gray-700">
+                        &lt;p&gt;{language === "ne" ? "यो एउटा पैराग्राफ हो" : "This is a paragraph"}&lt;/p&gt;
                       </p>
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-medium text-neutral-700 mb-2">Link Element</h3>
-                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <p className="font-mono text-sm text-gray-700">
-                        &lt;a href="https://example.com"&gt;Click here to visit Example&lt;/a&gt;
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "लिङ्क तत्व" : "Link Element"}
+                    </h3>
+                    <p className="text-neutral-600 text-sm mb-2">
+                      {language === "ne" ? "अन्य पेजहरू वा वेबसाइटहरूमा जडान गर्ने तत्व" : "Element to link to other pages or websites"}
+                    </p>
+                    <div className="bg-gray-50 p-3 rounded border">
+                      <p className="font-mono text-xs text-gray-700">
+                        &lt;a href="https://example.com"&gt;{language === "ne" ? "यहाँ क्लिक गर्नुहोस्" : "Click here"}&lt;/a&gt;
                       </p>
                     </div>
-                    <p className="text-sm text-neutral-500 mt-2">The href attribute specifies the destination URL</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "छवि तत्व" : "Image Element"}
+                    </h3>
+                    <p className="text-neutral-600 text-sm mb-2">
+                      {language === "ne" ? "छविहरू देखाउन प्रयोग गरिने तत्व" : "Element used to display images"}
+                    </p>
+                    <div className="bg-gray-50 p-3 rounded border">
+                      <p className="font-mono text-xs text-gray-700">
+                        &lt;img src="image.jpg" alt="{language === "ne" ? "छवि वर्णन" : "Image description"}" /&gt;
+                      </p>
+                    </div>
                   </div>
                 </div>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Element Structure
+                  {language === "ne" ? "HTML तत्वहरूको संरचना" : "HTML Element Structure"}
                 </h2>
                 
-                <p className="text-neutral-600 leading-relaxed">
-                  Every HTML element follows this basic structure:
-                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">1</div>
+                    <div>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "सुरु ट्याग" : "Opening Tag"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "तत्वको सुरुवात चिन्हित गर्ने ट्याग" : "Tag that marks the beginning of an element"}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">2</div>
+                    <div>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "सामग्री" : "Content"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "तत्वको वास्तविक सामग्री (टेक्स्ट, अन्य तत्वहरू, वा खाली)" : "The actual content of the element (text, other elements, or empty)"}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">3</div>
+                    <div>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "अन्त्य ट्याग" : "Closing Tag"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "तत्वको अन्त्य चिन्हित गर्ने ट्याग (सुरु ट्यागमा / थपेर)" : "Tag that marks the end of an element (add / to opening tag)"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
                 
-                <ul className="space-y-3 text-neutral-600 leading-relaxed">
-                  <li>• <strong>Start tag:</strong> &lt;tagname&gt; - tells the browser where the element begins</li>
-                  <li>• <strong>Content:</strong> The actual content (text, images, other elements)</li>
-                  <li>• <strong>End tag:</strong> &lt;/tagname&gt; - tells the browser where the element ends</li>
-                </ul>
-                
-                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                  <p className="text-blue-800 text-sm">
-                    <strong>Note:</strong> Some elements like &lt;img&gt; and &lt;br&gt; don't have end tags. These are called "self-closing" or "void" elements.
+                <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                  <p className="text-yellow-800 text-sm">
+                    <strong>{language === "ne" ? "स्मरण राख्नुहोस्:" : "Remember:"}</strong> {language === "ne" ? "सबै HTML तत्वहरूले अन्त्य ट्याग चाहिन्छन् (स्व-बन्द तत्वहरू बाहेक जस्तै &lt;img&gt; वा &lt;br&gt;)" : "All HTML elements need closing tags (except self-closing elements like &lt;img&gt; or &lt;br&gt;)"}
                   </p>
                 </div>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Common HTML Elements
+                  {language === "ne" ? "तत्वहरूको नेस्टिङ" : "Nesting Elements"}
                 </h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="bg-gray-50 p-3 rounded border">
-                    <h4 className="font-medium text-neutral-700">Text Elements</h4>
-                    <p className="text-sm text-neutral-600">p, span, div, strong, em, mark</p>
-                  </div>
-                  <div className="bg-gray-50 p-3 rounded border">
-                    <h4 className="font-medium text-neutral-700">Heading Elements</h4>
-                    <p className="text-sm text-neutral-600">h1, h2, h3, h4, h5, h6</p>
-                  </div>
-                  <div className="bg-gray-50 p-3 rounded border">
-                    <h4 className="font-medium text-neutral-700">List Elements</h4>
-                    <p className="text-sm text-neutral-600">ul, ol, li, dl, dt, dd</p>
-                  </div>
-                  <div className="bg-gray-50 p-3 rounded border">
-                    <h4 className="font-medium text-neutral-700">Link & Media</h4>
-                    <p className="text-sm text-neutral-600">a, img, video, audio</p>
-                  </div>
+                <p className="text-neutral-600 leading-relaxed">
+                  {language === "ne" ? "HTML तत्वहरूलाई एकअर्कामा राख्न सकिन्छ। यसलाई नेस्टिङ भनिन्छ र यो HTML को शक्तिशाली विशेषता हो।" : "HTML elements can be placed inside each other. This is called nesting and it's a powerful feature of HTML."}
+                </p>
+                
+                <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                  <p className="font-mono text-sm text-gray-700">
+                    &lt;div&gt;<br/>
+                    &nbsp;&nbsp;&lt;h1&gt;{language === "ne" ? "शीर्षक" : "Title"}&lt;/h1&gt;<br/>
+                    &nbsp;&nbsp;&lt;p&gt;{language === "ne" ? "यहाँ केही <strong>महत्वपूर्ण</strong> सामग्री छ" : "Here is some <strong>important</strong> content"}&lt;/p&gt;<br/>
+                    &lt;/div&gt;
+                  </p>
+                </div>
+                
+                <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+                  <p className="text-red-800 text-sm">
+                    <strong>{language === "ne" ? "गलत:" : "Wrong:"}</strong> {language === "ne" ? "ट्यागहरू गलत क्रममा बन्द गर्नुहोस्" : "Closing tags in wrong order"}<br/>
+                    &lt;p&gt;&lt;strong&gt;{language === "ne" ? "सामग्री" : "Content"}&lt;/p&gt;&lt;/strong&gt;
+                  </p>
+                </div>
+                
+                <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                  <p className="text-green-800 text-sm">
+                    <strong>{language === "ne" ? "सही:" : "Correct:"}</strong> {language === "ne" ? "ट्यागहरू सही क्रममा बन्द गर्नुहोस्" : "Closing tags in correct order"}<br/>
+                    &lt;p&gt;&lt;strong&gt;{language === "ne" ? "सामग्री" : "Content"}&lt;/strong&gt;&lt;/p&gt;
+                  </p>
                 </div>
                 
                 <hr className="border-gray-300" />
@@ -401,49 +505,65 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {isLesson1 && currentStep === 3 && (
               <div className="mt-8 space-y-8">
                 <p className="text-lg text-neutral-600 leading-relaxed">
-                  Web browsers are software applications that retrieve, display, and navigate information on the World Wide Web. They interpret HTML code and render it into visual web pages.
+                  {language === "ne" ? "वेब ब्राउजरहरू सफ्टवेयर अनुप्रयोगहरू हुन् जसले वर्ल्ड वाइड वेबमा जानकारी पुनर्प्राप्त, प्रदर्शन, र नेभिगेट गर्छन्। तिनीहरू HTML कोड व्याख्या गर्छन् र दृश्य वेब पेजहरूमा रेन्डर गर्छन्।" : "Web browsers are software applications that retrieve, display, and navigate information on the World Wide Web. They interpret HTML code and render it into visual web pages."}
                 </p>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-6">
-                  How Browsers Work
+                  {language === "ne" ? "ब्राउजरहरू कसरी काम गर्छन्" : "How Browsers Work"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  When you visit a website, your browser goes through several steps to display the page:
+                  {language === "ne" ? "जब तपाईं कुनै वेबसाइटमा जानुहुन्छ, ब्राउजरले पृष्ठ देखाउनका लागि केही चरणहरू पालना गर्छ:" : "When you visit a website, your browser goes through several steps to display the page:"}
                 </p>
                 
                 <div className="space-y-4">
                   <div className="flex items-start space-x-3">
                     <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">1</div>
                     <div>
-                      <h3 className="font-medium text-neutral-700">Request</h3>
-                      <p className="text-neutral-600 text-sm">Browser sends a request to the web server for the HTML file</p>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "अनुरोध (Request)" : "Request"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "ब्राउजरले वेब सर्भरलाई HTML फाइलको लागि अनुरोध पठाउँछ" : "Browser sends a request to the web server for the HTML file"}
+                      </p>
                     </div>
                   </div>
                   
                   <div className="flex items-start space-x-3">
                     <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">2</div>
                     <div>
-                      <h3 className="font-medium text-neutral-700">Receive</h3>
-                      <p className="text-neutral-600 text-sm">Server sends back the HTML document and related resources</p>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "प्राप्त (Receive)" : "Receive"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "सर्भरले HTML डकुमेन्ट र सम्बन्धित स्रोतहरू फिर्ता पठाउँछ" : "Server sends back the HTML document and related resources"}
+                      </p>
                     </div>
                   </div>
                   
                   <div className="flex items-start space-x-3">
                     <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">3</div>
                     <div>
-                      <h3 className="font-medium text-neutral-700">Parse</h3>
-                      <p className="text-neutral-600 text-sm">Browser parses the HTML and creates a Document Object Model (DOM)</p>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "पार्स (Parse)" : "Parse"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "ब्राउजरले HTML पार्स गर्छ र DOM (Document Object Model) बनाउँछ" : "Browser parses the HTML and creates a Document Object Model (DOM)"}
+                      </p>
                     </div>
                   </div>
                   
                   <div className="flex items-start space-x-3">
                     <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">4</div>
                     <div>
-                      <h3 className="font-medium text-neutral-700">Render</h3>
-                      <p className="text-neutral-600 text-sm">Browser renders the page based on the HTML structure and CSS styling</p>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "रेन्डर (Render)" : "Render"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "ब्राउजरले HTML संरचना र CSS शैलीको आधारमा पृष्ठ रेन्डर गर्छ" : "Browser renders the page based on the HTML structure and CSS styling"}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -451,67 +571,75 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Popular Web Browsers
+                  {language === "ne" ? "लोकप्रिय वेब ब्राउजरहरू" : "Popular Web Browsers"}
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <h3 className="font-medium text-neutral-700 mb-2">Chrome</h3>
-                    <p className="text-sm text-neutral-600">Developed by Google, known for speed and extensive extension support</p>
+                    <p className="text-sm text-neutral-600">
+                      {language === "ne" ? "Google द्वारा विकसित, उच्च गति र प्रशस्त एक्सटेन्सन समर्थनका लागि प्रसिद्ध" : "Developed by Google, known for speed and extensive extension support"}
+                    </p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <h3 className="font-medium text-neutral-700 mb-2">Firefox</h3>
-                    <p className="text-sm text-neutral-600">Open-source browser by Mozilla, focuses on privacy and customization</p>
+                    <p className="text-sm text-neutral-600">
+                      {language === "ne" ? "Mozilla द्वारा विकसित खुला-स्रोत ब्राउजर, गोपनीयता र अनुकूलनमा केन्द्रित" : "Open-source browser by Mozilla, focuses on privacy and customization"}
+                    </p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <h3 className="font-medium text-neutral-700 mb-2">Safari</h3>
-                    <p className="text-sm text-neutral-600">Apple's browser, optimized for macOS and iOS devices</p>
+                    <p className="text-sm text-neutral-600">
+                      {language === "ne" ? "Apple को ब्राउजर, macOS र iOS डिभाइसहरूका लागि अनुकूलित" : "Apple's browser, optimized for macOS and iOS devices"}
+                    </p>
                   </div>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                     <h3 className="font-medium text-neutral-700 mb-2">Edge</h3>
-                    <p className="text-sm text-neutral-600">Microsoft's modern browser, built on Chromium engine</p>
+                    <p className="text-sm text-neutral-600">
+                      {language === "ne" ? "Microsoft को आधुनिक ब्राउजर, Chromium इञ्जिनमा निर्मित" : "Microsoft's modern browser, built on Chromium engine"}
+                    </p>
                   </div>
                 </div>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Browser Developer Tools
+                  {language === "ne" ? "ब्राउजर डेभलपर टुलहरू" : "Browser Developer Tools"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  Modern browsers include powerful developer tools that help web developers:
+                  {language === "ne" ? "आधुनिक ब्राउजरहरूमा वेब विकासकर्तालाई मद्दत गर्ने शक्तिशाली डेभलपर टुलहरू समावेश हुन्छन्:" : "Modern browsers include powerful developer tools that help web developers:"}
                 </p>
                 
                 <ul className="space-y-3 text-neutral-600 leading-relaxed">
-                  <li>• <strong>Inspect Element:</strong> View and modify HTML structure in real-time</li>
-                  <li>• <strong>Console:</strong> Run JavaScript code and view error messages</li>
-                  <li>• <strong>Network Tab:</strong> Monitor HTTP requests and responses</li>
-                  <li>• <strong>Performance:</strong> Analyze page loading speed and optimization</li>
-                  <li>• <strong>Responsive Design:</strong> Test how pages look on different screen sizes</li>
+                  <li>• <strong>{language === "ne" ? "इन्स्पेक्ट एलिमेन्ट:" : "Inspect Element:"}</strong> {language === "ne" ? "रियल-टाइममा HTML संरचना हेर्न र परिमार्जन गर्न" : "View and modify HTML structure in real-time"}</li>
+                  <li>• <strong>{language === "ne" ? "कन्सोल:" : "Console:"}</strong> {language === "ne" ? "JavaScript कोड चलाउन र त्रुटि सन्देशहरू हेर्न" : "Run JavaScript code and view error messages"}</li>
+                  <li>• <strong>{language === "ne" ? "नेटवर्क ट्याब:" : "Network Tab:"}</strong> {language === "ne" ? "HTTP अनुरोध र प्रतिक्रिया निगरानी गर्न" : "Monitor HTTP requests and responses"}</li>
+                  <li>• <strong>{language === "ne" ? "प्रदर्शन:" : "Performance:"}</strong> {language === "ne" ? "पृष्ठ लोड गति र अनुकूलन विश्लेषण गर्न" : "Analyze page loading speed and optimization"}</li>
+                  <li>• <strong>{language === "ne" ? "रिस्पोन्सिभ डिजाइन:" : "Responsive Design:"}</strong> {language === "ne" ? "विभिन्न स्क्रिन आकारहरूमा पृष्ठहरू कसरी देखिन्छन् परीक्षण गर्न" : "Test how pages look on different screen sizes"}</li>
                 </ul>
                 
                 <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
                   <p className="text-yellow-800 text-sm">
-                    <strong>Tip:</strong> Press F12 or right-click and select "Inspect" to open developer tools in most browsers.
+                    <strong>{language === "ne" ? "सुझाव:" : "Tip:"}</strong> {language === "ne" ? "धेरै ब्राउजरहरूमा डेभलपर टुल खोल्न F12 थिच्नुहोस् वा राइट-क्लिक गरी \"Inspect\" छान्नुहोस्।" : "Press F12 or right-click and select \"Inspect\" to open developer tools in most browsers."}
                   </p>
                 </div>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Cross-Browser Compatibility
+                  {language === "ne" ? "क्रस-ब्राउजर कम्प्याटिबिलिटी" : "Cross-Browser Compatibility"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  Different browsers may interpret HTML slightly differently. This is why it's important to:
+                  {language === "ne" ? "विभिन्न ब्राउजरहरूले HTML लाई अलि फरक तरिकाले व्याख्या गर्न सक्छन्। त्यसैले यो कुरा महत्त्वपूर्ण छ:" : "Different browsers may interpret HTML slightly differently. This is why it's important to:"}
                 </p>
                 
                 <ul className="space-y-3 text-neutral-600 leading-relaxed">
-                  <li>• Write clean, standards-compliant HTML code</li>
-                  <li>• Test your websites in multiple browsers</li>
-                  <li>• Use CSS for styling instead of relying on browser defaults</li>
-                  <li>• Consider using CSS resets or normalize.css for consistent styling</li>
+                  <li>• {language === "ne" ? "सफा र मापदण्ड-अनुरूप HTML कोड लेख्नुहोस्" : "Write clean, standards-compliant HTML code"}</li>
+                  <li>• {language === "ne" ? "आफ्नो वेबसाइटलाई विभिन्न ब्राउजरहरूमा परीक्षण गर्नुहोस्" : "Test your websites in multiple browsers"}</li>
+                  <li>• {language === "ne" ? "ब्राउजरका डिफल्टमा भर नपरी शैलीकृत गर्न CSS प्रयोग गर्नुहोस्" : "Use CSS for styling instead of relying on browser defaults"}</li>
+                  <li>• {language === "ne" ? "समान शैलीका लागि CSS reset वा normalize.css प्रयोग गर्ने विचार गर्नुहोस्" : "Consider using CSS resets or normalize.css for consistent styling"}</li>
                 </ul>
                 
                 <hr className="border-gray-300" />
@@ -522,17 +650,17 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {isLesson1 && currentStep === 4 && (
               <div className="mt-8 space-y-8">
                 <p className="text-lg text-neutral-600 leading-relaxed">
-                  HTML page structure refers to the way HTML documents are organized and structured. Every HTML page follows a standard structure that browsers expect to see.
+                  {language === "ne" ? "HTML पेज संरचनाले HTML डकुमेन्टहरू कसरी संगठित र संरचित गरिन्छ भन्ने कुरालाई जनाउँछ। हरेक HTML पेजले ब्राउजरहरूले हेर्ने अपेक्षा गरेको मानक संरचना पालना गर्छ।" : "HTML page structure refers to the way HTML documents are organized and structured. Every HTML page follows a standard structure that browsers expect to see."}
                 </p>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-6">
-                  Basic HTML Document Structure
+                  {language === "ne" ? "आधारभूत HTML डकुमेन्ट संरचना" : "Basic HTML Document Structure"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  Every HTML document has a specific structure that includes several essential elements:
+                  {language === "ne" ? "हरेक HTML डकुमेन्टमा केही आवश्यक तत्वहरू समावेश गर्ने विशिष्ट संरचना हुन्छ:" : "Every HTML document has a specific structure that includes several essential elements:"}
                 </p>
                 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
@@ -540,11 +668,11 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                     &lt;!DOCTYPE html&gt;<br/>
                     &lt;html&gt;<br/>
                     &nbsp;&nbsp;&lt;head&gt;<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;Page Title&lt;/title&gt;<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;{language === "ne" ? "पेज शीर्षक" : "Page Title"}&lt;/title&gt;<br/>
                     &nbsp;&nbsp;&lt;/head&gt;<br/>
                     &nbsp;&nbsp;&lt;body&gt;<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Main Heading&lt;/h1&gt;<br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;Page content goes here&lt;/p&gt;<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;{language === "ne" ? "मुख्य शीर्षक" : "Main Heading"}&lt;/h1&gt;<br/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;{language === "ne" ? "पेज सामग्री यहाँ जान्छ" : "Page content goes here"}&lt;/p&gt;<br/>
                     &nbsp;&nbsp;&lt;/body&gt;<br/>
                     &lt;/html&gt;
                   </p>
@@ -553,37 +681,53 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Essential HTML Elements
+                  {language === "ne" ? "आवश्यक HTML तत्वहरू" : "Essential HTML Elements"}
                 </h2>
                 
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-medium text-neutral-700 mb-2">DOCTYPE Declaration</h3>
-                    <p className="text-neutral-600 text-sm mb-2">Tells the browser this is an HTML5 document</p>
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "DOCTYPE घोषणा" : "DOCTYPE Declaration"}
+                    </h3>
+                    <p className="text-neutral-600 text-sm mb-2">
+                      {language === "ne" ? "ब्राउजरलाई यो HTML5 डकुमेन्ट हो भनेर बताउँछ" : "Tells the browser this is an HTML5 document"}
+                    </p>
                     <div className="bg-gray-50 p-3 rounded border">
                       <p className="font-mono text-xs text-gray-700">&lt;!DOCTYPE html&gt;</p>
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-medium text-neutral-700 mb-2">HTML Root Element</h3>
-                    <p className="text-neutral-600 text-sm mb-2">The root container for the entire HTML document</p>
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "HTML मूल तत्व" : "HTML Root Element"}
+                    </h3>
+                    <p className="text-neutral-600 text-sm mb-2">
+                      {language === "ne" ? "सम्पूर्ण HTML डकुमेन्टको लागि मूल कन्टेनर" : "The root container for the entire HTML document"}
+                    </p>
                     <div className="bg-gray-50 p-3 rounded border">
                       <p className="font-mono text-xs text-gray-700">&lt;html lang="en"&gt;...&lt;/html&gt;</p>
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-medium text-neutral-700 mb-2">Head Section</h3>
-                    <p className="text-neutral-600 text-sm mb-2">Contains metadata, title, and links to external resources</p>
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "हेड खण्ड" : "Head Section"}
+                    </h3>
+                    <p className="text-neutral-600 text-sm mb-2">
+                      {language === "ne" ? "मेटाडाटा, शीर्षक, र बाह्य स्रोतहरूमा लिङ्कहरू समावेश गर्छ" : "Contains metadata, title, and links to external resources"}
+                    </p>
                     <div className="bg-gray-50 p-3 rounded border">
                       <p className="font-mono text-xs text-gray-700">&lt;head&gt;...&lt;/head&gt;</p>
                     </div>
                   </div>
                   
                   <div>
-                    <h3 className="text-lg font-medium text-neutral-700 mb-2">Body Section</h3>
-                    <p className="text-neutral-600 text-sm mb-2">Contains all the visible content of the webpage</p>
+                    <h3 className="text-lg font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "बडी खण्ड" : "Body Section"}
+                    </h3>
+                    <p className="text-neutral-600 text-sm mb-2">
+                      {language === "ne" ? "वेबपेजको सबै दृश्य सामग्री समावेश गर्छ" : "Contains all the visible content of the webpage"}
+                    </p>
                     <div className="bg-gray-50 p-3 rounded border">
                       <p className="font-mono text-xs text-gray-700">&lt;body&gt;...&lt;/body&gt;</p>
                     </div>
@@ -677,157 +821,160 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {isLesson1 && currentStep === 5 && (
               <div className="mt-8 space-y-8">
                 <p className="text-lg text-neutral-600 leading-relaxed">
-                  HTML has evolved significantly since its creation in the early 1990s. Understanding its history helps us appreciate how web standards have developed and why certain practices exist today.
+                  {language === "ne" ? "HTML ले 1990 को दशकको सुरुवातमा यसको सिर्जनादेखि धेरै विकास गरेको छ। यसको इतिहास बुझ्नाले वेब मापदण्डहरू कसरी विकसित भएका छन् र आज केही प्रथाहरू किन अवस्थित छन् भनेर बुझ्न मद्दत गर्छ।" : "HTML has evolved significantly since its creation in the early 1990s. Understanding its history helps us appreciate how web standards have developed and why certain practices exist today."}
                 </p>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-6">
-                  The Birth of HTML
+                  {language === "ne" ? "HTML को जन्म" : "The Birth of HTML"}
                 </h2>
                 
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                   <h3 className="font-medium text-blue-800 mb-2">Tim Berners-Lee (1989-1991)</h3>
                   <p className="text-blue-700 text-sm">
-                    While working at CERN, Tim Berners-Lee created HTML as a way to share scientific documents. He also created the first web browser and web server.
+                    {language === "ne" ? "CERN मा काम गर्दै गर्दा, Tim Berners-Lee ले वैज्ञानिक डकुमेन्टहरू साझा गर्ने तरिकाको रूपमा HTML सिर्जना गरे। उनले पहिलो वेब ब्राउजर र वेब सर्भर पनि सिर्जना गरे।" : "While working at CERN, Tim Berners-Lee created HTML as a way to share scientific documents. He also created the first web browser and web server."}
                   </p>
                 </div>
                 
                 <p className="text-neutral-600 leading-relaxed mt-4">
-                  HTML was originally designed to be simple and focused on document structure rather than presentation. The goal was to create a universal markup language that could work across different computer systems.
+                  {language === "ne" ? "HTML लाई मूल रूपमा सरल र प्रस्तुतिकरण भन्दा डकुमेन्ट संरचनामा केन्द्रित हुन डिजाइन गरिएको थियो। लक्ष्य थियो विभिन्न कम्प्युटर प्रणालीहरूमा काम गर्न सक्ने सार्वभौमिक मार्कअप भाषा सिर्जना गर्नु।" : "HTML was originally designed to be simple and focused on document structure rather than presentation. The goal was to create a universal markup language that could work across different computer systems."}
                 </p>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  HTML Version Timeline
+                  {language === "ne" ? "HTML संस्करण समयरेखा" : "HTML Version Timeline"}
                 </h2>
                 
                 <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">1.0</div>
-                    <div>
-                      <h3 className="font-medium text-neutral-700">HTML 1.0 (1993)</h3>
-                      <p className="text-neutral-600 text-sm">The first official specification included basic elements like headings, paragraphs, and links.</p>
-                    </div>
+                  <div className="border-l-4 border-blue-500 pl-4">
+                    <h3 className="font-medium text-neutral-700 mb-2">HTML 1.0 (1993)</h3>
+                    <p className="text-neutral-600 text-sm">
+                      {language === "ne" ? "पहिलो आधिकारिक HTML मापदण्ड। सरल तत्वहरू र बुनियादी संरचना मात्र समावेश थियो।" : "The first official HTML standard. Included only simple elements and basic structure."}
+                    </p>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">2.0</div>
-                    <div>
-                      <h3 className="font-medium text-neutral-700">HTML 2.0 (1995)</h3>
-                      <p className="text-neutral-600 text-sm">Introduced forms, tables, and became the standard for web development.</p>
-                    </div>
+                  <div className="border-l-4 border-green-500 pl-4">
+                    <h3 className="font-medium text-neutral-700 mb-2">HTML 2.0 (1995)</h3>
+                    <p className="text-neutral-600 text-sm">
+                      {language === "ne" ? "फारमहरू, टेबलहरू, र छविहरूको समर्थन थपियो। यो पहिलो HTML मापदण्ड थियो जुन RFC द्वारा मानकीकृत गरिएको थियो।" : "Added support for forms, tables, and images. This was the first HTML standard to be standardized by RFC."}
+                    </p>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">3.2</div>
-                    <div>
-                      <h3 className="font-medium text-neutral-700">HTML 3.2 (1997)</h3>
-                      <p className="text-neutral-600 text-sm">Added support for tables, applets, and text flow around images.</p>
-                    </div>
+                  <div className="border-l-4 border-yellow-500 pl-4">
+                    <h3 className="font-medium text-neutral-700 mb-2">HTML 3.2 (1997)</h3>
+                    <p className="text-neutral-600 text-sm">
+                      {language === "ne" ? "W3C द्वारा पहिलो मापदण्ड। फन्ट, रङ, र केही लेआउट नियन्त्रणहरू थपियो।" : "First standard by W3C. Added fonts, colors, and some layout controls."}
+                    </p>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">4.0</div>
-                    <div>
-                      <h3 className="font-medium text-neutral-700">HTML 4.0 (1998)</h3>
-                      <p className="text-neutral-600 text-sm">Major update with frames, scripting, and better form controls.</p>
-                    </div>
+                  <div className="border-l-4 border-purple-500 pl-4">
+                    <h3 className="font-medium text-neutral-700 mb-2">HTML 4.01 (1999)</h3>
+                    <p className="text-neutral-600 text-sm">
+                      {language === "ne" ? "महत्वपूर्ण अपडेटहरू: CSS समर्थन, स्क्रिप्टिङ, र अधिक सिमान्टिक तत्वहरू। यो लामो समयसम्म प्रमुख मापदण्ड रह्यो।" : "Major updates: CSS support, scripting, and more semantic elements. This remained the dominant standard for a long time."}
+                    </p>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
-                    <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">5</div>
-                    <div>
-                      <h3 className="font-medium text-neutral-700">HTML5 (2014)</h3>
-                      <p className="text-neutral-600 text-sm">Modern standard with semantic elements, multimedia support, and APIs.</p>
-                    </div>
+                  <div className="border-l-4 border-red-500 pl-4">
+                    <h3 className="font-medium text-neutral-700 mb-2">HTML5 (2014)</h3>
+                    <p className="text-neutral-600 text-sm">
+                      {language === "ne" ? "आधुनिक वेबका लागि पूर्ण रूपमा पुनर्डिजाइन गरिएको। नयाँ सिमान्टिक तत्वहरू, मल्टिमिडिया समर्थन, र वेब अनुप्रयोगहरूका लागि विशेषताहरू थपियो।" : "Completely redesigned for the modern web. Added new semantic elements, multimedia support, and features for web applications."}
+                    </p>
                   </div>
                 </div>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Key Milestones in HTML Development
+                  {language === "ne" ? "महत्वपूर्ण विकासकर्ताहरू" : "Key Developments"}
                 </h2>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <h4 className="font-medium text-neutral-700 mb-2">1991: First Website</h4>
-                    <p className="text-sm text-neutral-600">The first website went live at CERN, marking the beginning of the World Wide Web</p>
+                    <h3 className="font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "CSS को उदय" : "Rise of CSS"}
+                    </h3>
+                    <p className="text-sm text-neutral-600">
+                      {language === "ne" ? "HTML बाट प्रस्तुतिकरण अलग गर्ने प्रयासले CSS लाई जन्म दियो। यसले वेब डिजाइनलाई क्रान्तिकारी रूपमा परिवर्तन गर्यो।" : "The effort to separate presentation from HTML gave birth to CSS. This revolutionized web design."}
+                    </p>
                   </div>
+                  
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <h4 className="font-medium text-neutral-700 mb-2">1994: W3C Founded</h4>
-                    <p className="text-sm text-neutral-600">World Wide Web Consortium established to develop web standards</p>
+                    <h3 className="font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "सिमान्टिक HTML" : "Semantic HTML"}
+                    </h3>
+                    <p className="text-sm text-neutral-600">
+                      {language === "ne" ? "HTML5 ले सामग्रीको अर्थ र संरचनालाई प्राथमिकता दिने तत्वहरू थप्यो। यसले एक्सेसिबिलिटी र SEO लाई सुधार गर्यो।" : "HTML5 added elements that prioritize meaning and structure over content. This improved accessibility and SEO."}
+                    </p>
                   </div>
+                  
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <h4 className="font-medium text-neutral-700 mb-2">2000: XHTML 1.0</h4>
-                    <p className="text-sm text-neutral-600">Attempt to make HTML more XML-like with stricter syntax rules</p>
+                    <h3 className="font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "मोबाइल वेब" : "Mobile Web"}
+                    </h3>
+                    <p className="text-sm text-neutral-600">
+                      {language === "ne" ? "स्मार्टफोनहरूको उदयले रिस्पोन्सिभ डिजाइन र मोबाइल-पहिलो दृष्टिकोणलाई जन्म दियो।" : "The rise of smartphones gave birth to responsive design and mobile-first approaches."}
+                    </p>
                   </div>
+                  
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <h4 className="font-medium text-neutral-700 mb-2">2014: HTML5 Standard</h4>
-                    <p className="text-sm text-neutral-600">HTML5 becomes an official W3C recommendation</p>
+                    <h3 className="font-medium text-neutral-700 mb-2">
+                      {language === "ne" ? "वेब अनुप्रयोगहरू" : "Web Applications"}
+                    </h3>
+                    <p className="text-sm text-neutral-600">
+                      {language === "ne" ? "HTML5 ले वेब अनुप्रयोगहरू बनाउन सक्षम बनायो जुन डेस्कटप अनुप्रयोगहरूसँग प्रतिस्पर्धा गर्न सक्छन्।" : "HTML5 enabled web applications that can compete with desktop applications."}
+                    </p>
                   </div>
                 </div>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  The Browser Wars
+                  {language === "ne" ? "भविष्यको रुझानहरू" : "Future Trends"}
                 </h2>
-                
-                <p className="text-neutral-600 leading-relaxed">
-                  During the late 1990s and early 2000s, browser vendors competed by adding proprietary HTML extensions:
-                </p>
                 
                 <div className="space-y-4">
-                  <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
-                    <h3 className="font-medium text-yellow-800 mb-2">Netscape Navigator</h3>
-                    <p className="text-yellow-700 text-sm">Introduced many HTML features and JavaScript</p>
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">1</div>
+                    <div>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "Web Components" : "Web Components"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "पुनः प्रयोग गर्न सकिने कस्टम तत्वहरू बनाउन सक्षम बनाउँछ" : "Enables creating reusable custom elements"}
+                      </p>
+                    </div>
                   </div>
                   
-                  <div className="bg-red-50 p-4 rounded-lg border border-red-200">
-                    <h3 className="font-medium text-red-800 mb-2">Internet Explorer</h3>
-                    <p className="text-red-700 text-sm">Added proprietary tags and features to compete</p>
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">2</div>
+                    <div>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "Progressive Web Apps" : "Progressive Web Apps"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "वेब र मोबाइल अनुप्रयोगहरूको बीचको खाडल पूरा गर्ने" : "Bridging the gap between web and mobile applications"}
+                      </p>
+                    </div>
                   </div>
                   
-                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                    <h3 className="font-medium text-green-800 mb-2">Result</h3>
-                    <p className="text-green-700 text-sm">Led to non-standard HTML and compatibility issues</p>
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-1">3</div>
+                    <div>
+                      <h3 className="font-medium text-neutral-700">
+                        {language === "ne" ? "WebAssembly" : "WebAssembly"}
+                      </h3>
+                      <p className="text-neutral-600 text-sm">
+                        {language === "ne" ? "वेबमा उच्च-प्रदर्शन अनुप्रयोगहरू चलाउन सक्षम बनाउँछ" : "Enables running high-performance applications on the web"}
+                      </p>
+                    </div>
                   </div>
                 </div>
                 
-                <hr className="border-gray-300" />
-                
-                <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Modern HTML Standards
-                </h2>
-                
-                <p className="text-neutral-600 leading-relaxed">
-                  Today, HTML development is more collaborative and standards-focused:
-                </p>
-                
-                <ul className="space-y-3 text-neutral-600 leading-relaxed">
-                  <li>• <strong>W3C:</strong> Develops and maintains HTML standards</li>
-                  <li>• <strong>WHATWG:</strong> Web Hypertext Application Technology Working Group</li>
-                  <li>• <strong>Living Standard:</strong> HTML is now a "living standard" that evolves continuously</li>
-                  <li>• <strong>Browser Collaboration:</strong> Major browsers work together on new features</li>
-                  <li>• <strong>Web Components:</strong> Future of HTML with reusable custom elements</li>
-                </ul>
-                
-                <hr className="border-gray-300" />
-                
-                <h2 className="text-xl font-semibold text-neutral-700 mt-8">
-                  Why HTML History Matters
-                </h2>
-                
-                <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-200">
-                  <p className="text-indigo-800 text-sm">
-                    <strong>Understanding HTML history helps you:</strong><br/>
-                    • Appreciate why certain practices exist<br/>
-                    • Avoid outdated techniques and deprecated elements<br/>
-                    • Write more future-proof and standards-compliant code<br/>
-                    • Understand the importance of web standards and accessibility
+                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                  <p className="text-blue-800 text-sm">
+                    <strong>{language === "ne" ? "स्मरण राख्नुहोस्:" : "Remember:"}</strong> {language === "ne" ? "HTML को इतिहासले हामीलाई सिकाउँछ कि वेब मापदण्डहरू निरन्तर विकसित हुँदैछन्। आजको सर्वोत्तम प्रथाहरू भोलि परिवर्तन हुन सक्छन्।" : "HTML's history teaches us that web standards are constantly evolving. Today's best practices may change tomorrow."}
                   </p>
                 </div>
                 
@@ -839,17 +986,17 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
             {isLesson1 && currentStep === 6 && (
               <div className="mt-8 space-y-8">
                 <p className="text-lg text-neutral-600 leading-relaxed">
-                  HTML forms are essential for collecting user input on websites. They allow users to submit data, make selections, and interact with web applications.
+                  {language === "ne" ? "HTML फारमहरू वेबसाइटहरूमा प्रयोगकर्ता इनपुट संकलन गर्न आवश्यक छन्। तिनीहरूले प्रयोगकर्तालाई डाटा पेश गर्न, छनौट गर्न, र वेब अनुप्रयोगहरूसँग अन्तरक्रिया गर्न अनुमति दिन्छन्।" : "HTML forms are essential for collecting user input on websites. They allow users to submit data, make selections, and interact with web applications."}
                 </p>
                 
                 <hr className="border-gray-300" />
                 
                 <h2 className="text-xl font-semibold text-neutral-700 mt-6">
-                  Basic Form Structure
+                  {language === "ne" ? "आधारभूत फारम संरचना" : "Basic Form Structure"}
                 </h2>
                 
                 <p className="text-neutral-600 leading-relaxed">
-                  Every HTML form starts with the &lt;form&gt; element and contains various input elements:
+                  {language === "ne" ? "हरेक HTML फारम &lt;form&gt; तत्वबाट सुरु हुन्छ र विभिन्न इनपुट तत्वहरू समावेश गर्छ:" : "Every HTML form starts with the &lt;form&gt; element and contains various input elements:"}
                 </p>
                 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
