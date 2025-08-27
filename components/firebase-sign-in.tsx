@@ -3,12 +3,16 @@ import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
 
-export function FirebaseSignIn() {
+interface FirebaseSignInProps {
+  size?: "sm" | "lg";
+}
+
+export function FirebaseSignIn({ size = "lg" }: FirebaseSignInProps) {
   const { user, loading, signIn } = useFirebaseAuth();
 
   if (loading) {
     return (
-      <Button variant="ghost" size="sm" disabled>
+      <Button variant="ghost" size={size} disabled className={size === "lg" ? "w-full" : ""}>
         <Loader className="h-4 w-4 animate-spin" />
       </Button>
     );
@@ -20,10 +24,10 @@ export function FirebaseSignIn() {
 
   return (
     <Button 
-      variant="default" 
-      size="sm" 
+      size={size} 
+      variant="secondary" 
       onClick={signIn}
-      className="bg-green-600 hover:bg-green-700 text-white"
+      className={size === "lg" ? "w-full" : ""}
     >
       Sign In with Google
     </Button>

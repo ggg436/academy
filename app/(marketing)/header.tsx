@@ -27,7 +27,7 @@ export const Header = () => {
           ) : user ? (
             <FirebaseUserButton />
           ) : (
-            <FirebaseSignIn />
+            <FirebaseSignIn size="sm" />
           )}
         </div>
       </div>
