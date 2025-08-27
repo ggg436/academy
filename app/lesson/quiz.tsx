@@ -1,18 +1,22 @@
 "use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { CongratulationPage } from "@/components/congratulation-page";
 import { useLanguage } from "@/contexts/language-context";
 import HtmlRunner from "@/components/html-runner";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { saveLessonComplete } from "@/lib/progress-client";
+import { savePartialProgress } from "@/actions/progress";
+import { saveLessonCompleteServer } from "@/actions/progress";
 
-export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
+export const Quiz = ({ lessonTitle, currentStep, courseId: propCourseId, lessonId: propLessonId }: { lessonTitle: string; currentStep: number; courseId?: string; lessonId?: string }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
   const [playSound, setPlaySound] = useState(false);
   const { language } = useLanguage();
   const [runnerOpen, setRunnerOpen] = useState(false);
   const [runnerHtml, setRunnerHtml] = useState<string>("");
+  const partialTimer = useRef<NodeJS.Timeout | null>(null);
   
 
 
@@ -58,10 +62,30 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
     }
   }, [playSound]);
 
+  useEffect(() => {
+    // Debounced partial progress save on step changes
+    const courseId = propCourseId || "spanish";
+    const lessonId = propLessonId || (isLesson1 ? "lesson-1" : isLesson2 ? "lesson-2" : isLesson3 ? "lesson-3" : isLesson4 ? "lesson-4" : "lesson-5");
+    const totalSteps = isLesson1 ? 10 : (isLesson2 || isLesson3 || isLesson4 || isLesson5) ? 2 : 1;
+    if (partialTimer.current) clearTimeout(partialTimer.current);
+    partialTimer.current = setTimeout(() => {
+      savePartialProgress({ courseId, lessonId, step: currentStep, totalSteps }).catch(() => {});
+    }, 300);
+    return () => {
+      if (partialTimer.current) clearTimeout(partialTimer.current);
+    };
+  }, [currentStep]);
+
   const handleFinishLesson = () => {
     if (isLesson1 || isLesson2 || isLesson3 || isLesson4 || isLesson5) {
       setShowCongratulations(true);
       setPlaySound(true);
+      // Persist progress (map to course/lesson ids as needed)
+      const courseId = propCourseId || "spanish";
+      const lessonId = propLessonId || (isLesson1 ? "lesson-1" : isLesson2 ? "lesson-2" : isLesson3 ? "lesson-3" : isLesson4 ? "lesson-4" : "lesson-5");
+      saveLessonCompleteServer(courseId, lessonId, 25).catch(() => {});
+      // Keep local save as fallback for offline
+      saveLessonComplete(courseId, lessonId, 25);
     }
   };
 
@@ -111,7 +135,8 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
              currentStep === 7 ? "HTML Tables" :
              currentStep === 8 ? "HTML Lists" :
              currentStep === 9 ? "HTML Media" :
-             "Best Practices";
+             currentStep === 10 ? "Best Practices" :
+             "We Are Goood";
     } else if (isLesson2) {
       return currentStep === 1 ? "HI" : "HLO";
     } else if (isLesson3) {
@@ -144,6 +169,8 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
         return { href: "/lesson/lesson-1/html-media", text: "Next: HTML Media →" };
       } else if (currentStep === 9) {
         return { href: "/lesson/lesson-1/html-best-practices", text: "Next: Best Practices →" };
+      } else if (currentStep === 10) {
+        return { href: "/lesson/lesson-1/wearegoood", text: "Next: We Are Goood →" };
       }
     } else if (isLesson2) {
       if (currentStep === 1) {
@@ -524,7 +551,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                     </p>
                     <div className="bg-gray-50 p-3 rounded border">
                       <p className="font-mono text-xs text-gray-700">
-                        &lt;a href="https://example.com"&gt;{language === "ne" ? "यहाँ क्लिक गर्नुहोस्" : language === "new" ? "एति क्लिक गरइ" : "Click here"}&lt;/a&gt;
+                        &lt;a href=&quot;https://example.com&quot;&gt;{language === "ne" ? "यहाँ क्लिक गर्नुहोस्" : language === "new" ? "एति क्लिक गरइ" : "Click here"}&lt;/a&gt;
                       </p>
                     </div>
                   </div>
@@ -538,7 +565,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                     </p>
                     <div className="bg-gray-50 p-3 rounded border">
                       <p className="font-mono text-xs text-gray-700">
-                        &lt;img src="image.jpg" alt="{language === "ne" ? "छवि वर्णन" : language === "new" ? "छविको वर्णन" : "Image description"}" /&gt;
+                        &lt;img src=&quot;image.jpg&quot; alt=&quot;{language === "ne" ? "छवि वर्णन" : language === "new" ? "छविको वर्णन" : "Image description"}&quot; /&gt;
                       </p>
                     </div>
                   </div>
@@ -863,7 +890,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                     <h3 className="text-lg font-medium text-neutral-700 mb-2">{language === "ne" ? "HTML मूल तत्व" : language === "new" ? "HTML मूल एलिमेन्ट" : "HTML Root Element"}</h3>
                     <p className="text-neutral-600 text-sm mb-2">{language === "ne" ? "सम्पूर्ण HTML डकुमेन्टको लागि मूल कन्टेनर" : language === "new" ? "पूरो HTML डकुमेन्टय् मूल कन्टेनर" : "The root container for the entire HTML document"}</p>
                     <div className="bg-gray-50 p-3 rounded border">
-                      <p className="font-mono text-xs text-gray-700">&lt;html lang="en"&gt;...&lt;/html&gt;</p>
+                      <p className="font-mono text-xs text-gray-700">&lt;html lang=&quot;en&quot;&gt;...&lt;/html&gt;</p>
                     </div>
                   </div>
                   
@@ -1167,10 +1194,10 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <p className="font-mono text-sm text-gray-700">
-                    &lt;form action="/submit" method="post"&gt;<br/>
-                    &nbsp;&nbsp;&lt;label for="username"&gt;{language === "ne" ? "प्रयोगकर्ता नाम:" : language === "new" ? "प्रयोगकर्ता नाम:" : "Username:"}&lt;/label&gt;<br/>
-                    &nbsp;&nbsp;&lt;input type="text" id="username" name="username"&gt;<br/>
-                    &nbsp;&nbsp;&lt;button type="submit"&gt;{language === "ne" ? "पेश गर्नुहोस्" : language === "new" ? "पठाउ" : "Submit"}&lt;/button&gt;<br/>
+                    &lt;form action=&quot;/submit&quot; method=&quot;post&quot;&gt;<br/>
+                    &nbsp;&nbsp;&lt;label for=&quot;username&quot;&gt;{language === "ne" ? "प्रयोगकर्ता नाम:" : language === "new" ? "प्रयोगकर्ता नाम:" : "Username:"}&lt;/label&gt;<br/>
+                    &nbsp;&nbsp;&lt;input type=&quot;text&quot; id=&quot;username&quot; name=&quot;username&quot;&gt;<br/>
+                    &nbsp;&nbsp;&lt;button type=&quot;submit&quot;&gt;{language === "ne" ? "पेश गर्नुहोस्" : language === "new" ? "पठाउ" : "Submit"}&lt;/button&gt;<br/>
                     &lt;/form&gt;
                   </p>
                 </div>
@@ -1220,7 +1247,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                   <p className="text-blue-800 text-sm">
-                    <strong>{language === "ne" ? "उदाहरण:" : language === "new" ? "उदाहरण:" : "Example:"}</strong> &lt;input type="email" required placeholder="{language === "ne" ? "आफ्नो इमेल प्रविष्ट गर्नुहोस्" : language === "new" ? "आफ्नो इमेल लेख" : "Enter your email"}"&gt;
+                    <strong>{language === "ne" ? "उदाहरण:" : language === "new" ? "उदाहरण:" : "Example:"}</strong> &lt;input type=&quot;email&quot; required placeholder=&quot;{language === "ne" ? "आफ्नो इमेल प्रविष्ट गर्नुहोस्" : language === "new" ? "आफ्नो इमेल लेख" : "Enter your email"}&quot;&gt;
                   </p>
                 </div>
                 
@@ -1527,7 +1554,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <p className="font-mono text-sm text-gray-700">
-                    &lt;img src="image.jpg" alt="{language === "ne" ? "वर्णन" : language === "new" ? "वर्णन" : "Description"}" width="300" height="200"&gt;
+                    &lt;img src=&quot;image.jpg&quot; alt=&quot;{language === "ne" ? "वर्णन" : language === "new" ? "वर्णन" : "Description"}&quot; width=&quot;300&quot; height=&quot;200&quot;&gt;
                   </p>
                 </div>
                 
@@ -1562,9 +1589,9 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <p className="font-mono text-sm text-gray-700">
-                     &lt;video width="400" height="300" controls&gt;<br/>
-                     &nbsp;&nbsp;&lt;source src="video.mp4" type="video/mp4"&gt;<br/>
-                     &nbsp;&nbsp;&lt;source src="video.webm" type="video/webm"&gt;<br/>
+                     &lt;video width=&quot;400&quot; height=&quot;300&quot; controls&gt;<br/>
+                     &nbsp;&nbsp;&lt;source src=&quot;video.mp4&quot; type=&quot;video/mp4&quot;&gt;<br/>
+                     &nbsp;&nbsp;&lt;source src=&quot;video.webm&quot; type=&quot;video/webm&quot;&gt;<br/>
                      &nbsp;&nbsp;{language === "ne" ? "तपाईंको ब्राउजरले भिडियो ट्यागलाई समर्थन गर्दैन।" : language === "new" ? "तमाय् ब्राउजरले video ट्याग समर्थन नय्।" : "Your browser does not support the video tag."}<br/>
                      &lt;/video&gt;
                   </p>
@@ -1589,8 +1616,8 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <p className="font-mono text-sm text-gray-700">
                      &lt;audio controls&gt;<br/>
-                     &nbsp;&nbsp;&lt;source src="audio.mp3" type="audio/mpeg"&gt;<br/>
-                     &nbsp;&nbsp;&lt;source src="audio.ogg" type="audio/ogg"&gt;<br/>
+                     &nbsp;&nbsp;&lt;source src=&quot;audio.mp3&quot; type=&quot;audio/mpeg&quot;&gt;<br/>
+                     &nbsp;&nbsp;&lt;source src=&quot;audio.ogg&quot; type=&quot;audio/ogg&quot;&gt;<br/>
                      &lt;/audio&gt;
                   </p>
                 </div>
@@ -1607,7 +1634,7 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <p className="font-mono text-sm text-gray-700">
-                     &lt;iframe src="https://example.com" width="600" height="400"&gt;&lt;/iframe&gt;
+                     &lt;iframe src=&quot;https://example.com&quot; width=&quot;600&quot; height=&quot;400&quot;&gt;&lt;/iframe&gt;
                   </p>
                 </div>
                 
@@ -1781,6 +1808,20 @@ export const Quiz = ({ lessonTitle, currentStep }: { lessonTitle: string; curren
                 </div>
                 
                 <hr className="border-gray-300" />
+              </div>
+            )}
+
+            {/* We Are Goood Custom Step */}
+            {isLesson1 && currentStep === 11 && (
+              <div className="mt-8 space-y-8">
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                  <h2 className="text-xl font-semibold text-neutral-800 mb-2">We Are Goood</h2>
+                  <p className="text-neutral-700 leading-relaxed">
+                    {language === "ne"
+                      ? "नेपाल दक्षिण एसियामा अवस्थित सुन्दर स्थलरुद्ध देश हो, जसको उत्तरमा चीन र दक्षिणमा भारत छ। यस देशले आफ्नो समृद्ध संस्कृति, विविध परम्परा र प्राकृतिक सौन्दर्यका लागि ख्याति कमाएको छ। विश्वकै सर्वोच्च शिखर सगरमाथा यहीँ अवस्थित छ। राजधानी काठमाडौं हो र नेपाललाई भगवान बुद्ध जन्मभूमि भनेर पनि चिनिन्छ।"
+                      : "Nepal is a beautiful landlocked country located in South Asia, between China and India. It is known for its rich culture, diverse traditions, and natural beauty. Nepal is home to the world's highest peak, Mount Everest, and is famous for the Himalayas. The capital city is Kathmandu, and the country is also known as the birthplace of Lord Buddha."}
+                  </p>
+                </div>
               </div>
             )}
           </div>

@@ -46,29 +46,31 @@ export const Lesson2Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
   return (
     <div className="flex-1">
       <div className="h-full flex flex-col">
-        <div className="lg:min-h-[350px] lg:w-[1200px] w-full px-6 lg:px-0 flex flex-col ml-4 h-full relative">
+        <div className="lg:min-h-[350px] lg:w-[1200px] w-full px-6 lg:px-0 flex flex-col ml-12 h-full relative">
           <div className="text-left mt-4 ml-1">
             <h1 className="text-2xl lg:text-4xl font-bold text-neutral-700">
-              {currentStep === 1 ? "1. hi" : "2. hlo"}
+              {currentStep === 1 ? "HI" : "HLO"}
             </h1>
           </div>
           
           {/* Navigation Button */}
-          <div className="absolute bottom-4 right-4">
+          <div className="fixed bottom-6 right-6 z-50">
             {currentStep === 1 ? (
               <Button
-                variant="default"
-                className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3"
+                variant="secondary"
+                size="lg"
+                className="px-6"
                 asChild
               >
                 <a href="/lesson/lesson-2/hlo">
-                  Next: hlo →
+                  Next: HLO →
                 </a>
               </Button>
             ) : (
               <Button
-                variant="default"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3"
+                variant="secondary"
+                size="lg"
+                className="px-6"
                 onClick={handleFinishLesson}
               >
                 Finish Lesson 🎉

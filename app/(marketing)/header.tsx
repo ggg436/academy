@@ -1,17 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import { Loader } from "lucide-react";
-import { 
-  ClerkLoaded, 
-  ClerkLoading,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
+import { FirebaseSignIn } from "@/components/firebase-sign-in";
+import { FirebaseUserButton } from "@/components/firebase-user-button";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/language-selector";
 
 export const Header = () => {
+  const { user, loading } = useFirebaseAuth();
+  
   return (
     <header className="h-20 w-full border-b-2 border-slate-200 px-4">
       <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
@@ -23,27 +22,13 @@ export const Header = () => {
         </div>
         <div className="flex items-center gap-4">
           <LanguageSelector />
-          <ClerkLoading>
+          {loading ? (
             <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-          </ClerkLoading>
-          <ClerkLoaded>
-            <SignedIn>
-              <UserButton
-                afterSignOutUrl="/"
-              />
-            </SignedIn>
-            <SignedOut>
-              <SignInButton
-                mode="modal"
-                afterSignInUrl="/learn"
-                afterSignUpUrl="/learn"
-              >
-                <Button size="lg" variant="ghost">
-                  Login
-                </Button>
-              </SignInButton>
-            </SignedOut>
-          </ClerkLoaded>
+          ) : user ? (
+            <FirebaseUserButton />
+          ) : (
+            <FirebaseSignIn />
+          )}
         </div>
       </div>
     </header>

@@ -2,12 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import {
-  ClerkLoading,
-  ClerkLoaded,
-  UserButton,
-} from "@clerk/nextjs";
-import { Loader } from "lucide-react";
+import { FirebaseUserButton } from "@/components/firebase-user-button";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -23,10 +18,10 @@ export const Lesson4Sidebar = ({ className, courseId, lessonId }: Props) => {
   
   // Extract step number from URL like /lesson/lesson-4/html-attributes
   let currentStep = 1;
-  if (pathname.includes("/html-attributes") || pathname.includes("step-1")) {
-    currentStep = 1;
-  } else if (pathname.includes("/html-attributes-advanced") || pathname.includes("step-2")) {
+  if (pathname.includes("/html-attributes-advanced") || pathname.includes("step-2")) {
     currentStep = 2;
+  } else if (pathname.includes("/html-attributes") || pathname.includes("step-1")) {
+    currentStep = 1;
   } else {
     // Default to step 1 for any unrecognized URLs
     currentStep = 1;
@@ -37,7 +32,7 @@ export const Lesson4Sidebar = ({ className, courseId, lessonId }: Props) => {
       "flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
       className,
     )}>
-      <Link href="/learn">
+      <Link href="/learn" prefetch={false}>
         <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
           <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
           <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
@@ -52,7 +47,7 @@ export const Lesson4Sidebar = ({ className, courseId, lessonId }: Props) => {
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-4/html-attributes">
+          <Link href="/lesson/lesson-4/html-attributes" prefetch={false}>
             1. HTML Attributes
           </Link>
         </Button>
@@ -62,18 +57,13 @@ export const Lesson4Sidebar = ({ className, courseId, lessonId }: Props) => {
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-4/html-attributes-advanced">
+          <Link href="/lesson/lesson-4/html-attributes-advanced" prefetch={false}>
             2. Advanced Attributes
           </Link>
         </Button>
       </div>
       <div className="p-6">
-        <ClerkLoading>
-          <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-        </ClerkLoading>
-        <ClerkLoaded>
-          <UserButton afterSignOutUrl="/" />
-        </ClerkLoaded>
+        <FirebaseUserButton />
       </div>
     </div>
   );

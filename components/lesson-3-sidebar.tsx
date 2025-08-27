@@ -2,12 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import {
-  ClerkLoading,
-  ClerkLoaded,
-  UserButton,
-} from "@clerk/nextjs";
-import { Loader } from "lucide-react";
+import { FirebaseUserButton } from "@/components/firebase-user-button";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -37,7 +32,7 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
       "flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
       className,
     )}>
-      <Link href="/learn">
+      <Link href="/learn" prefetch={false}>
         <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
           <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
           <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
@@ -52,8 +47,8 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-3/we">
-            1. we
+          <Link href="/lesson/lesson-3/we" prefetch={false}>
+            1. WE
           </Link>
         </Button>
         {/* Step 2 */}
@@ -62,18 +57,13 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-3/gue">
-            2. gue
+          <Link href="/lesson/lesson-3/gue" prefetch={false}>
+            2. GUE
           </Link>
         </Button>
       </div>
       <div className="p-6">
-        <ClerkLoading>
-          <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-        </ClerkLoading>
-        <ClerkLoaded>
-          <UserButton afterSignOutUrl="/" />
-        </ClerkLoaded>
+        <FirebaseUserButton />
       </div>
     </div>
   );

@@ -2,12 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import {
-  ClerkLoading,
-  ClerkLoaded,
-  UserButton,
-} from "@clerk/nextjs";
-import { Loader } from "lucide-react";
+import { FirebaseUserButton } from "@/components/firebase-user-button";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -43,6 +38,8 @@ export const Lesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
     currentStep = 9;
   } else if (pathname.includes("/html-best-practices") || pathname.includes("step-10")) {
     currentStep = 10;
+  } else if (pathname.includes("/wearegoood") || pathname.includes("step-11")) {
+    currentStep = 11;
   } else {
     // Default to step 1 for any unrecognized URLs
     currentStep = 1;
@@ -162,14 +159,19 @@ export const Lesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
             Best Practices
           </Link>
         </Button>
+        {/* Step 11: Custom */}
+        <Button
+          variant={currentStep === 11 ? "sidebarOutline" : "sidebar"}
+          className="justify-start h-[40px] w-full text-sm font-medium"
+          asChild
+        >
+          <Link href="/lesson/lesson-1/wearegoood">
+            We Are Goood
+          </Link>
+        </Button>
       </div>
       <div className="p-6">
-        <ClerkLoading>
-          <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-        </ClerkLoading>
-        <ClerkLoaded>
-          <UserButton afterSignOutUrl="/" />
-        </ClerkLoaded>
+        <FirebaseUserButton />
       </div>
     </div>
   );

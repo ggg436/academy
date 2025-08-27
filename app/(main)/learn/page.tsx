@@ -19,6 +19,7 @@ const LearnPage = async () => {
     getUserSubscription(),
   ]);
 
+  // If user is not authenticated or doesn't have progress, redirect to courses
   if (!userProgress || !userProgress.activeCourseId) {
     redirect("/courses");
   }

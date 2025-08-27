@@ -1,13 +1,9 @@
+"use client";
+
 import Image from "next/image";
+import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
+import { FirebaseSignIn } from "@/components/firebase-sign-in";
 import { Loader } from "lucide-react";
-import { 
-  ClerkLoaded, 
-  ClerkLoading, 
-  SignInButton, 
-  SignUpButton, 
-  SignedIn, 
-  SignedOut
-} from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -22,40 +18,40 @@ export default function Home() {
           Learn, practice, and master new languages with Softcode.
         </h1>
         <div className="flex flex-col items-center gap-y-3 max-w-[330px] w-full">
-          <ClerkLoading>
-            <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-          </ClerkLoading>
-          <ClerkLoaded>
-            <SignedOut>
-              <SignUpButton
-                mode="modal"
-                afterSignInUrl="/learn"
-                afterSignUpUrl="/learn"
-              >
-                <Button size="lg" variant="secondary" className="w-full">
-                  Get Started
-                </Button>
-              </SignUpButton>
-              <SignInButton
-                mode="modal"
-                afterSignInUrl="/learn"
-                afterSignUpUrl="/learn"
-              >
-                <Button size="lg" variant="primaryOutline" className="w-full">
-                  I already have an account
-                </Button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <Button size="lg" variant="secondary" className="w-full" asChild>
-                <Link href="/learn">
-                  Continue Learning
-                </Link>
-              </Button>
-            </SignedIn>
-          </ClerkLoaded>
+          <FirebaseAuthWrapper />
         </div>
       </div>
     </div>
-  )
+  );
+}
+
+function FirebaseAuthWrapper() {
+  const { user, loading } = useFirebaseAuth();
+
+  if (loading) {
+    return (
+      <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
+    );
+  }
+
+  if (user) {
+    return (
+      <Button size="lg" variant="secondary" className="w-full" asChild>
+        <Link href="/learn">
+          Continue Learning
+        </Link>
+      </Button>
+    );
+  }
+
+  return (
+    <>
+      <FirebaseSignIn />
+      <Button size="lg" variant="primaryOutline" className="w-full" asChild>
+        <Link href="/learn">
+          Get Started
+        </Link>
+      </Button>
+    </>
+  );
 }

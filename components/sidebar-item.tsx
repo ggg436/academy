@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { memo } from "react";
 
 import { Button } from "@/components/ui/button";
 
@@ -12,7 +13,7 @@ type Props = {
   href: string;
 };
 
-export const SidebarItem = ({
+const SidebarItemComp = ({
   label,
   iconSrc,
   href,
@@ -26,7 +27,7 @@ export const SidebarItem = ({
       className="justify-start h-[52px]"
       asChild
     >
-      <Link href={href}>
+      <Link href={href} prefetch={false}>
         <Image
           src={iconSrc}
           alt={label}
@@ -39,3 +40,5 @@ export const SidebarItem = ({
     </Button>
   );
 };
+
+export const SidebarItem = memo(SidebarItemComp);

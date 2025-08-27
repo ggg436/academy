@@ -6,6 +6,7 @@ import { Lesson2Sidebar } from "@/components/lesson-2-sidebar";
 import { Lesson3Sidebar } from "@/components/lesson-3-sidebar";
 import { Lesson4Sidebar } from "@/components/lesson-4-sidebar";
 import { Lesson5Sidebar } from "@/components/lesson-5-sidebar";
+import { PythonLesson1Sidebar } from "@/components/python-lesson-1-sidebar";
 import { DynamicLessonSidebar } from "@/components/dynamic-lesson-sidebar";
 
 export function SidebarWrapper({ courseId }: { courseId: string }) {
@@ -16,8 +17,12 @@ export function SidebarWrapper({ courseId }: { courseId: string }) {
     lessonId = match[1];
   }
   
-  // Use different sidebar based on lesson ID
+  // Use different sidebar based on lesson ID and course
   if (lessonId === "lesson-1") {
+    // Check if this is Python course
+    if (courseId === "python") {
+      return <PythonLesson1Sidebar courseId={courseId} lessonId={lessonId} />;
+    }
     return <Lesson1Sidebar courseId={courseId} lessonId={lessonId} />;
   } else if (lessonId === "lesson-2") {
     return <Lesson2Sidebar courseId={courseId} lessonId={lessonId} />;
