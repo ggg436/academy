@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { debugFirebaseAdmin } from '@/actions/user-progress';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET() {
   try {
     const result = await debugFirebaseAdmin();

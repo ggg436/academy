@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET() {
   const envVars = {
     FB_PROJECT_ID: process.env.FB_PROJECT_ID ? 'Set' : 'Not Set',

@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET() {
   try {
     console.log("Testing current user data from cookies...");
     
-    const cookieStore = await cookies();
+    const cookieStore = cookies();
     const authCookie = cookieStore.get('firebase-auth');
     
     if (!authCookie?.value) {

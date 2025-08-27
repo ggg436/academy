@@ -19,23 +19,26 @@ if (missingVars.length > 0) {
   console.error("Firebase Admin will not work properly without these variables");
 }
 
-let app: App;
-try {
-  app = getApps().length
-    ? getApps()[0]!
-    : initializeApp({
-        credential: cert({
-          projectId: process.env.FB_PROJECT_ID,
-          clientEmail: process.env.FB_CLIENT_EMAIL,
-          privateKey: (process.env.FB_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
-        }),
-      });
-  
-  console.log("Firebase Admin initialized successfully");
-} catch (error) {
-  console.error("Failed to initialize Firebase Admin:", error);
-  throw error;
-}
+const app: App = (() => {
+  try {
+    const existingApp = getApps().length ? getApps()[0]! : undefined;
+    if (existingApp) return existingApp;
+
+    const initializedApp = initializeApp({
+      credential: cert({
+        projectId: process.env.FB_PROJECT_ID,
+        clientEmail: process.env.FB_CLIENT_EMAIL,
+        privateKey: (process.env.FB_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
+      }),
+    });
+
+    console.log("Firebase Admin initialized successfully");
+    return initializedApp;
+  } catch (error) {
+    console.error("Failed to initialize Firebase Admin:", error);
+    throw error;
+  }
+})();
 
 export const adminDb = getFirestore(app);
 export const adminAuth = getAuth(app);
