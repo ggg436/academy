@@ -1,4 +1,4 @@
-import { cert, getApps, initializeApp } from "firebase-admin/app";
+import { cert, getApps, initializeApp, App } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import { getAuth } from "firebase-admin/auth";
 
@@ -19,7 +19,7 @@ if (missingVars.length > 0) {
   console.error("Firebase Admin will not work properly without these variables");
 }
 
-let app;
+let app: App;
 try {
   app = getApps().length
     ? getApps()[0]!
