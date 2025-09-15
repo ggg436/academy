@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { FeedWrapper } from "@/components/feed-wrapper";
@@ -7,13 +7,59 @@ import { StickyWrapper } from "@/components/sticky-wrapper";
 import { getUserProgress, getAllRegisteredUsersWithProgress } from "@/actions/user-progress";
 import { getUserSubscription } from "@/actions/user-subscription";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Promo } from "@/components/promo";
 import { Quests } from "@/components/quests";
+import { UpdateGmailPhotoButton } from "@/components/update-gmail-photo-button";
+import { UpdateAllGmailPhotosButton } from "@/components/update-all-gmail-photos-button";
+import { UserAvatar } from "@/components/user-avatar";
 
 // Force dynamic rendering to ensure fresh data
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+// Generate random users with Indian and Nepali-like names
+const generateRandomUsers = () => {
+  const indianNames = [
+    "Arjun Sharma", "Priya Patel", "Rajesh Kumar", "Sneha Gupta", "Vikram Singh",
+    "Kavya Reddy", "Amit Kumar", "Deepika Joshi", "Rohit Verma", "Ananya Iyer",
+    "Suresh Nair", "Meera Desai", "Kiran Shah", "Ravi Agarwal", "Pooja Mehta",
+    "Nikhil Jain", "Shruti Rao", "Manoj Tiwari", "Ritu Choudhary", "Sandeep Yadav",
+    "Neha Agarwal", "Vishal Pandey", "Kritika Sharma", "Abhishek Singh", "Divya Mishra",
+    "Rahul Gupta", "Swati Jain", "Pankaj Kumar", "Anjali Verma", "Siddharth Patel",
+    "Isha Reddy", "Gaurav Sharma", "Riya Singh", "Harsh Kumar", "Tanvi Agarwal"
+  ];
+
+  const nepaliNames = [
+    "Bikram Thapa", "Sita Gurung", "Ram Bahadur", "Gita Magar", "Krishna Tamang",
+    "Laxmi Rai", "Hari Poudel", "Maya Limbu", "Suresh Shrestha", "Puja Karki",
+    "Nabin Bista", "Rita Maharjan", "Dipak Thakuri", "Sunita Basnet", "Rajendra Koirala",
+    "Bina Acharya", "Mohan Ghimire", "Sarita Dhakal", "Kumar Shrestha", "Rekha Pradhan",
+    "Bishnu Adhikari", "Sangita Timilsina", "Prakash Bhattarai", "Usha Nepal", "Gopal Pokhrel",
+    "Indira Kafle", "Keshav Joshi", "Radha Paudel", "Narayan Subedi", "Kamala Bhandari",
+    "Ramesh K.C.", "Sushila Gurung", "Bharat Thapa", "Laxmi Magar", "Dinesh Rai"
+  ];
+
+  const allNames = [...indianNames, ...nepaliNames];
+  
+  // Generate 35 random users
+  const users = [];
+  for (let i = 0; i < 35; i++) {
+    const randomName = allNames[Math.floor(Math.random() * allNames.length)];
+    const randomPoints = Math.floor(Math.random() * 5000) + 100; // Points between 100-5100
+    
+    users.push({
+      userId: user_,
+      userName: randomName,
+      userImageSrc: '/mascot.svg', // Default avatar
+      points: randomPoints,
+      hearts: 5,
+      activeCourseId: 'spanish'
+    });
+  }
+  
+  // Sort by points in descending order
+  return users.sort((a, b) => b.points - a.points);
+};
 
 const LearderboardPage = async () => {
   const userProgressData = getUserProgress();
@@ -44,6 +90,11 @@ const LearderboardPage = async () => {
     }
     
     leaderboard = [];
+  }
+
+  // Use random users if no real users are available
+  if (leaderboard.length === 0) {
+    leaderboard = generateRandomUsers();
   }
 
   const hasCourse = !!(userProgress && userProgress.activeCourseId);
@@ -97,15 +148,15 @@ const LearderboardPage = async () => {
             See where you stand among other learners in the community.
           </p>
           
-          {/* Debug information */}
-          {leaderboardError ? (
-            <div className="text-center text-red-600 py-4 mb-4 bg-red-50 rounded-lg border border-red-200">
-              <p className="mb-2 font-semibold">Firebase Error: Cannot Load Real User Data</p>
-              <p className="text-sm mb-3">{leaderboardError}</p>
+          {/* Show random users message */}
+          {leaderboardError && (
+            <div className="text-center text-blue-600 py-4 mb-4 bg-blue-50 rounded-lg border border-blue-200">
+              <p className="mb-2 font-semibold"> Showing Demo Leaderboard</p>
+              <p className="text-sm mb-3">Displaying 35 random users with Indian and Nepali names for demonstration</p>
               <div className="flex gap-2 justify-center">
                 <a 
                   href="/debug" 
-                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm"
                 >
                   Debug Firebase Configuration
                 </a>
@@ -113,72 +164,32 @@ const LearderboardPage = async () => {
                   href="/leaderboard" 
                   className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm"
                 >
-                  Retry
+                  Retry Real Data
                 </a>
               </div>
             </div>
-          ) : leaderboard.length === 0 ? (
-            <div className="text-center text-muted-foreground py-4 mb-4">
-              <p className="mb-2">No users found. This might be a Firebase configuration issue.</p>
-              <div className="flex gap-2 justify-center">
-                <a 
-                  href="/debug" 
-                  className="text-blue-600 hover:text-blue-800 underline text-sm"
-                >
-                  Debug Firebase Configuration
-                </a>
-                <span className="text-gray-400">|</span>
-                <a 
-                  href="/leaderboard" 
-                  className="text-green-600 hover:text-green-800 underline text-sm"
-                >
-                  Refresh Leaderboard
-                </a>
-              </div>
-            </div>
-          ) : null}
+          )}
           
           <Separator className="mb-4 h-0.5 rounded-full" />
           
-          {leaderboard.length === 0 ? (
-            <div className="text-center text-muted-foreground py-8">
-              <p className="mb-2">No users found. This might be a Firebase configuration issue.</p>
-              <p className="text-sm mt-2 mb-4">Check the console for debugging information.</p>
-              <a 
-                href="/debug" 
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm"
-              >
-                Debug Firebase Configuration
-              </a>
+          {leaderboard.map((userProgress: any, index: number) => (
+            <div 
+              key={userProgress.userId}
+              className="flex items-center w-full p-2 px-4 rounded-xl hover:bg-gray-200/50"
+            >
+              <p className="font-bold text-lime-700 mr-4">{index + 1}</p>
+              <UserAvatar 
+                userName={userProgress.userName}
+                userImageSrc={userProgress.userImageSrc}
+              />
+              <p className="font-bold text-neutral-800 flex-1">
+                {userProgress.userName}
+              </p>
+              <p className="text-muted-foreground">
+                {userProgress.points} XP
+              </p>
             </div>
-          ) : (
-            leaderboard.map((userProgress: any, index: number) => (
-              <div 
-                key={userProgress.userId}
-                className="flex items-center w-full p-2 px-4 rounded-xl hover:bg-gray-200/50"
-              >
-                <p className="font-bold text-lime-700 mr-4">{index + 1}</p>
-                <Avatar
-                  className="border bg-green-500 h-12 w-12 ml-3 mr-6"
-                >
-                  <AvatarImage
-                    className="object-cover"
-                    src={userProgress.userImageSrc}
-                    alt={userProgress.userName}
-                  />
-                  <AvatarFallback className="bg-green-100 text-green-600 text-xs font-semibold">
-                    {userProgress.userName ? userProgress.userName.charAt(0).toUpperCase() : 'U'}
-                  </AvatarFallback>
-                </Avatar>
-                <p className="font-bold text-neutral-800 flex-1">
-                  {userProgress.userName}
-                </p>
-                <p className="text-muted-foreground">
-                  {userProgress.points} XP
-                </p>
-              </div>
-            ))
-          )}
+          ))}
         </div>
       </FeedWrapper>
     </div>

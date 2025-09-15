@@ -79,4 +79,63 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Enhanced text selection styles */
+::selection {
+  @apply bg-green-200 text-green-900;
+}
+
+::-moz-selection {
+  @apply bg-green-200 text-green-900;
+}
+
+/* Make text more selectable */
+p, span, div, h1, h2, h3, h4, h5, h6, li, td, th {
+  @apply select-text;
+}
+
+/* Disable text selection for buttons and interactive elements */
+button, input, textarea, select, a[href] {
+  @apply select-none;
+}
+
+/* Flash card flip animations */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Card flip container */
+.flip-card {
+  background-color: transparent;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
 }

@@ -26,8 +26,17 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
   // Generate step names based on lesson
   const getStepNames = () => {
     if (lessonId === "lesson-1") {
-      return ["html-introduction", "html-element", "web-browsers", "html-page-structure", "html-history", "html-forms", "html-tables", "html-lists", "html-media", "html-best-practices"];
+      if (courseId === "python") {
+        return ["python-introduction", "python-basics"];
+      } else if (courseId === "c") {
+        return ["c-tutorial", "examples-in-each-chapter", "c-exercises", "c-quiz", "c-reference"];
+      } else {
+        return ["html-introduction", "html-element", "web-browsers", "html-page-structure", "html-history", "html-forms", "html-tables", "html-lists", "html-media", "html-best-practices"];
+      }
     } else if (lessonId === "lesson-2") {
+      if (courseId === "c") {
+        return ["pointers-tutorial", "examples-in-each-chapter", "pointers-exercises", "pointers-quiz", "pointers-reference"];
+      }
       return ["hi", "hlo"];
     } else if (lessonId === "lesson-3") {
       return ["we", "gue"];
@@ -56,11 +65,17 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
   // Generate step labels
   const getStepLabels = () => {
     if (lessonId === "lesson-1") {
+      if (courseId === "c") {
+        return ["C Tutorial", "Examples in Each Chapter", "C Exercises", "C Quiz", "C Reference"];
+      }
       return ["HTML Introduction", "HTML Element", "Web Browsers", "HTML Page Structure", "HTML History", "HTML Forms", "HTML Tables", "HTML Lists", "HTML Media", "Best Practices"];
     } else if (lessonId === "lesson-2") {
-      return ["1. hi", "2. hlo"];
+      if (courseId === "c") {
+        return ["Pointers Tutorial", "Examples in Each Chapter", "Pointers Exercises", "Pointers Quiz", "Pointers Reference"];
+      }
+      return ["hi", "hlo"];
     } else if (lessonId === "lesson-3") {
-      return ["1. we", "2. gue"];
+      return ["we", "gue"];
     } else if (lessonId === "lesson-4") {
       return ["HTML Attributes", "Advanced Attributes"];
     } else if (lessonId === "lesson-5") {
@@ -76,7 +91,7 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
 
   return (
     <div className={cn(
-      "flex h-full lg:w-[200px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
+      "hidden lg:flex h-full lg:w-[200px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
       className,
     )}>
       <Link href="/learn">

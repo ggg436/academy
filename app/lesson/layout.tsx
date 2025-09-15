@@ -13,7 +13,7 @@ const LessonLayout = async ({ children }: Props) => {
   return ( 
     <div className="flex h-full">
       <SidebarWrapper courseId={courseId} />
-      <div className="flex flex-col h-full w-full lg:ml-[256px]">
+      <div className="flex flex-col h-full w-full lg:ml-[280px]">
         <MobileHeader />
         {children}
       </div>

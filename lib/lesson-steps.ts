@@ -1,7 +1,7 @@
 export function getTotalStepsForLesson(lessonId: string): number {
   // Known step counts for current curriculum
   if (lessonId === "lesson-1") return 10;
-  if (lessonId === "lesson-2") return 2;
+  if (lessonId === "lesson-2") return 5;
   if (lessonId === "lesson-3") return 2;
   if (lessonId === "lesson-4") return 2;
   if (lessonId === "lesson-5") return 2;
@@ -28,11 +28,22 @@ export function getCurrentLessonAndStepFromPath(pathname: string): { lessonId: s
         "html-lists": 8,
         "html-media": 9,
         "html-best-practices": 10,
+        "python-introduction": 1,
+        "python-basics": 2,
+        "c-introduction": 1,
+        "c-fundamentals": 2,
       };
       return { lessonId, step: map[stepId] || 1 };
     }
     if (lessonId === "lesson-2") {
-      const map: Record<string, number> = { hi: 1, hlo: 2 };
+      const map: Record<string, number> = {
+        hi: 1, hlo: 2,
+        "pointers-tutorial": 1,
+        "examples-in-each-chapter": 2,
+        "pointers-exercises": 3,
+        "pointers-quiz": 4,
+        "pointers-reference": 5,
+      };
       return { lessonId, step: map[stepId] || 1 };
     }
     if (lessonId === "lesson-3") {

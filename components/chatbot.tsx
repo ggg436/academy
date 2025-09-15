@@ -20,24 +20,58 @@ export default function Chatbot() {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, open]);
 
-  const send = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const send = async () => {
     const text = input.trim();
     if (!text) return;
+    
     const userMsg: ChatMessage = { id: String(Date.now()), role: "user", text };
     setMessages((m) => [...m, userMsg]);
     setInput("");
+    setIsLoading(true);
 
-    // Mock bot reply. Replace with API call later.
-    setTimeout(() => {
+    try {
+      const response = await fetch('/api/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: text }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to get response');
+      }
+
+      const data = await response.json();
+      
+      if (data.error) {
+        console.error('API Error:', data.error, data.details);
+        throw new Error(data.error);
+      }
+      
       setMessages((m) => [
         ...m,
         {
           id: String(Date.now() + 1),
           role: "bot",
-          text: "Thanks! I noted your message. In production, I'll call an AI API and reply contextually.",
+          text: data.response || "I'm sorry, I couldn't process your request. Please try again.",
         },
       ]);
-    }, 700);
+    } catch (error) {
+      console.error('Chatbot error:', error);
+      setMessages((m) => [
+        ...m,
+        {
+          id: String(Date.now() + 1),
+          role: "bot",
+          text: "I'm sorry, I'm having trouble connecting right now. Please try again later.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -83,6 +117,20 @@ export default function Chatbot() {
                 </div>
               </div>
             ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-white text-neutral-800 border max-w-[80%] rounded-2xl px-3 py-2 text-sm shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                    <span className="text-xs text-gray-500">AI is thinking...</span>
+                  </div>
+                </div>
+              </div>
+            )}
             <div ref={endRef} />
           </div>
 
@@ -91,8 +139,9 @@ export default function Chatbot() {
             {["Course help", "Explain code", "Fix an error"].map((q) => (
               <button
                 key={q}
-                onClick={() => setInput(q)}
-                className="text-xs rounded-full border px-3 py-1 hover:bg-gray-100"
+                onClick={() => !isLoading && setInput(q)}
+                disabled={isLoading}
+                className="text-xs rounded-full border px-3 py-1 hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {q}
               </button>
@@ -104,15 +153,17 @@ export default function Chatbot() {
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && send()}
+              onKeyDown={(e) => e.key === "Enter" && !isLoading && send()}
+              disabled={isLoading}
               placeholder="Type your message..."
-              className="flex-1 rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600"
+              className="flex-1 rounded-md border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-600 disabled:bg-gray-100"
             />
             <button
               onClick={send}
-              className="rounded-md bg-green-600 hover:bg-green-700 text-white px-3 py-2 text-sm font-semibold"
+              disabled={isLoading}
+              className="rounded-md bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white px-3 py-2 text-sm font-semibold"
             >
-              Send
+              {isLoading ? 'Sending...' : 'Send'}
             </button>
           </div>
         </div>

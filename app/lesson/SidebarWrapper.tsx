@@ -7,6 +7,7 @@ import { Lesson3Sidebar } from "@/components/lesson-3-sidebar";
 import { Lesson4Sidebar } from "@/components/lesson-4-sidebar";
 import { Lesson5Sidebar } from "@/components/lesson-5-sidebar";
 import { PythonLesson1Sidebar } from "@/components/python-lesson-1-sidebar";
+import { CLesson1Sidebar } from "@/components/c-lesson-1-sidebar";
 import { DynamicLessonSidebar } from "@/components/dynamic-lesson-sidebar";
 
 export function SidebarWrapper({ courseId }: { courseId: string }) {
@@ -23,8 +24,16 @@ export function SidebarWrapper({ courseId }: { courseId: string }) {
     if (courseId === "python") {
       return <PythonLesson1Sidebar courseId={courseId} lessonId={lessonId} />;
     }
+    // Check if this is C course
+    if (courseId === "c") {
+      return <CLesson1Sidebar courseId={courseId} lessonId={lessonId} />;
+    }
     return <Lesson1Sidebar courseId={courseId} lessonId={lessonId} />;
   } else if (lessonId === "lesson-2") {
+    if (courseId === "c") {
+      const { CLesson2Sidebar } = require("@/components/c-lesson-2-sidebar");
+      return <CLesson2Sidebar courseId={courseId} lessonId={lessonId} />;
+    }
     return <Lesson2Sidebar courseId={courseId} lessonId={lessonId} />;
   } else if (lessonId === "lesson-3") {
     return <Lesson3Sidebar courseId={courseId} lessonId={lessonId} />;

@@ -6,6 +6,7 @@ import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/language-context";
 
 import "react-circular-progressbar/dist/styles.css";
 
@@ -17,6 +18,7 @@ type Props = {
   current?: boolean;
   percentage: number;
   stepName: string;
+  completed?: boolean;
 };
 
 export const LessonButton = ({
@@ -26,8 +28,12 @@ export const LessonButton = ({
   locked,
   current,
   percentage,
-  stepName
+  stepName,
+  completed
 }: Props) => {
+  const { language } = useLanguage();
+  const startText = language === "ne" ? "सुरु" : language === "mai" ? "शुरू" : language === "new" ? "सुरु" : "Start";
+
   const cycleLength = 8;
   const cycleIndex = index % cycleLength;
 
@@ -47,7 +53,7 @@ export const LessonButton = ({
 
   const isFirst = index === 0;
   const isLast = index === totalCount;
-  const isCompleted = false; // Force all lessons to show stars
+  const isCompleted = completed || false; // Use the passed completed prop
 
   const Icon = isCompleted ? Check : isLast ? Crown : Star;
 
@@ -69,7 +75,7 @@ export const LessonButton = ({
         {current ? (
           <div className="h-[102px] w-[102px] relative">
             <div className="absolute -top-6 left-2.5 px-3 py-2.5 border-2 font-bold uppercase text-green-500 bg-white rounded-xl animate-bounce tracking-wide z-10">
-              Start
+              {startText}
               <div
                 className="absolute left-1/2 -bottom-2 w-0 h-0 border-x-8 border-x-transparent border-t-8 transform -translate-x-1/2"
               />

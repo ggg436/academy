@@ -2,17 +2,29 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CongratulationPage } from "@/components/congratulation-page";
+import { saveLessonCompleteServer } from "@/actions/progress";
 
 export const Lesson5Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
+  const [isCompleting, setIsCompleting] = useState(false);
 
-  const handleFinishLesson = () => {
-    setShowCongratulations(true);
+  const handleFinishLesson = async () => {
+    try {
+      setIsCompleting(true);
+      // Mark lesson as completed in the database
+      await saveLessonCompleteServer("html", "lesson-5", 25);
+      setShowCongratulations(true);
+    } catch (error) {
+      console.error("Error completing lesson:", error);
+      alert("Failed to complete lesson. Please try again.");
+    } finally {
+      setIsCompleting(false);
+    }
   };
 
   const handleContinue = () => {
     setShowCongratulations(false);
-    // Navigate to learn page
+    // Navigate back to learn page since this is the last lesson
     window.location.href = "/learn";
   };
 
@@ -49,7 +61,7 @@ export const Lesson5Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
         <div className="lg:min-h-[350px] lg:w-[1200px] w-full px-6 lg:px-0 flex flex-col ml-12 h-full relative">
           <div className="text-left mt-4 ml-1">
             <h1 className="text-2xl lg:text-4xl font-bold text-neutral-700">
-              {currentStep === 1 ? "1. HTML Structure" : "2. Advanced Structure"}
+              {currentStep === 1 ? "HTML Structure" : "Advanced Structure"}
             </h1>
           </div>
           
@@ -72,8 +84,9 @@ export const Lesson5Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
                 size="lg"
                 className="px-6"
                 onClick={handleFinishLesson}
+                disabled={isCompleting}
               >
-                Finish Lesson 🎉
+                {isCompleting ? "Completing..." : "Finish Lesson 🎉"}
               </Button>
             )}
           </div>

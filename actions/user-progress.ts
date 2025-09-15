@@ -353,7 +353,7 @@ export const getAllRegisteredUsersWithProgress = async () => {
 		let list: any;
 		try {
 			list = await adminAuth.listUsers(1000);
-			console.log(`✅ Successfully fetched ${list.users.length} users from Firebase Auth`);
+			console.log(`✅ Successfully fetched ${list.users.length} total users from Firebase Auth`);
 			
 			if (list.users.length === 0) {
 				console.warn("⚠️ No users found in Firebase Auth - this might indicate a configuration issue");
@@ -377,14 +377,35 @@ export const getAllRegisteredUsersWithProgress = async () => {
 			throw new Error(`Failed to list users: ${listError instanceof Error ? listError.message : 'Unknown error'}`);
 		}
 		
-		// Always use real Firebase user data - never fall back to generic data
-		const users = list.users.map((u: any) => ({
-			userId: u.uid,
-			userName: u.displayName || u.email || 'User',
-			userImageSrc: u.photoURL || '/mascot.svg',
-		}));
+		// Filter out anonymous users and only include users with email/password or Google sign-in
+		const users = list.users
+			.filter((u: any) => {
+				// Check if user has an email (required for non-anonymous users)
+				const hasEmail = u.email && u.email.trim() !== '';
+				
+				// Check if user has provider data (Google, email/password, etc.)
+				const hasProviders = u.providerData && u.providerData.length > 0;
+				
+				// Check if user is not anonymous (anonymous users typically have no email and no providers)
+				const isNotAnonymous = hasEmail && hasProviders;
+				
+				console.log(`User ${u.uid} filter check:`, {
+					email: u.email,
+					hasEmail,
+					providers: u.providerData?.map((p: any) => p.providerId) || [],
+					hasProviders,
+					isNotAnonymous
+				});
+				
+				return isNotAnonymous;
+			})
+			.map((u: any) => ({
+				userId: u.uid,
+				userName: u.displayName || u.email || 'User',
+				userImageSrc: u.photoURL || '/mascot.svg',
+			}));
 
-		console.log("🔄 Processed users with real data:", users.slice(0, 3));
+		console.log(`🔄 Processed ${users.length} non-anonymous users with real data:`, users.slice(0, 3));
 
 		// Fetch all progress documents and index by userId
 		console.log("🔄 Fetching user progress documents...");
@@ -413,7 +434,7 @@ export const getAllRegisteredUsersWithProgress = async () => {
 		// Sort by points desc
 		merged.sort((a: any, b: any) => (b.points || 0) - (a.points || 0));
 		
-		console.log("✅ Successfully fetched real user data for leaderboard:", merged.length, "users");
+		console.log(`✅ Successfully fetched ${merged.length} registered users for leaderboard (filtered out anonymous users)`);
 		console.log("📊 Final merged data sample:", merged.slice(0, 3));
 		console.log("=== FIREBASE ADMIN USER FETCH COMPLETED ===");
 		return merged;
@@ -429,5 +450,73 @@ export const getAllRegisteredUsersWithProgress = async () => {
 		// If we can't get real Firebase users, show an error instead of generic data
 		console.error("💥 CRITICAL: Cannot fetch real Firebase users. Leaderboard will show error.");
 		throw new Error(`Failed to fetch real user data: ${error instanceof Error ? error.message : "Unknown error"}`);
+	}
+};
+
+export const updateAllUsersGmailPhotos = async () => {
+	if (typeof window !== 'undefined') {
+		return { error: "This function can only run on the server" };
+	}
+
+	try {
+		console.log("=== STARTING BULK GMAIL PHOTO UPDATE ===");
+		
+		// Get all users from Firebase Auth and filter out anonymous users
+		const list = await adminAuth.listUsers(1000);
+		const registeredUsers = list.users.filter((user: any) => {
+			const hasEmail = user.email && user.email.trim() !== '';
+			const hasProviders = user.providerData && user.providerData.length > 0;
+			return hasEmail && hasProviders;
+		});
+		console.log(`Found ${registeredUsers.length} registered users to update (filtered out ${list.users.length - registeredUsers.length} anonymous users)`);
+		
+		let updatedCount = 0;
+		let skippedCount = 0;
+		
+		for (const user of registeredUsers) {
+			try {
+				const userName = user.displayName || user.email || 'User';
+				const userImageSrc = user.photoURL || '/mascot.svg';
+				
+				// Update user progress document
+				await adminDb.collection('userProgress').doc(user.uid).update({
+					userName,
+					userImageSrc,
+					updatedAt: Date.now(),
+				});
+				
+				// Also update server memory store
+				if (userProgressServerStore[user.uid]) {
+					userProgressServerStore[user.uid].userName = userName;
+					userProgressServerStore[user.uid].userImageSrc = userImageSrc;
+				}
+				
+				console.log(`✅ Updated user ${user.uid}: ${userName} with photo: ${userImageSrc}`);
+				updatedCount++;
+				
+			} catch (userError) {
+				console.error(`❌ Failed to update user ${user.uid}:`, userError);
+				skippedCount++;
+			}
+		}
+		
+		console.log(`=== BULK UPDATE COMPLETED ===`);
+		console.log(`✅ Successfully updated: ${updatedCount} users`);
+		console.log(`❌ Skipped: ${skippedCount} users`);
+		
+		return {
+			success: true,
+			totalUsers: list.users.length,
+			registeredUsers: registeredUsers.length,
+			updatedCount,
+			skippedCount,
+			message: `Updated ${updatedCount} registered users with Gmail photos`
+		};
+		
+	} catch (error) {
+		console.error("Bulk update error:", error);
+		return {
+			error: error instanceof Error ? error.message : "Unknown error"
+		};
 	}
 };

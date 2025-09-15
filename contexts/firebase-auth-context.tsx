@@ -1,12 +1,22 @@
-"use client";
+﻿"use client";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { getFirebaseAuth, signInWithGoogle, signOutUser } from "@/lib/firebase-client";
+import { 
+  getFirebaseAuth, 
+  signInWithGoogle, 
+  signInWithEmail,
+  signUpWithEmail,
+  signInAnonymouslyUser,
+  signOutUser 
+} from "@/lib/firebase-client";
 
 interface FirebaseAuthContextType {
   user: User | null;
   loading: boolean;
-  signIn: () => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithEmail: (email: string, password: string) => Promise<void>;
+  signUpWithEmail: (email: string, password: string, displayName?: string) => Promise<void>;
+  signInAnonymously: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -43,7 +53,8 @@ export function FirebaseAuthProvider({ children }: { children: ReactNode }) {
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
-          photoURL: user.photoURL
+          photoURL: user.photoURL,
+          isAnonymous: user.isAnonymous
         })}; path=/; max-age=3600; secure; samesite=strict`;
       } else {
         document.cookie = 'firebase-auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
@@ -53,15 +64,43 @@ export function FirebaseAuthProvider({ children }: { children: ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  const signIn = async () => {
+  const handleSignInWithGoogle = async () => {
     try {
       await signInWithGoogle();
     } catch (error) {
-      console.error("Sign-in error:", error);
+      console.error("Google sign-in error:", error);
+      throw error;
     }
   };
 
-  const signOut = async () => {
+  const handleSignInWithEmail = async (email: string, password: string) => {
+    try {
+      await signInWithEmail(email, password);
+    } catch (error) {
+      console.error("Email sign-in error:", error);
+      throw error;
+    }
+  };
+
+  const handleSignUpWithEmail = async (email: string, password: string, displayName?: string) => {
+    try {
+      await signUpWithEmail(email, password, displayName);
+    } catch (error) {
+      console.error("Email sign-up error:", error);
+      throw error;
+    }
+  };
+
+  const handleSignInAnonymously = async () => {
+    try {
+      await signInAnonymouslyUser();
+    } catch (error) {
+      console.error("Anonymous sign-in error:", error);
+      throw error;
+    }
+  };
+
+  const handleSignOut = async () => {
     try {
       await signOutUser();
     } catch (error) {
@@ -72,8 +111,11 @@ export function FirebaseAuthProvider({ children }: { children: ReactNode }) {
   const value = {
     user,
     loading: loading || !initialized,
-    signIn,
-    signOut,
+    signInWithGoogle: handleSignInWithGoogle,
+    signInWithEmail: handleSignInWithEmail,
+    signUpWithEmail: handleSignUpWithEmail,
+    signInAnonymously: handleSignInAnonymously,
+    signOut: handleSignOut,
   };
 
   return (
@@ -89,4 +131,4 @@ export function useFirebaseAuth() {
     throw new Error("useFirebaseAuth must be used within a FirebaseAuthProvider");
   }
   return context;
-} 
+}

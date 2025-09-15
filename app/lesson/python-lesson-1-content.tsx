@@ -1,21 +1,33 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CongratulationPage } from "@/components/congratulation-page";
 import { useLanguage } from "@/contexts/language-context";
+import { saveLessonCompleteServer } from "@/actions/progress";
 
 export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
+  const [isCompleting, setIsCompleting] = useState(false);
   const { language } = useLanguage();
 
-  const handleFinishLesson = () => {
-    setShowCongratulations(true);
+  const handleFinishLesson = async () => {
+    try {
+      setIsCompleting(true);
+      // Mark lesson as completed in the database
+      await saveLessonCompleteServer("python", "lesson-1", 25);
+      setShowCongratulations(true);
+    } catch (error) {
+      console.error("Error completing lesson:", error);
+      alert("Failed to complete lesson. Please try again.");
+    } finally {
+      setIsCompleting(false);
+    }
   };
 
   const handleContinue = () => {
     setShowCongratulations(false);
-    // Navigate to learn page
-    window.location.href = "/learn";
+    // Navigate to lesson 2 instead of learn page
+    window.location.href = "/lesson/lesson-2";
   };
 
   const handlePracticeAgain = () => {
@@ -282,8 +294,9 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
                 size="lg"
                 className="px-6"
                 onClick={handleFinishLesson}
+                disabled={isCompleting}
               >
-                Finish Lesson 🎉
+                {isCompleting ? "Completing..." : "Finish Lesson 🎉"}
               </Button>
             )}
           </div>

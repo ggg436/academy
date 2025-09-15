@@ -1,24 +1,26 @@
-import { Sidebar } from "@/components/sidebar";
 import { MobileHeader } from "@/components/mobile-header";
+import { Sidebar } from "@/components/sidebar";
 
 type Props = {
-  children: React.ReactNode;
+	children: React.ReactNode;
 };
 
 const MainLayout = ({
-  children,
+	children,
 }: Props) => {
-  return (
-    <>
-      <MobileHeader />
-      <Sidebar className="hidden lg:flex" />
-      <main className="lg:pl-[256px] h-full pt-[50px] lg:pt-0">
-        <div className="max-w-[1280px] mx-auto pt-6 h-full">
-          {children}
-        </div>
-      </main>
-    </>
-  );
+	return (
+		<div className="flex h-full">
+			<Sidebar />
+			<div className="flex flex-col h-full w-full lg:ml-[256px]">
+				<MobileHeader />
+				<main className="h-full pt-[50px] lg:pt-0">
+					<div className="max-w-[1280px] mx-auto pt-6 h-full px-6">
+						{children}
+					</div>
+				</main>
+			</div>
+		</div>
+	);
 };
- 
+
 export default MainLayout;

@@ -61,6 +61,27 @@ const ShopPage = async () => {
           <p className="text-muted-foreground text-center text-lg mb-6">
             Spend your points on cool stuff.
           </p>
+          
+          {/* Demo text for text selection feature */}
+          <div className="w-full max-w-2xl mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+            <h3 className="text-lg font-semibold text-blue-800 mb-3">
+              💡 Try the Text Selection Feature!
+            </h3>
+            <p className="text-blue-700 mb-3">
+              Select any text below to get an AI-powered explanation powered by Gemini AI:
+            </p>
+            <div className="space-y-2 text-sm text-blue-600">
+              <p>• <span className="font-medium">JavaScript</span> - A programming language for web development</p>
+              <p>• <span className="font-medium">React</span> - A JavaScript library for building user interfaces</p>
+              <p>• <span className="font-medium">API</span> - Application Programming Interface for data exchange</p>
+              <p>• <span className="font-medium">CSS</span> - Cascading Style Sheets for web styling</p>
+              <p>• <span className="font-medium">Database</span> - Organized collection of structured information</p>
+            </div>
+            <p className="text-xs text-blue-500 mt-3">
+              Simply select any word or phrase above to see an AI explanation!
+            </p>
+          </div>
+          
           <Items
             hearts={userProgress.hearts}
             points={userProgress.points}

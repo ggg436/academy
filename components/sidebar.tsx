@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FirebaseUserButton } from "@/components/firebase-user-button";
+import { LanguageSelector } from "@/components/language-selector";
 
 import { cn } from "@/lib/utils";
 
@@ -14,7 +15,7 @@ type Props = {
 const SidebarComp = ({ className }: Props) => {
   return (
     <div className={cn(
-      "flex h-full lg:w-[256px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
+      "hidden lg:flex h-full lg:w-[256px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
       className,
     )}>
       <Link href="/learn" prefetch={false}>
@@ -47,6 +48,11 @@ const SidebarComp = ({ className }: Props) => {
           iconSrc="/shop.svg"
         />
         <SidebarItem 
+          label="Shop Redeem" 
+          href="/shop-redeem"
+          iconSrc="/shop.svg"
+        />
+        <SidebarItem 
           label="quizes" 
           href="/quizes"
           iconSrc="/quests.svg"
@@ -72,7 +78,10 @@ const SidebarComp = ({ className }: Props) => {
           iconSrc="/learn.svg"
         />
       </div>
-      <div className="p-4">
+      <div className="px-4 pb-2">
+        <LanguageSelector />
+      </div>
+      <div className="p-4 pt-2 mb-6">
         <FirebaseUserButton />
       </div>
     </div>

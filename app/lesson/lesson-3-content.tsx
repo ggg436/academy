@@ -2,18 +2,30 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CongratulationPage } from "@/components/congratulation-page";
+import { saveLessonCompleteServer } from "@/actions/progress";
 
 export const Lesson3Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
+  const [isCompleting, setIsCompleting] = useState(false);
 
-  const handleFinishLesson = () => {
-    setShowCongratulations(true);
+  const handleFinishLesson = async () => {
+    try {
+      setIsCompleting(true);
+      // Mark lesson as completed in the database
+      await saveLessonCompleteServer("html", "lesson-3", 25);
+      setShowCongratulations(true);
+    } catch (error) {
+      console.error("Error completing lesson:", error);
+      alert("Failed to complete lesson. Please try again.");
+    } finally {
+      setIsCompleting(false);
+    }
   };
 
   const handleContinue = () => {
     setShowCongratulations(false);
-    // Navigate to learn page
-    window.location.href = "/learn";
+    // Navigate to lesson 4
+    window.location.href = "/lesson/lesson-4";
   };
 
   const handlePracticeAgain = () => {
@@ -72,8 +84,9 @@ export const Lesson3Content = ({ lessonTitle, currentStep }: { lessonTitle: stri
                 size="lg"
                 className="px-6"
                 onClick={handleFinishLesson}
+                disabled={isCompleting}
               >
-                Finish Lesson 🎉
+                {isCompleting ? "Completing..." : "Finish Lesson 🎉"}
               </Button>
             )}
           </div>

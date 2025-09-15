@@ -1,44 +1,76 @@
 export default function GamesPage() {
   const games = [
     {
-      id: "html",
-      title: "HTML",
-      description: "Practice games for tags, elements, and structure.",
-      href: "/learn",
-      icon: "/html.svg",
-      accent: "from-orange-500 to-rose-500",
+      id: "typing-race",
+      title: "Typing Race",
+      description: "Improve typing speed with real code snippets and accuracy tracking.",
+      href: "/games/typing-race",
+      icon: "/react.svg",
+      accent: "from-blue-500 to-purple-500",
     },
     {
-      id: "css",
-      title: "CSS",
-      description: "Master selectors, layout, and responsive design.",
-      href: "/learn",
-      icon: "/css.svg",
-      accent: "from-sky-500 to-indigo-500",
+      id: "flash-cards",
+      title: "Flash Cards",
+      description: "Flip and recall key concepts quickly. Streaks and spaced repetition.",
+      href: "/games/flash-cards",
+      icon: "/learn.svg",
+      accent: "from-green-500 to-teal-500",
     },
     {
-      id: "python",
-      title: "Python",
-      description: "Sharpen syntax, control flow, and functions.",
-      href: "/learn",
-      icon: "/python.svg",
-      accent: "from-emerald-500 to-teal-500",
-    },
-    {
-      id: "javascript",
-      title: "JavaScript",
-      description: "Quizzes and challenges for JS fundamentals.",
-      href: "/learn",
+      id: "code-quiz",
+      title: "Code Quiz",
+      description: "Test your programming knowledge with interactive quizzes.",
+      href: "/games/code-quiz",
       icon: "/javascript.svg",
-      accent: "from-amber-500 to-orange-500",
+      accent: "from-yellow-500 to-orange-500",
     },
     {
-      id: "c",
-      title: "C",
-      description: "Pointers, arrays, and memory concepts.",
-      href: "/learn",
-      icon: "/c.svg",
-      accent: "from-cyan-500 to-blue-600",
+      id: "word-match",
+      title: "Word Match",
+      description: "Match programming terms with their definitions.",
+      href: "/games/word-match",
+      icon: "/html.svg",
+      accent: "from-red-500 to-pink-500",
+    },
+    {
+      id: "code-quest",
+      title: "Code Quest",
+      description: "Adventure game with coding puzzles and story progression.",
+      href: "/games/code-quest",
+      icon: "/python.svg",
+      accent: "from-indigo-500 to-purple-600",
+    },
+    {
+      id: "debug-hero",
+      title: "Debug Hero",
+      description: "Fix bugs in code to become a debugging hero.",
+      href: "/games/debug-hero",
+      icon: "/javascript.svg",
+      accent: "from-red-500 to-orange-500",
+    },
+    {
+      id: "code-tycoon",
+      title: "Code Tycoon",
+      description: "Build a virtual tech company by solving coding challenges.",
+      href: "/games/code-tycoon",
+      icon: "/python.svg",
+      accent: "from-purple-500 to-pink-500",
+    },
+    {
+      id: "algo-arena",
+      title: "Algo Arena",
+      description: "Battle enemies with algorithms. Code efficiency = attack power!",
+      href: "/games/algo-arena",
+      icon: "/javascript.svg",
+      accent: "from-indigo-500 to-purple-600",
+    },
+    {
+      id: "build-run",
+      title: "Build & Run",
+      description: "Create real applications with drag-and-drop or code editing.",
+      href: "/games/build-run",
+      icon: "/html.svg",
+      accent: "from-green-500 to-teal-500",
     },
   ];
 
@@ -48,7 +80,7 @@ export default function GamesPage() {
         <img src="/games.svg" alt="Games" className="h-10 w-10" />
         <h1 className="text-3xl font-extrabold tracking-tight text-neutral-800">Games</h1>
       </div>
-      <p className="text-neutral-600 text-lg">Choose a course to play themed mini‑games and reinforce learning.</p>
+      <p className="text-neutral-600 text-lg">Choose a game to practice coding skills and have fun while learning.</p>
 
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {games.map((g) => (

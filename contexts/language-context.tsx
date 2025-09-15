@@ -36,7 +36,10 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
           localStorage.setItem("site-language", settings.language);
           return;
         }
-      } catch {}
+      } catch (error) {
+        // Silently handle authentication errors - user is not signed in
+        console.log("User not authenticated, using localStorage fallback");
+      }
       try {
         const local = localStorage.getItem("site-language");
         if (local) setLanguageState(local as Language);
@@ -55,4 +58,4 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
       {children}
     </LanguageContext.Provider>
   );
-}; 
+};

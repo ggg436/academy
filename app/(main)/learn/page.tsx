@@ -83,6 +83,7 @@ const LearnPage = async () => {
                   }
                 }}
                 activeLessonPercentage={0}
+                courseId={course.id}
               />
             </div>
           ))}

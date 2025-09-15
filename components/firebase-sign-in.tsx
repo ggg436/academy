@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";
@@ -8,7 +8,7 @@ interface FirebaseSignInProps {
 }
 
 export function FirebaseSignIn({ size = "lg" }: FirebaseSignInProps) {
-  const { user, loading, signIn } = useFirebaseAuth();
+  const { user, loading, signInWithGoogle } = useFirebaseAuth();
 
   if (loading) {
     return (
@@ -26,10 +26,10 @@ export function FirebaseSignIn({ size = "lg" }: FirebaseSignInProps) {
     <Button 
       size={size} 
       variant="secondary" 
-      onClick={signIn}
+      onClick={signInWithGoogle}
       className={size === "lg" ? "w-full" : ""}
     >
       Sign In with Google
     </Button>
   );
-} 
+}

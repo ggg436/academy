@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FirebaseUserButton } from "@/components/firebase-user-button";
+import { LanguageSelector } from "@/components/language-selector";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -47,7 +48,7 @@ export const Lesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
 
   return (
     <div className={cn(
-      "flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
+      "hidden lg:flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
       className,
     )}>
       <Link href="/learn">
@@ -170,7 +171,10 @@ export const Lesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
           </Link>
         </Button>
       </div>
-      <div className="p-6">
+      <div className="px-6 pb-2">
+        <LanguageSelector />
+      </div>
+      <div className="p-6 pt-2">
         <FirebaseUserButton />
       </div>
     </div>

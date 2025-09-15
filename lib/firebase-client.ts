@@ -1,6 +1,18 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
+﻿import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics, isSupported, Analytics } from "firebase/analytics";
-import { getAuth, Auth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, User } from "firebase/auth";
+import { 
+  getAuth, 
+  Auth, 
+  signInWithPopup, 
+  GoogleAuthProvider, 
+  signOut, 
+  onAuthStateChanged, 
+  User,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signInAnonymously,
+  updateProfile
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAaoxkTKghZiNxxVzPuk7dPezYG6j50i8E",
@@ -36,7 +48,52 @@ export async function signInWithGoogle(): Promise<User | null> {
     return result.user;
   } catch (error) {
     console.error("Google sign-in error:", error);
-    return null;
+    throw error;
+  }
+}
+
+export async function signInWithEmail(email: string, password: string): Promise<User | null> {
+  try {
+    const auth = getFirebaseAuth();
+    if (!auth) return null;
+
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    return result.user;
+  } catch (error) {
+    console.error("Email sign-in error:", error);
+    throw error;
+  }
+}
+
+export async function signUpWithEmail(email: string, password: string, displayName?: string): Promise<User | null> {
+  try {
+    const auth = getFirebaseAuth();
+    if (!auth) return null;
+
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+    
+    // Update profile with display name if provided
+    if (displayName && result.user) {
+      await updateProfile(result.user, { displayName });
+    }
+    
+    return result.user;
+  } catch (error) {
+    console.error("Email sign-up error:", error);
+    throw error;
+  }
+}
+
+export async function signInAnonymouslyUser(): Promise<User | null> {
+  try {
+    const auth = getFirebaseAuth();
+    if (!auth) return null;
+
+    const result = await signInAnonymously(auth);
+    return result.user;
+  } catch (error) {
+    console.error("Anonymous sign-in error:", error);
+    throw error;
   }
 }
 
@@ -62,4 +119,4 @@ export async function initAnalytics(): Promise<Analytics | null> {
     // Ignore analytics errors in unsupported environments (e.g., SSR, private mode)
   }
   return null;
-} 
+}

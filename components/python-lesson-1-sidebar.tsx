@@ -29,7 +29,7 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
 
   return (
     <div className={cn(
-      "flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
+      "hidden lg:flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
       className,
     )}>
       <Link href="/learn" prefetch={false}>

@@ -1,4 +1,4 @@
-{
+﻿{
   "courses": [
     {
       "id": "spanish",
@@ -47,6 +47,18 @@
             { "id": "lesson-4", "title": "Functions",            "order": 4 },
             { "id": "lesson-5", "title": "Data Structures",      "order": 5 }
           ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Object-Oriented Programming", "order": 1 },
+            { "id": "lesson-7", "title": "File Handling",                "order": 2 },
+            { "id": "lesson-8", "title": "Error Handling",               "order": 3 },
+            { "id": "lesson-9", "title": "Modules & Packages",          "order": 4 },
+            { "id": "lesson-10", "title": "Web Development",             "order": 5 }
+          ]
         }
       ]
     },
@@ -65,6 +77,18 @@
             { "id": "lesson-3", "title": "Control Flow",       "order": 3 },
             { "id": "lesson-4", "title": "Functions",          "order": 4 },
             { "id": "lesson-5", "title": "DOM & Events",       "order": 5 }
+          ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "ES6+ Features",      "order": 1 },
+            { "id": "lesson-7", "title": "Async Programming",  "order": 2 },
+            { "id": "lesson-8", "title": "Error Handling",     "order": 3 },
+            { "id": "lesson-9", "title": "Modules & Bundlers", "order": 4 },
+            { "id": "lesson-10", "title": "Testing & Debugging", "order": 5 }
           ]
         }
       ]
@@ -85,6 +109,18 @@
             { "id": "lesson-4", "title": "Flexbox & Grid",          "order": 4 },
             { "id": "lesson-5", "title": "Responsive Design",       "order": 5 }
           ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "CSS Animations",      "order": 1 },
+            { "id": "lesson-7", "title": "CSS Variables",      "order": 2 },
+            { "id": "lesson-8", "title": "CSS Preprocessors",  "order": 3 },
+            { "id": "lesson-9", "title": "CSS Architecture",   "order": 4 },
+            { "id": "lesson-10", "title": "CSS Performance",   "order": 5 }
+          ]
         }
       ]
     },
@@ -103,6 +139,18 @@
             { "id": "lesson-3", "title": "Props & State",       "order": 3 },
             { "id": "lesson-4", "title": "Effects & Lifecycle",  "order": 4 },
             { "id": "lesson-5", "title": "Routing & Context",    "order": 5 }
+          ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Hooks Advanced",      "order": 1 },
+            { "id": "lesson-7", "title": "State Management",    "order": 2 },
+            { "id": "lesson-8", "title": "Performance",        "order": 3 },
+            { "id": "lesson-9", "title": "Testing",            "order": 4 },
+            { "id": "lesson-10", "title": "Deployment",        "order": 5 }
           ]
         }
       ]
@@ -123,6 +171,18 @@
             { "id": "lesson-4", "title": "HTTP & Express",     "order": 4 },
             { "id": "lesson-5", "title": "APIs & Middleware",  "order": 5 }
           ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Database Integration", "order": 1 },
+            { "id": "lesson-7", "title": "Authentication",       "order": 2 },
+            { "id": "lesson-8", "title": "Error Handling",       "order": 3 },
+            { "id": "lesson-9", "title": "Testing & Debugging",   "order": 4 },
+            { "id": "lesson-10", "title": "Deployment",          "order": 5 }
+          ]
         }
       ]
     },
@@ -141,6 +201,18 @@
             { "id": "lesson-3", "title": "State Management Basics", "order": 3 },
             { "id": "lesson-4", "title": "Navigation & Routing",  "order": 4 },
             { "id": "lesson-5", "title": "Networking & APIs",     "order": 5 }
+          ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Advanced State Management", "order": 1 },
+            { "id": "lesson-7", "title": "Custom Widgets",           "order": 2 },
+            { "id": "lesson-8", "title": "Animations",               "order": 3 },
+            { "id": "lesson-9", "title": "Testing",                 "order": 4 },
+            { "id": "lesson-10", "title": "Deployment",            "order": 5 }
           ]
         }
       ]
@@ -161,6 +233,18 @@
             { "id": "lesson-4", "title": "Neural Networks",     "order": 4 },
             { "id": "lesson-5", "title": "ML & Evaluation",     "order": 5 }
           ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Deep Learning",        "order": 1 },
+            { "id": "lesson-7", "title": "Computer Vision",       "order": 2 },
+            { "id": "lesson-8", "title": "Natural Language Processing", "order": 3 },
+            { "id": "lesson-9", "title": "Reinforcement Learning", "order": 4 },
+            { "id": "lesson-10", "title": "AI Ethics",           "order": 5 }
+          ]
         }
       ]
     },
@@ -179,6 +263,18 @@
             { "id": "lesson-3", "title": "Generics",         "order": 3 },
             { "id": "lesson-4", "title": "Modules",          "order": 4 },
             { "id": "lesson-5", "title": "Tooling",          "order": 5 }
+          ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Advanced Types",     "order": 1 },
+            { "id": "lesson-7", "title": "Decorators",          "order": 2 },
+            { "id": "lesson-8", "title": "Namespaces",          "order": 3 },
+            { "id": "lesson-9", "title": "Testing",            "order": 4 },
+            { "id": "lesson-10", "title": "Best Practices",    "order": 5 }
           ]
         }
       ]
@@ -199,6 +295,18 @@
             { "id": "lesson-4", "title": "Structs & Enums",    "order": 4 },
             { "id": "lesson-5", "title": "File I/O",          "order": 5 }
           ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Advanced Pointers",   "order": 1 },
+            { "id": "lesson-7", "title": "Dynamic Memory",      "order": 2 },
+            { "id": "lesson-8", "title": "Data Structures",     "order": 3 },
+            { "id": "lesson-9", "title": "Preprocessor",        "order": 4 },
+            { "id": "lesson-10", "title": "System Programming",  "order": 5 }
+          ]
         }
       ]
     },
@@ -217,6 +325,18 @@
             { "id": "lesson-3", "title": "Memory Management","order": 3 },
             { "id": "lesson-4", "title": "Exceptions",       "order": 4 },
             { "id": "lesson-5", "title": "Build Systems",    "order": 5 }
+          ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Advanced OOP",        "order": 1 },
+            { "id": "lesson-7", "title": "Design Patterns",     "order": 2 },
+            { "id": "lesson-8", "title": "Concurrency",        "order": 3 },
+            { "id": "lesson-9", "title": "Metaprogramming",    "order": 4 },
+            { "id": "lesson-10", "title": "Performance",       "order": 5 }
           ]
         }
       ]
@@ -237,8 +357,21 @@
             { "id": "lesson-4", "title": "ASP.NET Intro",       "order": 4 },
             { "id": "lesson-5", "title": "Entity Framework",    "order": 5 }
           ]
+        },
+        {
+          "id": "unit-2",
+          "title": "Unit 2",
+          "order": 2,
+          "lessons": [
+            { "id": "lesson-6", "title": "Advanced C# Features", "order": 1 },
+            { "id": "lesson-7", "title": "Web APIs",             "order": 2 },
+            { "id": "lesson-8", "title": "Authentication",       "order": 3 },
+            { "id": "lesson-9", "title": "Testing",              "order": 4 },
+            { "id": "lesson-10", "title": "Deployment",          "order": 5 }
+          ]
         }
       ]
     }
+
   ]
 }

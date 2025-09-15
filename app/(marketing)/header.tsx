@@ -1,15 +1,16 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import { Loader } from "lucide-react";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
-import { FirebaseSignIn } from "@/components/firebase-sign-in";
 import { FirebaseUserButton } from "@/components/firebase-user-button";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/language-selector";
+import { useAuthModal } from "@/store/use-auth-modal";
 
 export const Header = () => {
   const { user, loading } = useFirebaseAuth();
+  const { open } = useAuthModal();
   
   return (
     <header className="h-20 w-full border-b-2 border-slate-200 px-4">
@@ -27,7 +28,22 @@ export const Header = () => {
           ) : user ? (
             <FirebaseUserButton />
           ) : (
-            <FirebaseSignIn size="sm" />
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => open("login")}
+              >
+                Sign In
+              </Button>
+              <Button 
+                variant="secondary" 
+                size="sm"
+                onClick={() => open("signup")}
+              >
+                Get Started
+              </Button>
+            </div>
           )}
         </div>
       </div>
