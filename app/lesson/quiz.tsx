@@ -3,8 +3,8 @@
 import { useMemo } from "react";
 import type { ReactNode } from "react";
 
-// Reuse the modern full-page quiz UI from `m/v1`
-import { Quiz as ModernQuiz } from "@/m/v1/app/lesson/quiz";
+// Use local modern full-page quiz UI fallback
+import { Quiz as ModernQuiz } from "@/components/quiz-modern";
 
 // Keep the existing export name/signature used across the app
 export const Quiz = ({ lessonTitle, currentStep, courseId, lessonId }: { lessonTitle: string; currentStep: number; courseId?: string; lessonId?: string }) => {
