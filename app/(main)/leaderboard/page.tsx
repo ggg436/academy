@@ -46,9 +46,10 @@ const generateRandomUsers = () => {
   for (let i = 0; i < 35; i++) {
     const randomName = allNames[Math.floor(Math.random() * allNames.length)];
     const randomPoints = Math.floor(Math.random() * 5000) + 100; // Points between 100-5100
-    
+    const randomId = `user_${i + 1}`;
+
     users.push({
-      userId: user_,
+      userId: randomId,
       userName: randomName,
       userImageSrc: '/mascot.svg', // Default avatar
       points: randomPoints,
