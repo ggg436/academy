@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OneCompilerEmbed from "@/components/onecompiler-embed";
+import { CodeSnippet } from "@/components/ui/code-snippet";
+import CCodeRunner from "@/components/c-code-runner";
 import { saveLessonCompleteServer } from "@/actions/progress";
 
 export const CLesson6Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
@@ -48,7 +50,7 @@ export const CLesson6Content = ({ lessonTitle, currentStep }: { lessonTitle: str
           <p className="text-xl text-gray-600">You earned 30 points!</p>
           <div className="space-y-4">
             <Button size="lg" className="px-8" asChild>
-              <a href="/lesson/lesson-7/dynamic-memory">Continue to Lesson 7 </a>
+              <a href="/lesson/lesson-7/c-data-types">Continue to Lesson 7 </a>
             </Button>
             <div>
               <Button variant="secondaryOutline" asChild>
@@ -77,16 +79,16 @@ export const CLesson6Content = ({ lessonTitle, currentStep }: { lessonTitle: str
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Basic Syntax:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`int **pp;  // Pointer to pointer to int
+                    <CodeSnippet language="c" code={`int **pp;  // Pointer to pointer to int
 int *p;    // Pointer to int
-int x = 10; // Integer variable`}</code></pre>
+int x = 10; // Integer variable`} />
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Complete Example:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
     int x = 10;
@@ -102,7 +104,7 @@ int main() {
     printf("Address stored in pp: %p\\n", pp);
     
     return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
 
@@ -134,7 +136,7 @@ int main() {
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">String Array Example:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
     // Array of pointers to strings
@@ -154,14 +156,14 @@ int main() {
     }
     
     return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Integer Array Example:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
     int a = 10, b = 20, c = 30;
@@ -177,14 +179,14 @@ int main() {
     printf("After modification: a = %d\\n", a);
     
     return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Dynamic Array of Pointers:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 #include <stdlib.h>
 
 int main() {
@@ -214,7 +216,7 @@ int main() {
     free(arr);
     
     return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
               </div>
@@ -233,18 +235,18 @@ int main() {
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Basic Function Pointer Syntax:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`// Function pointer syntax
+                    <CodeSnippet language="c" code={`// Function pointer syntax
 return_type (*pointer_name)(parameter_types);
 
 // Example
-int (*func_ptr)(int, int);  // Points to function that takes 2 ints and returns int`}</code></pre>
+int (*func_ptr)(int, int);  // Points to function that takes 2 ints and returns int`} />
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Complete Example with Math Operations:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 // Math operation functions
 int add(int a, int b) { return a + b; }
@@ -270,14 +272,14 @@ int main() {
     printf("%d / %d = %d\\n", x, y, operation(x, y));
     
     return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Array of Function Pointers:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int add(int a, int b) { return a + b; }
 int subtract(int a, int b) { return a - b; }
@@ -298,7 +300,7 @@ int main() {
     }
     
     return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
               </div>
@@ -317,7 +319,7 @@ int main() {
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Advanced Example: Dynamic String Manager:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -373,7 +375,7 @@ int main() {
     free(strings);
     
     return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
 
@@ -417,7 +419,9 @@ int main() {
         <DialogContent>
           <DialogTitle>Try Now (C)</DialogTitle>
         <div className="space-y-3">
-          <OneCompilerEmbed language="c" height={560} />
+          <div className="pt-2">
+            <CCodeRunner initialCode={runnerCode} height={560} />
+          </div>
           <div className="flex justify-end gap-2">
             <Button variant="secondaryOutline" onClick={() => setRunnerOpen(false)}>Close</Button>
             <Button variant="secondary" onClick={() => navigator.clipboard.writeText(runnerCode)}>Copy snippet</Button>

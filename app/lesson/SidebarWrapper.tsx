@@ -29,13 +29,17 @@ export function SidebarWrapper({ courseId }: { courseId: string }) {
       return <CLesson1Sidebar courseId={courseId} lessonId={lessonId} />;
     }
     return <Lesson1Sidebar courseId={courseId} lessonId={lessonId} />;
-  } else if (lessonId === "lesson-2") {
-    if (courseId === "c") {
-      const { CLesson2Sidebar } = require("@/components/c-lesson-2-sidebar");
-      return <CLesson2Sidebar courseId={courseId} lessonId={lessonId} />;
-    }
-    return <Lesson2Sidebar courseId={courseId} lessonId={lessonId} />;
-  } else if (lessonId === "lesson-3") {
+  	} else if (lessonId === "lesson-2") {
+		if (courseId === "c") {
+			const { CLesson2Sidebar } = require("@/components/c-lesson-2-sidebar");
+			return <CLesson2Sidebar courseId={courseId} lessonId={lessonId} />;
+		}
+		if (courseId === "python") {
+			const { PythonLesson2Sidebar } = require("@/components/python-lesson-2-sidebar");
+			return <PythonLesson2Sidebar courseId={courseId} lessonId={lessonId} />;
+		}
+		return <Lesson2Sidebar courseId={courseId} lessonId={lessonId} />;
+	} else if (lessonId === "lesson-3") {
     return <Lesson3Sidebar courseId={courseId} lessonId={lessonId} />;
   } else if (lessonId === "lesson-4") {
     return <Lesson4Sidebar courseId={courseId} lessonId={lessonId} />;

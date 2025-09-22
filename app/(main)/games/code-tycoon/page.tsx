@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { CodeSnippet } from "@/components/ui/code-snippet";
 
 // Company building simulation with coding challenges
 const COMPANY_LEVELS = [
@@ -624,10 +625,7 @@ export default function CodeTycoonPage() {
         {/* Output */}
         {codeOutput && (
           <div className="mt-4">
-            <h4 className="font-semibold mb-2">Output:</h4>
-            <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm whitespace-pre-wrap">
-              {codeOutput}
-            </div>
+            <CodeSnippet isOutput language="output" code={codeOutput} />
           </div>
         )}
 

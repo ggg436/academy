@@ -35,7 +35,7 @@ export default function VideosPage() {
   // Sample video courses data
   const videoCourses: VideoCourse[] = [
     {
-      id: "python-basics",
+      id: "python-history",
       title: "Python Programming Fundamentals",
       description: "Master the basics of Python programming language. Learn variables, loops, functions, and object-oriented programming concepts.",
       thumbnail: "/python.svg",

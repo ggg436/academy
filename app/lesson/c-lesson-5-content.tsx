@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OneCompilerEmbed from "@/components/onecompiler-embed";
 import { saveLessonCompleteServer } from "@/actions/progress";
+import { CodeSnippet } from "@/components/ui/code-snippet";
 
 export const CLesson5Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [runnerOpen, setRunnerOpen] = useState(false);
@@ -83,15 +84,15 @@ export const CLesson5Content = ({ lessonTitle, currentStep }: { lessonTitle: str
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Example 1 - Comment before code:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`// This is a comment
-printf("Hello World!");`}</code></pre>
+                    <CodeSnippet language="c" code={`// This is a comment
+printf("Hello World!");`} />
                   </div>
                 </div>
                 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Example 2 - Comment at end of line:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`printf("Hello World!"); // This is a comment`}</code></pre>
+                    <CodeSnippet language="c" code={`printf("Hello World!"); // This is a comment`} />
                   </div>
                 </div>
               </div>
@@ -106,9 +107,9 @@ printf("Hello World!");`}</code></pre>
               <div>
                 <p className="text-sm font-medium text-gray-600 mb-2">Example - Multi-line comment:</p>
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                  <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`/* The code below will print the words Hello World!
+                  <CodeSnippet language="c" code={`/* The code below will print the words Hello World!
 to the screen, and it is amazing */
-printf("Hello World!");`}</code></pre>
+printf("Hello World!");`} />
                 </div>
               </div>
             </div>
@@ -126,19 +127,19 @@ printf("Hello World!");`}</code></pre>
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Short comment (recommended):</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`// This is a short comment
-printf("Hello World!");`}</code></pre>
+                    <CodeSnippet language="c" code={`// This is a short comment
+printf("Hello World!");`} />
                   </div>
                 </div>
                 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Long comment (for detailed explanations):</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`/* This is a longer comment
+                    <CodeSnippet language="c" code={`/* This is a longer comment
    that spans multiple lines
    and provides detailed
    explanations about the code */
-printf("Hello World!");`}</code></pre>
+printf("Hello World!");`} />
                   </div>
                 </div>
               </div>

@@ -11,11 +11,11 @@ type Props = {
 export function TryNow({ initialHtml }: Props) {
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="secondary" size="lg">
-          Try Now
-        </Button>
-      </DialogTrigger>
+      			<DialogTrigger asChild>
+				<Button variant="secondary" size="sm">
+					TRY NOW
+				</Button>
+			</DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
         <DialogTitle>Try it now</DialogTitle>
         <HtmlRunner initialHtml={initialHtml} />

@@ -63,6 +63,22 @@ const StepPage = async ({ params }: Props) => {
     }
   }
 
+  // Canonicalize C lesson 7 path
+  if (userProgress.activeCourseId === "c" && params.lessonId === "lesson-7") {
+    const allowed7 = ["c-data-types", "basic-data-types", "format-specifiers", "exercise"];
+    if (!allowed7.includes(params.stepId)) {
+      redirect(`/lesson/${params.lessonId}/c-data-types`);
+    }
+  }
+
+  // Canonicalize C lesson 8 path
+  if (userProgress.activeCourseId === "c" && params.lessonId === "lesson-8") {
+    const allowed8 = ["c-constants", "const-keyword", "define-macros", "exercise"];
+    if (!allowed8.includes(params.stepId)) {
+      redirect(`/lesson/${params.lessonId}/c-constants`);
+    }
+  }
+
   // Find the current course
   const course = getCourseById(userProgress.activeCourseId);
   let lessonTitle = "Lesson";
@@ -81,7 +97,12 @@ const StepPage = async ({ params }: Props) => {
   if (params.lessonId === "lesson-1") {
     if (userProgress.activeCourseId === "python") {
       if (params.stepId === "python-introduction") stepNumber = 1;
-      else if (params.stepId === "python-basics") stepNumber = 2;
+      else if (params.stepId === "python-history") stepNumber = 2;
+      else if (params.stepId === "python-popularity") stepNumber = 3;
+      else if (params.stepId === "python-applications") stepNumber = 4;
+      else if (params.stepId === "python-first-program") stepNumber = 5;
+      else if (params.stepId === "python-problems") stepNumber = 6;
+      else if (params.stepId === "python-quiz") stepNumber = 7;
     } else if (userProgress.activeCourseId === "c") {
       if (params.stepId === "c-tutorial") stepNumber = 1;
       else if (params.stepId === "examples-in-each-chapter") stepNumber = 2;
@@ -101,19 +122,25 @@ const StepPage = async ({ params }: Props) => {
       else if (params.stepId === "html-best-practices") stepNumber = 10;
       else if (params.stepId === "wearegoood") stepNumber = 11;
     }
-  } else if (params.lessonId === "lesson-2") {
-    if (userProgress.activeCourseId === "c") {
-      if (params.stepId === "get-started-with-c") stepNumber = 1;
-      else if (params.stepId === "install-c") stepNumber = 2;
-      else if (params.stepId === "install-ide") stepNumber = 3;
-      else if (params.stepId === "c-quickstart") stepNumber = 4;
-      const { CLesson2Content } = await import("../../c-lesson-2-content");
-      return <CLesson2Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
-    } else {
-      if (params.stepId === "hi") stepNumber = 1;
-      else if (params.stepId === "hlo") stepNumber = 2;
-    }
-  } else if (params.lessonId === "lesson-3") {
+  	} else if (params.lessonId === "lesson-2") {
+		if (userProgress.activeCourseId === "c") {
+			if (params.stepId === "get-started-with-c") stepNumber = 1;
+			else if (params.stepId === "install-c") stepNumber = 2;
+			else if (params.stepId === "install-ide") stepNumber = 3;
+			else if (params.stepId === "c-quickstart") stepNumber = 4;
+			const { CLesson2Content } = await import("../../c-lesson-2-content");
+			return <CLesson2Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
+		} else {
+			if (params.stepId === "python-case-sensitivity") stepNumber = 1;
+			else if (params.stepId === "python-indentation") stepNumber = 2;
+			else if (params.stepId === "python-comments") stepNumber = 3;
+			else if (params.stepId === "python-quotes") stepNumber = 4;
+			else if (params.stepId === "python-multiple-statements") stepNumber = 5;
+			else if (params.stepId === "python-problems") stepNumber = 6;
+			else if (params.stepId === "python-quiz") stepNumber = 7;
+			// Defer rendering; fall through to the later lesson-2 branch that handles quiz vs content
+		}
+	  } else if (params.lessonId === "lesson-3") {
     if (userProgress.activeCourseId === "c") {
       if (params.stepId === "c-syntax") stepNumber = 1;
       else if (params.stepId === "example-explained") stepNumber = 2;
@@ -122,8 +149,20 @@ const StepPage = async ({ params }: Props) => {
       const { CLesson3Content } = await import("../../c-lesson-3-content");
       return <CLesson3Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
     }
-    if (params.stepId === "we") stepNumber = 1;
-    else if (params.stepId === "gue") stepNumber = 2;
+    if (userProgress.activeCourseId === "python") {
+      if (params.stepId === "python-variables") stepNumber = 1;
+      else if (params.stepId === "python-variable-rules") stepNumber = 2;
+      else if (params.stepId === "python-data-types") stepNumber = 3;
+      else if (params.stepId === "python-dynamic-typing") stepNumber = 4;
+      else if (params.stepId === "python-type-casting") stepNumber = 5;
+      else if (params.stepId === "python-problems") stepNumber = 6;
+      else if (params.stepId === "python-quiz") stepNumber = 7;
+      if (params.stepId === "python-quiz") {
+        return <Quiz lessonTitle={"Python Variables & Types"} currentStep={1} courseId={"python"} lessonId={"lesson-3"} />;
+      }
+      const { PythonLesson3Content } = await import("../../python-lesson-3-content");
+      return <PythonLesson3Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
+    }
   } else if (params.lessonId === "lesson-4") {
     if (userProgress.activeCourseId === "c") {
       if (params.stepId === "c-output-print-text") stepNumber = 1;
@@ -133,19 +172,36 @@ const StepPage = async ({ params }: Props) => {
       const { CLesson4Content } = await import("../../c-lesson-4-content");
       return <CLesson4Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
     }
+    if (userProgress.activeCourseId === "python") {
+      if (params.stepId === "python-operators-intro") stepNumber = 1;
+      else if (params.stepId === "python-arithmetic-operators") stepNumber = 2;
+      else if (params.stepId === "python-comparison-operators") stepNumber = 3;
+      else if (params.stepId === "python-logical-operators") stepNumber = 4;
+      else if (params.stepId === "python-assignment-operators") stepNumber = 5;
+      else if (params.stepId === "python-identity-membership") stepNumber = 6;
+      else if (params.stepId === "python-operators-problems") stepNumber = 7;
+      const { PythonLesson4Content } = await import("../../python-lesson-4-content");
+      return <PythonLesson4Content lessonTitle={"Python Operators"} currentStep={stepNumber} />;
+    }
     if (params.stepId === "html-attributes") stepNumber = 1;
     else if (params.stepId === "html-attributes-advanced") stepNumber = 2;
   } else if (params.lessonId === "lesson-5") {
-    if (userProgress.activeCourseId === "c") {
-      if (params.stepId === "c-comments") stepNumber = 1;
-      else if (params.stepId === "single-line-comments") stepNumber = 2;
-      else if (params.stepId === "multi-line-comments") stepNumber = 3;
-      else if (params.stepId === "single-or-multi-line") stepNumber = 4;
-      const { CLesson5Content } = await import("../../c-lesson-5-content");
-      return <CLesson5Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
+    const isPythonStep = params.stepId.startsWith("python-");
+    if (userProgress.activeCourseId === "python" || isPythonStep) {
+      if (params.stepId === "python-io-intro") stepNumber = 1;
+      else if (params.stepId === "python-print") stepNumber = 2;
+      else if (params.stepId === "python-input") stepNumber = 3;
+      else if (params.stepId === "python-input-type-conversion") stepNumber = 4;
+      else if (params.stepId === "python-formatting-output") stepNumber = 5;
+      else if (params.stepId === "python-io-practice") stepNumber = 6;
+      else if (params.stepId === "python-io-quiz") stepNumber = 7;
+      if (params.stepId === "python-io-quiz") {
+        return <Quiz lessonTitle={"Python Input & Output"} currentStep={1} courseId={"python"} lessonId={"lesson-5"} />;
+      }
+      const { PythonLesson5Content } = await import("../../python-lesson-5-content");
+      return <PythonLesson5Content lessonTitle={"Python Input & Output"} currentStep={stepNumber} />;
     }
-    if (params.stepId === "html-structure") stepNumber = 1;
-    else if (params.stepId === "html-structure-advanced") stepNumber = 2;
+    return <Lesson5Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
   } else if (params.lessonId === "lesson-6") {
     if (userProgress.activeCourseId === "c") {
       if (params.stepId === "pointer-to-pointer") stepNumber = 1;
@@ -157,6 +213,24 @@ const StepPage = async ({ params }: Props) => {
     }
     if (params.stepId === "html-semantics") stepNumber = 1;
     else if (params.stepId === "html-semantics-advanced") stepNumber = 2;
+  } else if (params.lessonId === "lesson-7") {
+    if (userProgress.activeCourseId === "c") {
+      if (params.stepId === "c-data-types") stepNumber = 1;
+      else if (params.stepId === "basic-data-types") stepNumber = 2;
+      else if (params.stepId === "format-specifiers") stepNumber = 3;
+      else if (params.stepId === "exercise") stepNumber = 4;
+      const { CLesson7Content } = await import("../../c-lesson-7-content");
+      return <CLesson7Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
+    }
+  } else if (params.lessonId === "lesson-8") {
+    if (userProgress.activeCourseId === "c") {
+      if (params.stepId === "c-constants") stepNumber = 1;
+      else if (params.stepId === "const-keyword") stepNumber = 2;
+      else if (params.stepId === "define-macros") stepNumber = 3;
+      else if (params.stepId === "exercise") stepNumber = 4;
+      const { CLesson8Content } = await import("../../c-lesson-8-content");
+      return <CLesson8Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
+    }
   } else {
     if (params.stepId.includes('step-1-') || params.stepId.includes('step-1')) {
       stepNumber = 1;
@@ -171,18 +245,32 @@ const StepPage = async ({ params }: Props) => {
   }
 
   if (userProgress.activeCourseId === "python" && params.lessonId === "lesson-1") {
+    if (params.stepId === "python-quiz") {
+      return <Quiz lessonTitle={"Python Introduction"} currentStep={1} courseId={"python"} lessonId={"lesson-1"} />;
+    }
     return <PythonLesson1Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
   } else if (userProgress.activeCourseId === "c" && params.lessonId === "lesson-1") {
     return <CLesson1Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
-  } else if (params.lessonId === "lesson-2") {
-    if (userProgress.activeCourseId === "c") {
-      const { CLesson2Content } = await import("../../c-lesson-2-content");
-      return <CLesson2Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
-    }
-    return <Lesson2Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
-  } else if (params.lessonId === "lesson-3") {
+  	} else if (params.lessonId === "lesson-2") {
+		if (userProgress.activeCourseId === "c") {
+			const { CLesson2Content } = await import("../../c-lesson-2-content");
+			return <CLesson2Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
+		}
+		if (userProgress.activeCourseId === "python") {
+			if (params.stepId === "python-quiz") {
+				return <Quiz lessonTitle={"Python Syntax & Rules"} currentStep={1} courseId={"python"} lessonId={"lesson-2"} />;
+			}
+			const { PythonLesson2Content } = await import("../../python-lesson-2-content");
+			return <PythonLesson2Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
+		}
+		return <Lesson2Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
+	} else if (params.lessonId === "lesson-3") {
     return <Lesson3Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
   } else if (params.lessonId === "lesson-4") {
+    if (userProgress.activeCourseId === "python") {
+      const { PythonLesson4Content } = await import("../../python-lesson-4-content");
+      return <PythonLesson4Content lessonTitle={"Python Operators"} currentStep={stepNumber} />;
+    }
     return <Lesson4Content lessonTitle={lessonTitle} currentStep={stepNumber} />;
   } else if (params.lessonId === "lesson-5") {
     return <Lesson5Content lessonTitle={lessonTitle} currentStep={stepNumber} />;

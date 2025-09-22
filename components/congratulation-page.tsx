@@ -34,15 +34,15 @@ export const CongratulationPage = ({
 
   return (
     <>
-      <Confetti
-        width={dimensions.width}
-        height={dimensions.height}
-        recycle={false}
-        numberOfPieces={500}
-        tweenDuration={10000}
-      />
-      
-      <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg mx-auto text-center items-center justify-center h-full">
+      		<Confetti
+			width={Math.min(dimensions.width, 1100)}
+			height={dimensions.height}
+			recycle={false}
+			numberOfPieces={500}
+			tweenDuration={10000}
+		/>
+		
+		<div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-3xl mx-auto text-center items-center justify-center h-full">
         {/* Finish Icon */}
         <div className="w-16 h-16 lg:w-24 lg:h-24 bg-green-500 rounded-full flex items-center justify-center">
           <CheckCircle className="w-8 h-8 lg:w-12 lg:h-12 text-white" />

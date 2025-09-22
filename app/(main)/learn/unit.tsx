@@ -54,24 +54,43 @@ export const Unit = ({
           // Unit 1 lessons
           if (lesson.id === "lesson-1") {
             if (courseId === "python") {
-              stepName = index === 0 ? "python-introduction" : "python-basics";
+              stepName = "python-introduction";
             } else if (courseId === "c") {
-              stepName = index === 0 ? "c-tutorial" : index === 1 ? "examples-in-each-chapter" : index === 2 ? "c-exercises" : index === 3 ? "c-quiz" : "c-reference";
+              stepName = "c-tutorial";
             } else {
-              stepName = index === 0 ? "html-introduction" : index === 1 ? "html-element" : index === 2 ? "web-browsers" : index === 3 ? "html-page-structure" : index === 4 ? "html-history" : index === 5 ? "html-forms" : index === 6 ? "html-tables" : index === 7 ? "html-lists" : index === 8 ? "html-media" : "html-best-practices";
+              stepName = "html-introduction";
             }
           } else if (lesson.id === "lesson-2") {
             if (courseId === "c") {
-              stepName = index === 0 ? "pointers-tutorial" : index === 1 ? "examples-in-each-chapter" : index === 2 ? "pointers-exercises" : index === 3 ? "pointers-quiz" : "pointers-reference";
+              stepName = "pointers-tutorial";
+            } else if (courseId === "python") {
+              // Always start Python lesson 2 at Step 1
+              stepName = "python-case-sensitivity";
             } else {
-              stepName = index === 0 ? "html-basics-intro" : "html-basics-advanced";
+              stepName = "html-basics-intro";
             }
           } else if (lesson.id === "lesson-3") {
-            stepName = index === 0 ? "html-elements-basic" : "html-elements-advanced";
+            if (courseId === "python") {
+              stepName = "python-variables";
+            } else if (courseId === "c") {
+              stepName = "c-syntax";
+            } else {
+              stepName = "html-elements-basic";
+            }
           } else if (lesson.id === "lesson-4") {
-            stepName = index === 0 ? "html-attributes" : "html-attributes-advanced";
+            if (courseId === "python") {
+              stepName = "python-operators-intro";
+            } else if (courseId === "c") {
+              stepName = "c-output-print-text";
+            } else {
+              stepName = "html-attributes";
+            }
           } else if (lesson.id === "lesson-5") {
-            stepName = index === 0 ? "html-structure" : "html-structure-advanced";
+            if (courseId === "c") {
+              stepName = "c-comments";
+            } else {
+              stepName = "html-structure";
+            }
           }
           // Unit 2 lessons
           else if (lesson.id === "lesson-6") {

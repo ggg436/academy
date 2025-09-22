@@ -20,8 +20,18 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
   let currentStep = 1;
   if (pathname.includes("/python-introduction") || pathname.includes("step-1")) {
     currentStep = 1;
-  } else if (pathname.includes("/python-basics") || pathname.includes("step-2")) {
+  } else if (pathname.includes("/python-history") || pathname.includes("step-2")) {
     currentStep = 2;
+  } else if (pathname.includes("/python-popularity") || pathname.includes("step-3")) {
+    currentStep = 3;
+  } else if (pathname.includes("/python-applications") || pathname.includes("step-4")) {
+    currentStep = 4;
+  } else if (pathname.includes("/python-first-program") || pathname.includes("step-5")) {
+    currentStep = 5;
+  } else if (pathname.includes("/python-problems") || pathname.includes("step-6")) {
+    currentStep = 6;
+  } else if (pathname.includes("/python-quiz") || pathname.includes("step-7")) {
+    currentStep = 7;
   } else {
     // Default to step 1 for any unrecognized URLs
     currentStep = 1;
@@ -57,8 +67,58 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-1/python-basics" prefetch={false}>
-            Python Basics
+          <Link href="/lesson/lesson-1/python-history" prefetch={false}>
+            Python History
+          </Link>
+        </Button>
+        {/* Step 3 */}
+        <Button
+          variant={currentStep === 3 ? "sidebarOutline" : "sidebar"}
+          className="justify-start h-[40px] w-full text-sm font-medium"
+          asChild
+        >
+          <Link href="/lesson/lesson-1/python-popularity" prefetch={false}>
+            Python Popularity
+          </Link>
+        </Button>
+        {/* Step 4 */}
+        <Button
+          variant={currentStep === 4 ? "sidebarOutline" : "sidebar"}
+          className="justify-start h-[40px] w-full text-sm font-medium"
+          asChild
+        >
+          <Link href="/lesson/lesson-1/python-applications" prefetch={false}>
+            Python Applications
+          </Link>
+        </Button>
+        {/* Step 5 */}
+        <Button
+          variant={currentStep === 5 ? "sidebarOutline" : "sidebar"}
+          className="justify-start h-[40px] w-full text-sm font-medium"
+          asChild
+        >
+          <Link href="/lesson/lesson-1/python-first-program" prefetch={false}>
+            First Program
+          </Link>
+        </Button>
+        {/* Step 6 */}
+        <Button
+          variant={currentStep === 6 ? "sidebarOutline" : "sidebar"}
+          className="justify-start h-[40px] w-full text-sm font-medium"
+          asChild
+        >
+          <Link href="/lesson/lesson-1/python-problems" prefetch={false}>
+            Problems
+          </Link>
+        </Button>
+        {/* Step 7 */}
+        <Button
+          variant={currentStep === 7 ? "sidebarOutline" : "sidebar"}
+          className="justify-start h-[40px] w-full text-sm font-medium"
+          asChild
+        >
+          <Link href="/lesson/lesson-1/python-quiz" prefetch={false}>
+            Quiz
           </Link>
         </Button>
       </div>

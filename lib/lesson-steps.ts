@@ -1,6 +1,7 @@
 export function getTotalStepsForLesson(lessonId: string): number {
   // Known step counts for current curriculum
-  if (lessonId === "lesson-1") return 10;
+  if (lessonId === "lesson-1") return 10; // HTML lesson 1
+  // Python Lesson 1 overrides handled in page component; default counts remain here
   if (lessonId === "lesson-2") return 5;
   if (lessonId === "lesson-3") return 2;
   if (lessonId === "lesson-4") return 2;
@@ -29,7 +30,12 @@ export function getCurrentLessonAndStepFromPath(pathname: string): { lessonId: s
         "html-media": 9,
         "html-best-practices": 10,
         "python-introduction": 1,
-        "python-basics": 2,
+        "python-history": 2,
+        "python-popularity": 3,
+        "python-applications": 4,
+        "python-first-program": 5,
+        "python-problems": 6,
+        "python-quiz": 7,
         "c-introduction": 1,
         "c-fundamentals": 2,
       };

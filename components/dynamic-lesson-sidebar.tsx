@@ -27,7 +27,7 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
   const getStepNames = () => {
     if (lessonId === "lesson-1") {
       if (courseId === "python") {
-        return ["python-introduction", "python-basics"];
+        return ["python-introduction", "python-history", "python-popularity", "python-applications", "python-first-program"];
       } else if (courseId === "c") {
         return ["c-tutorial", "examples-in-each-chapter", "c-exercises", "c-quiz", "c-reference"];
       } else {
@@ -44,6 +44,12 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
       return ["html-attributes", "html-attributes-advanced"];
     } else if (lessonId === "lesson-5") {
       return ["html-structure", "html-structure-advanced"];
+    } else if (lessonId === "lesson-6" && courseId === "c") {
+      return ["pointer-to-pointer", "array-of-pointers", "function-pointers", "advanced-examples"];
+    } else if (lessonId === "lesson-7" && courseId === "c") {
+      return ["c-data-types", "basic-data-types", "format-specifiers", "exercise"];
+    } else if (lessonId === "lesson-8" && courseId === "c") {
+      return ["c-constants", "const-keyword", "define-macros", "exercise"];
     } else {
       // For future lessons, generate step names based on lesson title
       const baseName = lesson?.title?.toLowerCase().replace(/\s+/g, '-') || 'step';
@@ -80,6 +86,12 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
       return ["HTML Attributes", "Advanced Attributes"];
     } else if (lessonId === "lesson-5") {
       return ["HTML Structure", "Advanced Structure"];
+    } else if (lessonId === "lesson-6" && courseId === "c") {
+      return ["Pointer to Pointer", "Array of Pointers", "Function Pointers", "Advanced Examples"];
+    } else if (lessonId === "lesson-7" && courseId === "c") {
+      return ["C Data Types", "Basic Data Types", "Format Specifiers", "Exercise"];
+    } else if (lessonId === "lesson-8" && courseId === "c") {
+      return ["C Constants", "const Keyword", "#define Macros", "Exercise"];
     } else {
       // For future lessons, use lesson title
       const baseLabel = lesson?.title || 'Step';
@@ -115,6 +127,16 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
             </Link>
           </Button>
         ))}
+        {/* Step 5 */}
+        <Button
+          variant={currentStep === 5 ? "sidebarOutline" : "sidebar"}
+          className="justify-start h-[40px] w-full text-sm font-medium"
+          asChild
+        >
+          <Link href="/lesson/lesson-1/python-first-program" prefetch={false}>
+            First Program
+          </Link>
+        </Button>
       </div>
       <div className="p-4">
         <FirebaseUserButton />

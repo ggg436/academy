@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import OneCompilerEmbed from "@/components/onecompiler-embed";
 import { saveLessonCompleteServer } from "@/actions/progress";
+import { CodeSnippet } from "@/components/ui/code-snippet";
 
 export const CLesson4Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [runnerOpen, setRunnerOpen] = useState(false);
@@ -77,39 +78,39 @@ export const CLesson4Content = ({ lessonTitle, currentStep }: { lessonTitle: str
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Basic Example:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
   printf("Hello World!");
   return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Multiple Print Statements:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
   printf("Welcome to C Programming!");
   printf("This is my first program.");
   printf("I am learning to code!");
   return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
 
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Printing Numbers:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
   printf("The number is: 42");
   printf("Another number: 100");
   return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
               </div>
@@ -130,13 +131,13 @@ int main() {
                   <p className="text-sm font-medium text-green-600 mb-2"> Working Examples:</p>
                   <div className="space-y-3">
                     <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`printf("This sentence will work!");`}</code></pre>
+                      <CodeSnippet language="c" code={`printf("This sentence will work!");`} />
                     </div>
                     <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`printf("Hello, my name is John");`}</code></pre>
+                      <CodeSnippet language="c" code={`printf("Hello, my name is John");`} />
                     </div>
                     <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`printf("The answer is 42");`}</code></pre>
+                      <CodeSnippet language="c" code={`printf("The answer is 42");`} />
                     </div>
                   </div>
                 </div>
@@ -145,13 +146,13 @@ int main() {
                   <p className="text-sm font-medium text-red-600 mb-2"> Error Examples:</p>
                   <div className="space-y-3">
                     <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`printf(This sentence will produce an error.);`}</code></pre>
+                      <CodeSnippet language="c" code={`printf(This sentence will produce an error.);`} />
                     </div>
                     <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`printf(Hello World);`}</code></pre>
+                      <CodeSnippet language="c" code={`printf(Hello World);`} />
                     </div>
                     <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`printf(123);`}</code></pre>
+                      <CodeSnippet language="c" code={`printf(123);`} />
                     </div>
                   </div>
                 </div>
@@ -171,14 +172,14 @@ int main() {
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Multiple printf() without newlines:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
   printf("Hello World!");
   printf("I am learning c.");
   printf("And it is awesome!");
   return 0;
-}`}</code></pre>
+}`} />
                   </div>
                   <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                     <p className="text-sm text-blue-800"><strong>Output:</strong> <code>Hello World!I am learning c.And it is awesome!</code> - all on one line!</p>
@@ -188,14 +189,14 @@ int main() {
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Adding newlines with \\n:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
   printf("Hello World!\\n");
   printf("I am learning c.\\n");
   printf("And it is awesome!\\n");
   return 0;
-}`}</code></pre>
+}`} />
                   </div>
                   <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                     <p className="text-sm text-green-800"><strong>Output:</strong> Each sentence will be on a separate line!</p>
@@ -205,7 +206,7 @@ int main() {
                 <div>
                   <p className="text-sm font-medium text-gray-600 mb-2">Mixed examples with numbers and text:</p>
                   <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-                    <pre className="font-mono text-[15px] lg:text-base text-gray-700 whitespace-pre-wrap"><code>{`#include <stdio.h>
+                    <CodeSnippet language="c" code={`#include <stdio.h>
 
 int main() {
   printf("My name is ");
@@ -214,7 +215,7 @@ int main() {
   printf("25");
   printf(" years old.\\n");
   return 0;
-}`}</code></pre>
+}`} />
                   </div>
                 </div>
               </div>
