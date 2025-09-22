@@ -1,10 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import PythonCodeRunner from "@/components/python-code-runner";
 import CCodeRunner from "@/components/c-code-runner";
 import { Button } from "@/components/ui/button";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 function safeDecodeBase64Utf8(input: string | null): string {
   if (!input) return "";
@@ -21,7 +24,7 @@ function safeDecodeBase64Utf8(input: string | null): string {
   }
 }
 
-export default function RunnerPage() {
+function RunnerInner() {
   const params = useSearchParams();
   const lang = (params.get("lang") || "python").toLowerCase();
   const codeParam = params.get("code");
@@ -45,5 +48,13 @@ export default function RunnerPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function RunnerPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen w-full bg-white" />}> 
+      <RunnerInner />
+    </Suspense>
   );
 } 
