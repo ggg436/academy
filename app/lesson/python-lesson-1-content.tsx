@@ -18,6 +18,10 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
   const [solutionCode, setSolutionCode] = useState("");
   const [isProblemStep, setIsProblemStep] = useState(false);
   const { language } = useLanguage();
+  // Hoisted Nepali runner state to respect hooks rules
+  const [runnerOpenNp, setRunnerOpenNp] = useState(false as any);
+  const [runnerCodeNp, setRunnerCodeNp] = useState("");
+  const tryNowNepali = (code: string) => { setRunnerCodeNp(code); setRunnerOpenNp(true); };
 
   const handleFinishLesson = async () => {
     try {
@@ -211,10 +215,6 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
 
   // Nepali translation branch for Lesson 1
   if (language === "ne") {
-    const [runnerOpenNp, setRunnerOpenNp] = useState(false as any);
-    const [runnerCodeNp, setRunnerCodeNp] = useState("");
-    const tryNow = (code: string) => { setRunnerCodeNp(code); setRunnerOpenNp(true); };
-
     return (
       <div className="flex-1">
         <div className="h-full flex flex-col">
@@ -228,9 +228,9 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
             {currentStep === 1 && (
               <div className="mt-8 space-y-6">
                 <p className="text-neutral-700">Python एक <strong>high-level programming language</strong> हो, जसको मतलब यो मान्छेको भाषाजस्तै सजिलो छ र कम्प्युटरलाई बुझाउन सजिलो हुन्छ। यो <strong>interpreted</strong> हो र <strong>general-purpose</strong> छ — Web apps, AI, Games, Data science, Automation सबैमा प्रयोग हुन्छ।</p>
-                <CodeSnippet language="python" code={`print("Hello, Python!")`} onRun={tryNow} />
+                <CodeSnippet language="python" code={`print("Hello, Python!")`} onRun={tryNowNepali} />
                 <div className="mt-2"><CodeSnippet isOutput language="output" code={`Hello, Python!`} /></div>
-                <p className="text-neutral-700">print() ले कम्प्युटरलाई "यो देखाऊ" भन्छ, त्यसैले धेरै भाषा "Hello World" बाट सुरु हुन्छ।</p>
+                <p className="text-neutral-700">print() ले कम्प्युटरलाई &quot;यो देखाऊ&quot; भन्छ, त्यसैले धेरै भाषा &quot;Hello World&quot; बाट सुरु हुन्छ।</p>
                 <p className="text-blue-700">💡 Motivation: Python सिक्दा Web Development देखि AI सम्म करियर खुल्छ।</p>
                 <p className="text-purple-700">😂 Fun: Python नाम सर्पबाट होइन, Monty Python comedy शोबाट आएको हो 🐍😂।</p>
               </div>
@@ -279,12 +279,12 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
 
             {currentStep === 5 && (
               <div className="mt-8 space-y-6">
-                <CodeSnippet language="python" code={`print("Welcome to Python Programming!")`} onRun={tryNow} />
+                <CodeSnippet language="python" code={`print("Welcome to Python Programming!")`} onRun={tryNowNepali} />
                 <div className="mt-2"><CodeSnippet isOutput language="output" code={`Welcome to Python Programming!`} /></div>
                 <ul className="list-disc pl-6 text-neutral-700 space-y-1">
                   <li>print() → Output देखाउन</li>
                   <li>() → function भित्र data पठाउन</li>
-                  <li>" " वा ' ' → Text/string define गर्न</li>
+                  <li>&quot; &quot; वा ' ' → Text/string define गर्न</li>
                 </ul>
                 <p className="text-blue-700">💡 Motivation: यो नै पहिलो step — Computer सँग कुरा गर्ने</p>
                 <p className="text-purple-700">😂 Fun: अब तपाईं Hello World club का coder! 🎉</p>
@@ -296,7 +296,7 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
                 <h3 className="text-lg font-semibold text-neutral-800">🔧 अभ्यास प्रश्न</h3>
                 <ul className="list-disc pl-6 text-neutral-700 space-y-1">
                   <li>आफ्नो नाम print गर्ने code लेख।</li>
-                  <li>"Python is fun!" line print गर।</li>
+                  <li>&quot;Python is fun!&quot; line print गर।</li>
                   <li>३ फरक लाइन print() प्रयोग गरेर देखाऊ।</li>
                   <li>एउटै लाइन ५ पटक देखाउने code लेख।</li>
                   <li>Python प्रयोग गर्ने ५ प्रसिद्ध कम्पनी comment मा लेख।</li>
@@ -320,8 +320,8 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
                   <li>Text/string लाई define गर्न <em>quotes</em> प्रयोग हुन्छ।</li>
                 </ul>
                 <h4 className="font-medium">Output Based</h4>
-                <CodeSnippet language="python" code={`print("Hi" * 3)`} onRun={tryNow} />
-                <CodeSnippet language="python" code={`Print("Hello")`} onRun={tryNow} />
+                <CodeSnippet language="python" code={`print("Hi" * 3)`} onRun={tryNowNepali} />
+                <CodeSnippet language="python" code={`Print("Hello")`} onRun={tryNowNepali} />
               </div>
             )}
           </div>
