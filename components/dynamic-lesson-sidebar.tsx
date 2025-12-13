@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FirebaseUserButton } from "@/components/firebase-user-button";
+import { LanguageSelector } from "@/components/language-selector";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -16,13 +17,13 @@ type Props = {
 
 export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
-  
+
   // Get lesson data to determine steps
   const course = getCourseById(courseId);
   const lesson = course
     ? course.units.flatMap((u: any) => u.lessons || []).find((l: any) => l.id === lessonId)
     : undefined;
-  
+
   // Generate step names based on lesson
   const getStepNames = () => {
     if (lessonId === "lesson-1") {
@@ -44,6 +45,15 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
       return ["html-attributes", "html-attributes-advanced"];
     } else if (lessonId === "lesson-5") {
       return ["html-structure", "html-structure-advanced"];
+    } else if (lessonId === "lesson-6" && courseId === "python") {
+      return [
+        "python-comments-intro",
+        "python-single-line-comments",
+        "python-multi-line-comments",
+        "python-docstrings",
+        "python-comments-practice",
+        "python-comments-quiz",
+      ];
     } else if (lessonId === "lesson-6" && courseId === "c") {
       return ["pointer-to-pointer", "array-of-pointers", "function-pointers", "advanced-examples"];
     } else if (lessonId === "lesson-7" && courseId === "c") {
@@ -58,7 +68,7 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
   };
 
   const stepNames = getStepNames();
-  
+
   // Determine current step based on URL
   let currentStep = 1;
   for (let i = 0; i < stepNames.length; i++) {
@@ -86,6 +96,15 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
       return ["HTML Attributes", "Advanced Attributes"];
     } else if (lessonId === "lesson-5") {
       return ["HTML Structure", "Advanced Structure"];
+    } else if (lessonId === "lesson-6" && courseId === "python") {
+      return [
+        "What are Comments?",
+        "Single-line Comments",
+        "Multi-line Comments",
+        "Docstrings",
+        "Practice",
+        "Quiz",
+      ];
     } else if (lessonId === "lesson-6" && courseId === "c") {
       return ["Pointer to Pointer", "Array of Pointers", "Function Pointers", "Advanced Examples"];
     } else if (lessonId === "lesson-7" && courseId === "c") {
@@ -103,23 +122,20 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
 
   return (
     <div className={cn(
-      "hidden lg:flex h-full lg:w-[200px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
+      "hidden lg:flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
       className,
     )}>
       <Link href="/learn">
-        <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-          <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Softcode
-          </h1>
+        <div className="pt-8 pb-7 flex items-center gap-x-3 -ml-2">
+          <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">Gharti Academy</h1>
         </div>
       </Link>
-      <div className="flex flex-col gap-y-2 flex-1">
+      <div className="flex flex-col gap-y-3 flex-1 px-2">
         {stepNames.map((stepName, index) => (
           <Button
             key={stepName}
             variant={currentStep === index + 1 ? "sidebarOutline" : "sidebar"}
-            className="justify-start h-[32px] w-full text-xs"
+            className="justify-start h-[40px] w-full text-sm font-medium"
             asChild
           >
             <Link href={`/lesson/${lessonId}/${stepName}`}>
@@ -127,20 +143,9 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
             </Link>
           </Button>
         ))}
-        {/* Step 5 */}
-        <Button
-          variant={currentStep === 5 ? "sidebarOutline" : "sidebar"}
-          className="justify-start h-[40px] w-full text-sm font-medium"
-          asChild
-        >
-          <Link href="/lesson/lesson-1/python-first-program" prefetch={false}>
-            First Program
-          </Link>
-        </Button>
       </div>
-      <div className="p-4">
-        <FirebaseUserButton />
-      </div>
+      <div className="px-6 pb-2"><LanguageSelector /></div>
+      <div className="p-6 pt-2"><FirebaseUserButton /></div>
     </div>
   );
 }; 

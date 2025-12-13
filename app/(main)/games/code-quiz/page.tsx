@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -400,7 +400,7 @@ export default function CodeQuizPage() {
           variant="ghost"
           size="sm"
         >
-          ðŸ“Š History
+          📊 History
         </Button>
       </div>
 
@@ -446,7 +446,7 @@ export default function CodeQuizPage() {
       {/* Quiz Complete */}
       {quizComplete ? (
         <Card className="p-8 text-center bg-green-50 border-green-200">
-          <h2 className="text-3xl font-bold text-green-800 mb-4">ðŸŽ‰ Quiz Complete!</h2>
+          <h2 className="text-3xl font-bold text-green-800 mb-4">🎉 Quiz Complete!</h2>
           <div className="text-6xl font-bold text-green-600 mb-4">
             {Math.round((score / currentQuestions.length) * 100)}%
           </div>
@@ -508,7 +508,7 @@ export default function CodeQuizPage() {
                   : 'bg-red-100 border border-red-300'
               }`}>
                 <div className="font-semibold mb-2">
-                  {selectedAnswer === currentQuestion.correct ? 'âœ… Correct!' : 'âŒ Incorrect!'}
+                  {selectedAnswer === currentQuestion.correct ? '✅ Correct!' : '❌ Incorrect!'}
                 </div>
                 <p className="text-sm text-gray-700">
                   {currentQuestion.explanation}

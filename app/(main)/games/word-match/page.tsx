@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -139,7 +139,7 @@ export default function WordMatchPage() {
           variant="ghost"
           size="sm"
         >
-          ðŸ“Š History
+          📊 History
         </Button>
       </div>
 
@@ -185,7 +185,7 @@ export default function WordMatchPage() {
       {/* Game Complete */}
       {gameComplete ? (
         <Card className="p-8 text-center bg-purple-50 border-purple-200">
-          <h2 className="text-3xl font-bold text-purple-800 mb-4">ðŸŽ‰ Game Complete!</h2>
+          <h2 className="text-3xl font-bold text-purple-800 mb-4">🎉 Game Complete!</h2>
           <div className="text-6xl font-bold text-purple-600 mb-4">
             {Math.round((score / currentPairs.length) * 100)}%
           </div>

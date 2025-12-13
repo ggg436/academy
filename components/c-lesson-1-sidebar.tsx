@@ -17,7 +17,7 @@ type Props = {
 
 export const CLesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
-  
+
   // Map active step from URL
   let currentStep = 1;
   if (pathname.includes("/c-tutorial") || pathname.includes("/c-introduction") || pathname.includes("/what-is-c")) currentStep = 1;
@@ -32,11 +32,8 @@ export const CLesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
       className,
     )}>
       <Link href="/learn" prefetch={false}>
-        <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-          <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Softcode
-          </h1>
+        <div className="pt-8 pb-7 flex items-center gap-x-3 -ml-2">
+          <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">Gharti Academy</h1>
         </div>
       </Link>
       <div className="flex flex-col gap-y-3 flex-1 px-2">

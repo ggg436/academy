@@ -31,26 +31,26 @@ export const Unit = ({
   const desc = language === "ne"
     ? `${title} सिक्न ${lessons.length} पाठ पुरा गर्नुहोस्`
     : language === "mai"
-    ? `${title} सिखबाक लेल ${lessons.length} लेसन पूरा करू`
-    : language === "new"
-    ? `${title} सिक्न ${lessons.length} पाठ पूरा गरौं`
-    : `Complete ${lessons.length} lessons to master ${title}`;
+      ? `${title} सिखबाक लेल ${lessons.length} लेसन पूरा करू`
+      : language === "new"
+        ? `${title} सिक्न ${lessons.length} पाठ पूरा गरौं`
+        : `Complete ${lessons.length} lessons to master ${title}`;
 
   return (
     <>
-      <UnitBanner 
-        title={title} 
-        description={desc} 
+      <UnitBanner
+        title={title}
+        description={desc}
         unitOrder={order}
       />
       <div className="flex items-center flex-col relative">
         {lessons.map((lesson, index) => {
           const isCurrent = lesson.id === activeLesson?.id;
           const isLocked = false; // All lessons unlocked for now
-          
+
           // Create descriptive step names based on lesson and unit
           let stepName = "";
-          
+
           // Unit 1 lessons
           if (lesson.id === "lesson-1") {
             if (courseId === "python") {
@@ -94,9 +94,7 @@ export const Unit = ({
           }
           // Unit 2 lessons
           else if (lesson.id === "lesson-6") {
-            if (courseId === "python") {
-              stepName = index === 0 ? "oop-introduction" : "oop-advanced";
-            } else if (courseId === "javascript") {
+            if (courseId === "javascript") {
               stepName = index === 0 ? "es6-features-intro" : "es6-features-advanced";
             } else if (courseId === "css") {
               stepName = index === 0 ? "css-animations-intro" : "css-animations-advanced";
@@ -120,9 +118,7 @@ export const Unit = ({
               stepName = index === 0 ? "html-semantics-intro" : "html-semantics-advanced";
             }
           } else if (lesson.id === "lesson-7") {
-            if (courseId === "python") {
-              stepName = index === 0 ? "file-handling-intro" : "file-handling-advanced";
-            } else if (courseId === "javascript") {
+            if (courseId === "javascript") {
               stepName = index === 0 ? "async-programming-intro" : "async-programming-patterns";
             } else if (courseId === "css") {
               stepName = index === 0 ? "css-variables-intro" : "css-variables-advanced";
@@ -146,9 +142,7 @@ export const Unit = ({
               stepName = index === 0 ? "forms-advanced-intro" : "forms-advanced-practices";
             }
           } else if (lesson.id === "lesson-8") {
-            if (courseId === "python") {
-              stepName = index === 0 ? "error-handling-intro" : "error-handling-advanced";
-            } else if (courseId === "javascript") {
+            if (courseId === "javascript") {
               stepName = index === 0 ? "error-handling-intro" : "error-handling-patterns";
             } else if (courseId === "css") {
               stepName = index === 0 ? "css-preprocessors-intro" : "css-preprocessors-advanced";
@@ -172,9 +166,7 @@ export const Unit = ({
               stepName = index === 0 ? "tables-advanced-intro" : "tables-advanced-styling";
             }
           } else if (lesson.id === "lesson-9") {
-            if (courseId === "python") {
-              stepName = index === 0 ? "modules-intro" : "modules-advanced";
-            } else if (courseId === "javascript") {
+            if (courseId === "javascript") {
               stepName = index === 0 ? "modules-intro" : "modules-bundlers";
             } else if (courseId === "css") {
               stepName = index === 0 ? "css-architecture-intro" : "css-architecture-patterns";
@@ -198,9 +190,7 @@ export const Unit = ({
               stepName = index === 0 ? "multimedia-intro" : "multimedia-advanced";
             }
           } else if (lesson.id === "lesson-10") {
-            if (courseId === "python") {
-              stepName = index === 0 ? "web-development-intro" : "web-development-advanced";
-            } else if (courseId === "javascript") {
+            if (courseId === "javascript") {
               stepName = index === 0 ? "testing-debugging-intro" : "testing-debugging-advanced";
             } else if (courseId === "css") {
               stepName = index === 0 ? "css-performance-intro" : "css-performance-optimization";
@@ -240,6 +230,7 @@ export const Unit = ({
               percentage={activeLessonPercentage}
               stepName={stepName}
               completed={lesson.completed}
+              courseId={courseId}
             />
           );
         })}

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -311,7 +311,7 @@ export default function FlashCardsPage() {
             variant="ghost"
             size="sm"
           >
-            ðŸ“Š Stats
+            📊 Stats
           </Button>
           <Button
             onClick={resetProgress}
@@ -319,7 +319,7 @@ export default function FlashCardsPage() {
             size="sm"
             className="text-red-600 hover:text-red-700"
           >
-            ðŸ”„ Reset
+            🔄 Reset
           </Button>
         </div>
       </div>
@@ -408,7 +408,7 @@ export default function FlashCardsPage() {
       {/* Navigation and Actions */}
       <div className="flex justify-center gap-4">
         <Button onClick={previousCard} variant="secondary">
-          â† Previous
+          ← Previous
         </Button>
         
         {isFlipped && (
@@ -418,19 +418,19 @@ export default function FlashCardsPage() {
               variant="danger"
               className="bg-red-600 hover:bg-red-700"
             >
-              âŒ Don&apos;t Know
+              ❌ Don&apos;t Know
             </Button>
             <Button 
               onClick={() => markCard(true)}
               className="bg-green-600 hover:bg-green-700"
             >
-              âœ… Know It
+              ✅ Know It
             </Button>
           </div>
         )}
         
         <Button onClick={nextCard} variant="secondary">
-          Next â†’
+          Next →
         </Button>
       </div>
 
@@ -440,11 +440,11 @@ export default function FlashCardsPage() {
           <span className={`inline-block px-2 py-1 rounded ${getDifficultyColor(currentCard.difficulty)}`}>
             {currentCard.difficulty}
           </span>
-          <span className="mx-2">â€¢</span>
+          <span className="mx-2">•</span>
           <span className="capitalize">{currentCard.category}</span>
           {progress[currentCard.id] && (
             <>
-              <span className="mx-2">â€¢</span>
+              <span className="mx-2">•</span>
               <span className={progress[currentCard.id].known ? 'text-green-600' : 'text-red-600'}>
                 {progress[currentCard.id].known ? 'Known' : 'Unknown'}
               </span>

@@ -93,7 +93,7 @@ export default function Chatbot() {
           {/* Header */}
           <div className="bg-green-600 text-white px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src="/mascot.svg" alt="Assistant" className="h-7 w-7 rounded" />
+              <img src="/logo.svg" alt="Assistant" className="h-7 w-7 rounded" />
               <div>
                 <div className="font-semibold">Softcode Assistant</div>
                 <div className="text-xs text-white/80">Online now</div>

@@ -19,6 +19,7 @@ type Props = {
   percentage: number;
   stepName: string;
   completed?: boolean;
+  courseId: string;
 };
 
 export const LessonButton = ({
@@ -29,7 +30,8 @@ export const LessonButton = ({
   current,
   percentage,
   stepName,
-  completed
+  completed,
+  courseId
 }: Props) => {
   const { language } = useLanguage();
   const startText = language === "ne" ? "सुरु" : language === "mai" ? "शुरू" : language === "new" ? "सुरु" : "Start";
@@ -57,12 +59,12 @@ export const LessonButton = ({
 
   const Icon = isCompleted ? Check : isLast ? Crown : Star;
 
-  const href = `/lesson/${id}/${encodeURIComponent(stepName)}`;
+  const href = `/${courseId}/${id}/${encodeURIComponent(stepName)}`;
 
   return (
-    <Link 
-      href={href} 
-      aria-disabled={locked} 
+    <Link
+      href={href}
+      aria-disabled={locked}
       style={{ pointerEvents: locked ? "none" : "auto" }}
     >
       <div
@@ -100,8 +102,8 @@ export const LessonButton = ({
                   className={cn(
                     "h-10 w-10",
                     locked
-                    ? "fill-neutral-400 text-neutral-400 stroke-neutral-400"
-                    : "fill-primary-foreground text-primary-foreground",
+                      ? "fill-neutral-400 text-neutral-400 stroke-neutral-400"
+                      : "fill-primary-foreground text-primary-foreground",
                     isCompleted && "fill-none stroke-[4]"
                   )}
                 />
@@ -118,8 +120,8 @@ export const LessonButton = ({
               className={cn(
                 "h-10 w-10",
                 locked
-                ? "fill-neutral-400 text-neutral-400 stroke-neutral-400"
-                : "fill-primary-foreground text-primary-foreground",
+                  ? "fill-neutral-400 text-neutral-400 stroke-neutral-400"
+                  : "fill-primary-foreground text-primary-foreground",
                 isCompleted && "fill-none stroke-[4]"
               )}
             />

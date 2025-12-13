@@ -1,21 +1,24 @@
-Absolutely. Here’s the checklist I’ll follow whenever adding content to new lessons:
-Code snippets
-Use the shared CodeSnippet component for all examples/errors.
-Ensure there’s spacing between the snippet and buttons (handled by CodeSnippet’s built-in margin).
-Add onRun={handleTryNow} so the Run button opens the in-page playground (same-tab).
-The snippet header includes:
-Open-in-new-tab icon (left)
-Run
-Copy code
-Try Now behavior
-Keep existing TRY NOW buttons; they must open the same in-page playground dialog using handleTryNow(code).
-In Try Now dialogs, include “Open in new tab” linking to /runner?lang=<lang>&code=<base64-utf8>.
-Runners
-Inline runners are side-by-side: editor (left) + output (right).
-Footer buttons order: Open in new tab, Reset, Run.
-Use UTF-8 safe base64 for passing code between pages.
-Consistency
-Apply the same snippet UI and behaviors across all lessons and languages.
-Ensure snippets never touch adjacent buttons/text (spacing preserved).
-Prefer CodeSnippet over raw <pre><code>/<code>.
-If you want, I can codify this into a short contribution guide file (e.g., CONTRIBUTING-LESSONS.md) for future editors.
+# 🐍 MAIN TITLE (Emoji + Clear)
+
+## 🎯 LEARNING OBJECTIVES (Icon + Section)
+• Bullet point 1
+• Bullet point 2
+• Bullet point 3
+
+## 🏆 REAL-WORLD CONNECTION (Icon + Section)
+[Content with emojis]
+
+## 💡 CORE CONCEPT (Icon + Section)
+[Tables, code blocks, comparisons]
+
+## 🎮 HANDS-ON ACTIVITY (Icon + Section)
+[Interactive elements]
+
+## 🛠️ PRACTICE EXERCISES (Icon + Section)
+[Numbered exercises with spaces]
+
+## 🚀 KNOWLEDGE CHECK (Icon + Section)
+[Quiz format]
+
+## 📚 SUMMARY & NEXT STEPS (Icon + Section)
+[Bullet summary + preview]

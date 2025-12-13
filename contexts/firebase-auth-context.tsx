@@ -1,13 +1,13 @@
-﻿"use client";
+"use client";
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { 
-  getFirebaseAuth, 
-  signInWithGoogle, 
+import {
+  getFirebaseAuth,
+  signInWithGoogle,
   signInWithEmail,
   signUpWithEmail,
   signInAnonymouslyUser,
-  signOutUser 
+  signOutUser
 } from "@/lib/firebase-client";
 
 interface FirebaseAuthContextType {
@@ -46,16 +46,18 @@ export function FirebaseAuthProvider({ children }: { children: ReactNode }) {
       setUser(user);
       setLoading(false);
       setInitialized(true);
-      
+
       // Sync user data with cookies for server-side access
       if (user) {
+        const isProduction = process.env.NODE_ENV === 'production';
+        const secureFlag = isProduction ? '; secure' : '';
         document.cookie = `firebase-auth=${JSON.stringify({
           uid: user.uid,
           email: user.email,
           displayName: user.displayName,
           photoURL: user.photoURL,
           isAnonymous: user.isAnonymous
-        })}; path=/; max-age=3600; secure; samesite=strict`;
+        })}; path=/; max-age=3600${secureFlag}; samesite=strict`;
       } else {
         document.cookie = 'firebase-auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
       }

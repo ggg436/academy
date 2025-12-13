@@ -1,4 +1,4 @@
-﻿{
+{
   "courses": [
     {
       "id": "python",
@@ -10,23 +10,31 @@
           "title": "Unit 1",
           "order": 1,
           "lessons": [
-            { "id": "lesson-1", "title": "Python Introduction", "order": 1 },
-            { "id": "lesson-2", "title": "Syntax & Variables", "order": 2 },
-            { "id": "lesson-3", "title": "Control Flow", "order": 3 },
-            { "id": "lesson-4", "title": "Python Operators", "order": 4 },
-            { "id": "lesson-5", "title": "Data Structures", "order": 5 }
-          ]
-        },
-        {
-          "id": "unit-2",
-          "title": "Unit 2",
-          "order": 2,
-          "lessons": [
-            { "id": "lesson-6", "title": "Object-Oriented Programming", "order": 1 },
-            { "id": "lesson-7", "title": "File Handling", "order": 2 },
-            { "id": "lesson-8", "title": "Error Handling", "order": 3 },
-            { "id": "lesson-9", "title": "Modules & Packages", "order": 4 },
-            { "id": "lesson-10", "title": "Web Development", "order": 5 }
+            {
+              "id": "lesson-1",
+              "title": "Python Introduction",
+              "order": 1
+            },
+            {
+              "id": "lesson-2",
+              "title": "Syntax & Variables",
+              "order": 2
+            },
+            {
+              "id": "lesson-3",
+              "title": "Control Flow",
+              "order": 3
+            },
+            {
+              "id": "lesson-4",
+              "title": "Python Operators",
+              "order": 4
+            },
+            {
+              "id": "lesson-5",
+              "title": "Data Structures",
+              "order": 5
+            }
           ]
         }
       ]

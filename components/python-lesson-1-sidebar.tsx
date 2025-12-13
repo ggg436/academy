@@ -15,7 +15,7 @@ type Props = {
 
 export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
-  
+
   // Extract step number from URL like /lesson/lesson-1/python-introduction
   let currentStep = 1;
   if (pathname.includes("/python-introduction") || pathname.includes("step-1")) {
@@ -43,11 +43,8 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
       className,
     )}>
       <Link href="/learn" prefetch={false}>
-        <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-          <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Softcode
-          </h1>
+        <div className="pt-8 pb-7 flex items-center gap-x-3 -ml-2">
+          <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">Gharti Academy</h1>
         </div>
       </Link>
       <div className="flex flex-col gap-y-3 flex-1 px-2">
@@ -57,7 +54,7 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-1/python-introduction" prefetch={false}>
+          <Link href={`/${courseId}/lesson-1/python-introduction`} prefetch={false}>
             Python Introduction
           </Link>
         </Button>
@@ -67,7 +64,7 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-1/python-history" prefetch={false}>
+          <Link href={`/${courseId}/lesson-1/python-history`} prefetch={false}>
             Python History
           </Link>
         </Button>
@@ -77,7 +74,7 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-1/python-popularity" prefetch={false}>
+          <Link href={`/${courseId}/lesson-1/python-popularity`} prefetch={false}>
             Python Popularity
           </Link>
         </Button>
@@ -87,7 +84,7 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-1/python-applications" prefetch={false}>
+          <Link href={`/${courseId}/lesson-1/python-applications`} prefetch={false}>
             Python Applications
           </Link>
         </Button>
@@ -97,7 +94,7 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-1/python-first-program" prefetch={false}>
+          <Link href={`/${courseId}/lesson-1/python-first-program`} prefetch={false}>
             First Program
           </Link>
         </Button>
@@ -107,7 +104,7 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-1/python-problems" prefetch={false}>
+          <Link href={`/${courseId}/lesson-1/python-problems`} prefetch={false}>
             Problems
           </Link>
         </Button>
@@ -117,7 +114,7 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
           className="justify-start h-[40px] w-full text-sm font-medium"
           asChild
         >
-          <Link href="/lesson/lesson-1/python-quiz" prefetch={false}>
+          <Link href={`/${courseId}/lesson-1/python-quiz`} prefetch={false}>
             Quiz
           </Link>
         </Button>

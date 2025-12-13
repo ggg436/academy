@@ -143,11 +143,15 @@ export function Testimonials() {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="w-full bg-gradient-to-b from-white to-gray-50 py-16">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="w-full py-20 relative overflow-hidden" style={{ backgroundColor: '#f2f7ff' }}>
+      {/* Decorative Elements */}
+      <div className="absolute top-10 right-0 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+      <div className="absolute bottom-10 left-0 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+      <div className="max-w-6xl mx-auto px-4 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl lg:text-4xl font-bold text-neutral-800 mb-4">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl lg:text-5xl font-bold text-neutral-800 mb-4">
             {t.header}
           </h2>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
@@ -160,50 +164,50 @@ export function Testimonials() {
           {/* Navigation Buttons */}
           <button
             onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 border border-gray-200 rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-105"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 glass hover:bg-white/90 rounded-full p-3 shadow-xl transition-all duration-200 hover:scale-110"
             aria-label="Previous testimonial"
           >
-            <ChevronLeft className="h-5 w-5 text-gray-600" />
+            <ChevronLeft className="h-6 w-6 text-gray-700" />
           </button>
 
           <button
             onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-gray-50 border border-gray-200 rounded-full p-3 shadow-lg transition-all duration-200 hover:scale-105"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 glass hover:bg-white/90 rounded-full p-3 shadow-xl transition-all duration-200 hover:scale-110"
             aria-label="Next testimonial"
           >
-            <ChevronRight className="h-5 w-5 text-gray-600" />
+            <ChevronRight className="h-6 w-6 text-gray-700" />
           </button>
 
           {/* Testimonial Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12 mx-8">
+          <div className="glass rounded-3xl shadow-2xl p-8 lg:p-12 mx-8 transition-all duration-500">
             <div className="flex flex-col items-center text-center">
               {/* Avatar */}
-              <div className="w-16 h-16 lg:w-20 lg:h-20 mb-6">
+              <div className="w-20 h-20 lg:w-24 lg:h-24 mb-6 rounded-full overflow-hidden ring-4 ring-green-100 shadow-lg">
                 <img
                   src={currentTestimonial.avatar}
                   alt={currentTestimonial.name}
-                  className="w-full h-full rounded-full object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
 
               {/* Rating */}
               <div className="flex items-center gap-1 mb-6">
                 {[...Array(currentTestimonial.rating)].map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  <Star key={i} className="h-6 w-6 fill-yellow-400 text-yellow-400" />
                 ))}
               </div>
 
               {/* Content */}
-              <blockquote className="text-lg lg:text-xl text-neutral-700 mb-8 leading-relaxed italic">
+              <blockquote className="text-lg lg:text-xl text-neutral-700 mb-8 leading-relaxed italic font-medium">
                 "{currentTestimonial.content}"
               </blockquote>
 
               {/* Author */}
               <div>
-                <div className="font-semibold text-neutral-800 text-lg">
+                <div className="font-bold text-neutral-800 text-xl">
                   {currentTestimonial.name}
                 </div>
-                <div className="text-neutral-600 text-sm">
+                <div className="text-neutral-500 text-sm mt-1">
                   {currentTestimonial.role}
                 </div>
               </div>
@@ -216,11 +220,10 @@ export function Testimonials() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                  index === currentIndex
-                    ? "bg-green-600 scale-125"
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
+                className={`h-3 rounded-full transition-all duration-300 ${index === currentIndex
+                    ? "bg-green-600 w-8"
+                    : "bg-gray-300 w-3 hover:bg-gray-400"
+                  }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
             ))}
@@ -228,24 +231,24 @@ export function Testimonials() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
-          <div className="text-center">
-            <div className="text-3xl lg:text-4xl font-bold text-green-600 mb-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+          <div className="text-center glass rounded-2xl p-6 hover-lift">
+            <div className="text-4xl lg:text-5xl font-bold gradient-text mb-2">
               5K+
             </div>
-            <div className="text-neutral-600">{t.stats1}</div>
+            <div className="text-neutral-600 font-medium">{t.stats1}</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl lg:text-4xl font-bold text-green-600 mb-2">
+          <div className="text-center glass rounded-2xl p-6 hover-lift">
+            <div className="text-4xl lg:text-5xl font-bold gradient-text mb-2">
               92%
             </div>
-            <div className="text-neutral-600">{t.stats2}</div>
+            <div className="text-neutral-600 font-medium">{t.stats2}</div>
           </div>
-          <div className="text-center">
-            <div className="text-3xl lg:text-4xl font-bold text-green-600 mb-2">
+          <div className="text-center glass rounded-2xl p-6 hover-lift">
+            <div className="text-4xl lg:text-5xl font-bold gradient-text mb-2">
               4.6/5
             </div>
-            <div className="text-neutral-600">{t.stats3}</div>
+            <div className="text-neutral-600 font-medium">{t.stats3}</div>
           </div>
         </div>
       </div>

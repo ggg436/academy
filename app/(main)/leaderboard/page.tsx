@@ -1,4 +1,4 @@
-﻿import Image from "next/image";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 
 import { FeedWrapper } from "@/components/feed-wrapper";
@@ -47,11 +47,11 @@ const generateRandomUsers = () => {
     const randomName = allNames[Math.floor(Math.random() * allNames.length)];
     const randomPoints = Math.floor(Math.random() * 5000) + 100; // Points between 100-5100
     const randomId = `user_${i + 1}`;
-
+    
     users.push({
       userId: randomId,
       userName: randomName,
-      userImageSrc: '/mascot.svg', // Default avatar
+      userImageSrc: '/logo.svg', // Default avatar
       points: randomPoints,
       hearts: 5,
       activeCourseId: 'spanish'

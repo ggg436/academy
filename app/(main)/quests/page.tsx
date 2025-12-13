@@ -22,9 +22,13 @@ const QuestsPage = async () => {
     userSubscriptionData,
   ]);
 
-  if (!userProgress || !userProgress.activeCourseId) {
-    redirect("/courses");
-  }
+  // Allow access without authentication - use default values
+  const defaultProgress = {
+    hearts: 5,
+    points: 0,
+    activeCourseId: "python"
+  };
+  const progress = userProgress || defaultProgress;
 
   const isPro = !!userSubscription?.isActive;
 
@@ -33,12 +37,12 @@ const QuestsPage = async () => {
       <StickyWrapper>
         <UserProgress
           activeCourse={{
-            id: userProgress.activeCourseId,
-            title: "Spanish",
-            imageSrc: "/es.svg"
+            id: progress.activeCourseId,
+            title: "Python",
+            imageSrc: "/python.svg"
           }}
-          hearts={userProgress.hearts}
-          points={userProgress.points}
+          hearts={progress.hearts}
+          points={progress.points}
           hasActiveSubscription={isPro}
         />
         {!isPro && (
@@ -61,7 +65,7 @@ const QuestsPage = async () => {
           </p>
           <ul className="w-full">
             {quests.map((quest) => {
-              const progress = (userProgress.points / quest.value) * 100;
+              const questProgress = (progress.points / quest.value) * 100;
 
               return (
                 <div
@@ -78,7 +82,7 @@ const QuestsPage = async () => {
                     <p className="text-neutral-700 text-xl font-bold">
                       {quest.title}
                     </p>
-                    <Progress value={progress} className="h-3" />
+                    <Progress value={questProgress} className="h-3" />
                   </div>
                 </div>
               )

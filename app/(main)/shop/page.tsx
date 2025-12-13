@@ -23,29 +23,33 @@ const ShopPage = async () => {
     userSubscriptionData
   ]);
 
-  if (!userProgress || !userProgress.activeCourseId) {
-    redirect("/courses");
-  }
+  // Allow access without authentication - use default values
+  const defaultProgress = {
+    hearts: 5,
+    points: 0,
+    activeCourseId: "python"
+  };
 
   const isPro = !!userSubscription?.isActive;
+  const progress = userProgress || defaultProgress;
 
   return ( 
     <div className="flex flex-row-reverse gap-[48px] px-6">
       <StickyWrapper>
         <UserProgress
           activeCourse={{
-            id: userProgress.activeCourseId,
-            title: "Spanish",
-            imageSrc: "/es.svg"
+            id: progress.activeCourseId,
+            title: "Python",
+            imageSrc: "/python.svg"
           }}
-          hearts={userProgress.hearts}
-          points={userProgress.points}
+          hearts={progress.hearts}
+          points={progress.points}
           hasActiveSubscription={isPro}
         />
         {!isPro && (
           <Promo />
         )}
-        <Quests points={userProgress.points} />
+        <Quests points={progress.points} />
       </StickyWrapper>
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
@@ -83,8 +87,8 @@ const ShopPage = async () => {
           </div>
           
           <Items
-            hearts={userProgress.hearts}
-            points={userProgress.points}
+            hearts={progress.hearts}
+            points={progress.points}
             hasActiveSubscription={isPro}
           />
         </div>

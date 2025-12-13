@@ -21,6 +21,7 @@ function base64EncodeUtf8(input: string): string {
 
 export default function CCodeRunner({ initialCode, height = 560 }: Props) {
   const [code, setCode] = useState<string>(initialCode);
+  const [stdinText, setStdinText] = useState<string>("");
   const [isRunning, setIsRunning] = useState(false);
   const [output, setOutput] = useState<string>("");
 
@@ -38,9 +39,9 @@ export default function CCodeRunner({ initialCode, height = 560 }: Props) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          source_code: btoa(code),
+          source_code: base64EncodeUtf8(code),
           language_id: 50, // C (GCC 9.2.0) common id in Judge0 CE
-          stdin: btoa(""),
+          stdin: base64EncodeUtf8(stdinText || ""),
         }),
       });
       const createData = await createRes.json();
@@ -67,6 +68,7 @@ export default function CCodeRunner({ initialCode, height = 560 }: Props) {
 
   const reset = () => {
     setCode(initialCode);
+    setStdinText("");
     setOutput("");
   };
 
@@ -92,6 +94,24 @@ export default function CCodeRunner({ initialCode, height = 560 }: Props) {
           <pre className="w-full bg-white p-3 text-sm" style={{ height, overflow: "auto" }}>{output}</pre>
         </div>
       </div>
+      {(() => {
+        const lower = (code || "").toLowerCase();
+        const needsInput = lower.includes("scanf(") || lower.includes("gets(") || lower.includes("fgets(") || lower.includes("getchar(");
+        if (!needsInput) return null;
+        return (
+          <div className="mt-3 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="border-2 border-b-4 rounded-xl overflow-hidden">
+              <div className="px-3 py-2 bg-slate-50 border-b text-xs font-bold tracking-wide text-slate-500">Program Input (stdin)</div>
+              <textarea
+                className="w-full h-28 font-mono text-sm p-3 outline-none resize-y"
+                placeholder={"Type input here. Example:\n42"}
+                value={stdinText}
+                onChange={(e) => setStdinText(e.target.value)}
+              />
+            </div>
+          </div>
+        );
+      })()}
       <div className="mt-4 flex gap-2 justify-end">
         <Button variant="secondaryOutline" type="button" onClick={openInNewTab}>Open in new tab</Button>
         <Button variant="secondaryOutline" type="button" onClick={reset} disabled={isRunning}>Reset</Button>

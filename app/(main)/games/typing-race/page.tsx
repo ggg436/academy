@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -312,7 +312,7 @@ export default function TypingRacePage() {
         
         {/* User Coins Display */}
         <div className="flex items-center gap-2 bg-yellow-100 px-4 py-2 rounded-lg border border-yellow-300">
-          <span className="text-yellow-600 font-semibold">ðŸª™</span>
+          <span className="text-yellow-600 font-semibold">🪙</span>
           <span className="text-yellow-800 font-bold text-lg">1000</span>
           <span className="text-yellow-600 text-sm">coins</span>
         </div>
@@ -338,7 +338,7 @@ export default function TypingRacePage() {
           size="sm"
           className="text-gray-600"
         >
-          {soundEnabled ? 'ðŸ”Š' : 'ðŸ”‡'} Sound
+          {soundEnabled ? '🔊' : '🔇'} Sound
         </Button>
       </div>
 
@@ -411,7 +411,7 @@ export default function TypingRacePage() {
       {/* Results */}
       {isComplete && (
         <div className="bg-green-50 border-2 border-green-200 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-green-800 mb-4">ðŸŽ‰ Race Complete!</h3>
+          <h3 className="text-xl font-bold text-green-800 mb-4">🎉 Race Complete!</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-3xl font-bold text-green-600">{stats.wpm}</div>

@@ -6,8 +6,8 @@ import "./globals.css";
 const font = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Softcode",
-  description: "Softcode – Learn, practice, and master web development.",
+  title: "Gharti Academy",
+  description: "Gharti Academy – Learn, practice, and master web development.",
 };
 
 export default function RootLayout({

@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import { Button } from "@/components/ui/button";
 import { Loader } from "lucide-react";

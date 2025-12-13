@@ -16,7 +16,7 @@ type Props = {
 
 export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
-  
+
   // If C course, show C-specific steps
   if (courseId === "c") {
     const is = (slug: string) => pathname.includes(`/lesson/lesson-3/${slug}`);
@@ -27,9 +27,9 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
       )}>
         <Link href="/learn" prefetch={false}>
           <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-            <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-            <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-              Softcode
+            <Image src="/logo.svg" height={40} width={40} alt="Mascot" />
+            <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">
+              Gharti Academy
             </h1>
           </div>
         </Link>
@@ -52,7 +52,7 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
       </div>
     );
   }
-  
+
   // Python-specific steps for lesson 3
   if (courseId === "python") {
     const is = (slug: string) => pathname.includes(`/lesson/lesson-3/${slug}`);
@@ -64,9 +64,9 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
       )}>
         <Link href="/learn" prefetch={false}>
           <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-            <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
+            <Image src="/logo.svg" height={40} width={40} alt="Mascot" />
             <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-              Softcode
+              Gharti Academy
             </h1>
           </div>
         </Link>
@@ -98,9 +98,9 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
       </div>
     );
   }
-  
+
   // Default non-C, non-Python fallback (kept but unused now)
-  
+
   // Extract step number from URL like /lesson/lesson-3/we
   let currentStep = 1;
   if (pathname.includes("/we") || pathname.includes("step-1")) {
@@ -117,11 +117,8 @@ export const Lesson3Sidebar = ({ className, courseId, lessonId }: Props) => {
       className,
     )}>
       <Link href="/learn" prefetch={false}>
-        <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-          <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Softcode
-          </h1>
+        <div className="pt-8 pb-7 flex items-center gap-x-3 -ml-2">
+          <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">Gharti Academy</h1>
         </div>
       </Link>
       <div className="flex flex-col gap-y-3 flex-1 px-2">

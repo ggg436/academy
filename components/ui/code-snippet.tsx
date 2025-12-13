@@ -64,12 +64,12 @@ export const CodeSnippet = ({ code, language = "python", title, isOutput = false
   return (
     <div className={containerClass}> 
       {!hideHeader && (
-        <div className={headerClass}>
-          <div className="flex items-center gap-2">
-            <span className={langPillClass}>{isOutput ? "output" : language}</span>
-            {title && <span className="text-xs text-neutral-700">{title}</span>}
-          </div>
-          {!isOutput && (
+      <div className={headerClass}>
+        <div className="flex items-center gap-2">
+          <span className={langPillClass}>{isOutput ? "output" : language}</span>
+          {title && <span className="text-xs text-neutral-700">{title}</span>}
+        </div>
+        {!isOutput && (
             <div className="flex items-center gap-2">
               <button onClick={handleOpenNewTab} className={copyBtnClass} aria-label="Open in new tab">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -82,11 +82,11 @@ export const CodeSnippet = ({ code, language = "python", title, isOutput = false
                 ▶ Run
               </button>
               <button onClick={onCopy} className={copyBtnClass} aria-label="Copy code">
-                {copied ? "Copied" : "Copy code"}
-              </button>
+            {copied ? "Copied" : "Copy code"}
+          </button>
             </div>
-          )}
-        </div>
+        )}
+      </div>
       )}
       <pre className={codeClass}> 
         <code>{code}</code>

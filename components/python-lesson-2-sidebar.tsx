@@ -16,15 +16,15 @@ type Props = {
 export const PythonLesson2Sidebar = ({ className, courseId, lessonId }: Props) => {
   const pathname = usePathname();
 
-  	const items = [
-	    { href: "/lesson/lesson-2/python-case-sensitivity", label: "Case Sensitivity" },
-	    { href: "/lesson/lesson-2/python-indentation", label: "Indentation" },
-	    { href: "/lesson/lesson-2/python-comments", label: "Comments" },
-	    { href: "/lesson/lesson-2/python-quotes", label: "Quotes" },
-	    { href: "/lesson/lesson-2/python-multiple-statements", label: "Multiple Statements" },
-	    { href: "/lesson/lesson-2/python-problems", label: "Problems" },
-	    { href: "/lesson/lesson-2/python-quiz", label: "Quiz" },
-	  ];
+  const items = [
+    { href: `/${courseId}/lesson-2/python-case-sensitivity`, label: "Case Sensitivity" },
+    { href: `/${courseId}/lesson-2/python-indentation`, label: "Indentation" },
+    { href: `/${courseId}/lesson-2/python-comments`, label: "Comments" },
+    { href: `/${courseId}/lesson-2/python-quotes`, label: "Quotes" },
+    { href: `/${courseId}/lesson-2/python-multiple-statements`, label: "Multiple Statements" },
+    { href: `/${courseId}/lesson-2/python-problems`, label: "Problems" },
+    { href: `/${courseId}/lesson-2/python-quiz`, label: "Quiz" },
+  ];
 
   return (
     <div className={cn(
@@ -32,11 +32,8 @@ export const PythonLesson2Sidebar = ({ className, courseId, lessonId }: Props) =
       className,
     )}>
       <Link href="/learn" prefetch={false}>
-        <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-          <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Softcode
-          </h1>
+        <div className="pt-8 pb-7 flex items-center gap-x-3 -ml-2">
+          <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">Gharti Academy</h1>
         </div>
       </Link>
 
@@ -61,4 +58,4 @@ export const PythonLesson2Sidebar = ({ className, courseId, lessonId }: Props) =
       </div>
     </div>
   );
-}; 
+};

@@ -1,50 +1,350 @@
-﻿"use client";
+"use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Loader } from "lucide-react";
+import { Loader, ChevronDown, Menu, X, BookOpen, Gamepad2, Trophy, ShoppingBag, Target, Rss, GraduationCap, Code, Video, FileText } from "lucide-react";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import { FirebaseUserButton } from "@/components/firebase-user-button";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/language-selector";
 import { useAuthModal } from "@/store/use-auth-modal";
+import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { getCourses } from "@/lib/data";
 
 export const Header = () => {
   const { user, loading } = useFirebaseAuth();
   const { open } = useAuthModal();
-  
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const courses = getCourses();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navigationLinks = [
+    { href: "/learn", label: "Learn", icon: GraduationCap },
+    { href: "/games", label: "Games", icon: Gamepad2 },
+    { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
+    { href: "/shop", label: "Shop", icon: ShoppingBag },
+    { href: "/quests", label: "Quests", icon: Target },
+    { href: "/feeds", label: "Feeds", icon: Rss },
+  ];
+
   return (
-    <header className="h-20 w-full border-b-2 border-slate-200 px-4">
-      <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
-        <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
-          <Image src="/mascot.svg" height={40} width={40} alt="Mascot" />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Softcode
+    <header
+      className={`fixed top-0 left-0 right-0 z-[100] h-20 w-full px-4 sm:px-6 transition-shadow duration-300 bg-white ${scrolled ? 'shadow-md' : 'border-b border-slate-200'
+        }`}
+      style={{ 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        width: '100%',
+        transform: 'translateZ(0)',
+        WebkitTransform: 'translateZ(0)',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+      }}
+    >
+      <div className="max-w-screen-xl mx-auto flex items-center justify-between h-full relative w-full">
+        {/* Logo and Brand */}
+        <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+          <h1 className="text-xl sm:text-2xl font-bold text-green-600 tracking-tight">
+            Gharti Academy
           </h1>
-        </div>
-        <div className="flex items-center gap-4">
-          <LanguageSelector />
-          {loading ? (
-            <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-          ) : user ? (
-            <FirebaseUserButton />
-          ) : (
-            <div className="flex items-center gap-2">
+        </Link>
+
+        {/* Center Navigation - Hidden on mobile */}
+        <nav className="hidden lg:flex items-center gap-6">
+          {/* Courses Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button 
+                className="flex items-center gap-1 text-neutral-700 hover:text-neutral-900 font-medium transition-colors outline-none focus:outline-none focus-visible:outline-none"
+                type="button"
+              >
+                Courses
+                <ChevronDown className="h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56">
+              <DropdownMenuLabel>Available Courses</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link href="/courses">
+                <DropdownMenuItem className="cursor-pointer">
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  All Courses
+                </DropdownMenuItem>
+              </Link>
+              {courses.map((course) => (
+                <Link key={course.id} href={`/${course.id}`}>
+                  <DropdownMenuItem className="cursor-pointer">
+                    <Code className="mr-2 h-4 w-4" />
+                    {course.title}
+                  </DropdownMenuItem>
+                </Link>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Learn Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button 
+                className="flex items-center gap-1 text-neutral-700 hover:text-neutral-900 font-medium transition-colors outline-none focus:outline-none focus-visible:outline-none"
+                type="button"
+              >
+                Learn
+                <ChevronDown className="h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56">
+              <DropdownMenuLabel>Learning Resources</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link href="/learn">
+                <DropdownMenuItem className="cursor-pointer">
+                  <GraduationCap className="mr-2 h-4 w-4" />
+                  Start Learning
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/courses">
+                <DropdownMenuItem className="cursor-pointer">
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  Browse Courses
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/videos">
+                <DropdownMenuItem className="cursor-pointer">
+                  <Video className="mr-2 h-4 w-4" />
+                  Video Tutorials
+                </DropdownMenuItem>
+              </Link>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Direct Links */}
+          <Link href="/games" className="text-neutral-700 hover:text-neutral-900 font-medium transition-colors">
+            Games
+          </Link>
+          <Link href="/leaderboard" className="text-neutral-700 hover:text-neutral-900 font-medium transition-colors">
+            Leaderboard
+          </Link>
+
+          {/* Resources Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button 
+                className="flex items-center gap-1 text-neutral-700 hover:text-neutral-900 font-medium transition-colors outline-none focus:outline-none focus-visible:outline-none"
+                type="button"
+              >
+                Resources
+                <ChevronDown className="h-4 w-4" />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-56">
+              <DropdownMenuLabel>Resources</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <Link href="/shop">
+                <DropdownMenuItem className="cursor-pointer">
+                  <ShoppingBag className="mr-2 h-4 w-4" />
+                  Shop
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/quests">
+                <DropdownMenuItem className="cursor-pointer">
+                  <Target className="mr-2 h-4 w-4" />
+                  Quests
+                </DropdownMenuItem>
+              </Link>
+              <Link href="/feeds">
+                <DropdownMenuItem className="cursor-pointer">
+                  <Rss className="mr-2 h-4 w-4" />
+                  Community Feeds
+                </DropdownMenuItem>
+              </Link>
+              <DropdownMenuSeparator />
+              <Link href="/quizes">
+                <DropdownMenuItem className="cursor-pointer">
+                  <FileText className="mr-2 h-4 w-4" />
+                  Quizzes
+                </DropdownMenuItem>
+              </Link>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </nav>
+
+        {/* Right Actions */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="hidden sm:block">
+            <LanguageSelector />
+          </div>
+
+          {/* Mobile Menu Button */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="lg:hidden">
               <Button 
                 variant="ghost" 
-                size="sm"
-                onClick={() => open("login")}
+                size="sm" 
+                className="p-2 outline-none focus:outline-none focus-visible:outline-none"
+                type="button"
               >
-                Sign In
+                <Menu className="h-5 w-5" />
               </Button>
-              <Button 
-                variant="secondary" 
-                size="sm"
-                onClick={() => open("signup")}
-              >
-                Get Started
-              </Button>
-            </div>
-          )}
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetHeader>
+                <SheetTitle className="text-left">Menu</SheetTitle>
+              </SheetHeader>
+              <div className="mt-6 flex flex-col gap-4">
+                {/* Mobile Language Selector */}
+                <div className="sm:hidden">
+                  <LanguageSelector />
+                </div>
+
+                {/* Mobile Navigation Links */}
+                <div className="flex flex-col gap-2">
+                  <div className="space-y-1">
+                    <p className="px-2 text-sm font-semibold text-neutral-500">Courses</p>
+                    <Link href="/courses" onClick={() => setMobileMenuOpen(false)}>
+                      <div className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-neutral-100 transition-colors">
+                        <BookOpen className="h-4 w-4" />
+                        <span>All Courses</span>
+                      </div>
+                    </Link>
+                    {courses.map((course) => (
+                      <Link key={course.id} href={`/${course.id}`} onClick={() => setMobileMenuOpen(false)}>
+                        <div className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-neutral-100 transition-colors">
+                          <Code className="h-4 w-4" />
+                          <span>{course.title}</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className="space-y-1 pt-2">
+                    <p className="px-2 text-sm font-semibold text-neutral-500">Learn</p>
+                    {[
+                      { href: "/learn", label: "Start Learning", icon: GraduationCap },
+                      { href: "/courses", label: "Browse Courses", icon: BookOpen },
+                      { href: "/videos", label: "Video Tutorials", icon: Video },
+                    ].map((item) => (
+                      <Link key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)}>
+                        <div className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-neutral-100 transition-colors">
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.label}</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className="space-y-1 pt-2">
+                    <p className="px-2 text-sm font-semibold text-neutral-500">Resources</p>
+                    {navigationLinks.map((item) => (
+                      <Link key={item.href} href={item.href} onClick={() => setMobileMenuOpen(false)}>
+                        <div className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-neutral-100 transition-colors">
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.label}</span>
+                        </div>
+                      </Link>
+                    ))}
+                    <Link href="/quizes" onClick={() => setMobileMenuOpen(false)}>
+                      <div className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-neutral-100 transition-colors">
+                        <FileText className="h-4 w-4" />
+                        <span>Quizzes</span>
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Mobile Auth Buttons */}
+                <div className="pt-4 border-t">
+                  {loading ? (
+                    <div className="flex justify-center py-2">
+                      <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
+                    </div>
+                  ) : user ? (
+                    <div className="flex justify-center">
+                      <FirebaseUserButton />
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          open("login");
+                        }}
+                        className="w-full"
+                      >
+                        Log in
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                          open("signup");
+                        }}
+                        className="w-full relative overflow-hidden animate-air-flow"
+                      >
+                        <span className="relative z-10">GET STARTED - IT'S FREE</span>
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          {/* Desktop Auth */}
+          <div className="hidden lg:flex items-center gap-3">
+            {loading ? (
+              <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
+            ) : user ? (
+              <FirebaseUserButton />
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => open("login")}
+                  className="font-medium"
+                >
+                  Log in
+                </Button>
+                <Button
+                  size="sm"
+                  variant="secondary"
+                  onClick={() => open("signup")}
+                  className="px-5 relative overflow-hidden animate-air-flow"
+                >
+                  <span className="relative z-10">GET STARTED - IT'S FREE</span>
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>

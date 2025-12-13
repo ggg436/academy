@@ -21,7 +21,7 @@ export function useTextSelection() {
           y: rect.bottom + window.scrollY + 10
         });
         setSelectedText(text);
-        setShowExplanation(true);
+        setShowExplanation(true); // Show popup directly
       }
     } else {
       setShowExplanation(false);

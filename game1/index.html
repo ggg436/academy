@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-Rex Dino Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🦖 T-Rex Chrome Dino Game</h1>
+            <p class="subtitle">Answer coding questions to make the dino jump!</p>
+        </div>
+
+        <div class="game-wrapper">
+            <!-- Quiz Question Panel -->
+            <div id="questionPanel" class="question-panel hidden">
+                <div class="question-text" id="questionText">Loading question...</div>
+                <div class="options-grid">
+                    <button class="option-btn" data-index="0"></button>
+                    <button class="option-btn" data-index="1"></button>
+                    <button class="option-btn" data-index="2"></button>
+                    <button class="option-btn" data-index="3"></button>
+                </div>
+                <div class="feedback-message" id="feedbackMessage"></div>
+            </div>
+
+            <canvas id="gameCanvas"></canvas>
+
+            <div id="startScreen" class="overlay">
+                <div class="overlay-content">
+                    <h2>🎮 Ready to Play?</h2>
+                    <p>Answer coding questions to make the dino jump!</p>
+                    <p class="start-hint">Click <strong>Start Game</strong> to begin</p>
+                    <button id="startBtn" class="btn">Start Game</button>
+                    <div class="high-score">High Score: <span id="highScoreDisplay">0</span></div>
+                </div>
+            </div>
+
+            <div id="gameOverScreen" class="overlay hidden">
+                <div class="overlay-content">
+                    <h2>💀 Game Over!</h2>
+                    <div class="score-display">
+                        <p>Score: <span id="finalScore">0</span></p>
+                        <p>High Score: <span id="finalHighScore">0</span></p>
+                    </div>
+                    <button id="restartBtn" class="btn">Play Again</button>
+                </div>
+            </div>
+
+            <div class="score-container">
+                <div class="score">Score: <span id="currentScore">0</span></div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>🎯 How to Play</h3>
+            <ul>
+                <li>📝 Answer coding questions to make the dino jump</li>
+                <li>✅ Click the correct answer → Dino jumps</li>
+                <li>❌ Wrong answer → No jump, try again</li>
+                <li>🦖 Avoid cacti to keep running</li>
+                <li>📈 Game speed increases over time</li>
+                <li>🏆 Beat your high score!</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>

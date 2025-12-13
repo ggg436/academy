@@ -1,8 +1,9 @@
-﻿"use client";
+"use client";
 
 import { ReactNode } from "react";
 import { FirebaseAuthProvider } from "@/contexts/firebase-auth-context";
 import { LanguageProvider } from "@/contexts/language-context";
+import { SettingsProvider } from "@/contexts/settings-context";
 import { Toaster } from "@/components/ui/sonner";
 import { ExitModal } from "@/components/modals/exit-modal";
 import { HeartsModal } from "@/components/modals/hearts-modal";
@@ -22,21 +23,23 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <FirebaseAuthProvider>
       <LanguageProvider>
-        <Toaster />
-        <ExitModal />
-        <HeartsModal />
-        <PracticeModal />
-        <AuthModal />
-        <TextSelectionProvider>
-          {children}
-        </TextSelectionProvider>
-        <Chatbot />
-        <FirebaseAnalytics />
-        <TextSelectionInstructions />
-        {/* Mobile floating language selector above help button */}
-        <div className="fixed bottom-20 left-5 z-40 lg:hidden">
-          <LanguageSelector />
-        </div>
+        <SettingsProvider>
+          <Toaster />
+          <ExitModal />
+          <HeartsModal />
+          <PracticeModal />
+          <AuthModal />
+          <TextSelectionProvider>
+            {children}
+          </TextSelectionProvider>
+          <Chatbot />
+          <FirebaseAnalytics />
+          <TextSelectionInstructions />
+          {/* Mobile floating language selector above help button */}
+          <div className="fixed bottom-20 left-5 z-40 lg:hidden">
+            <LanguageSelector />
+          </div>
+        </SettingsProvider>
       </LanguageProvider>
     </FirebaseAuthProvider>
   );

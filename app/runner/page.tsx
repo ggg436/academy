@@ -42,9 +42,9 @@ function RunnerInner() {
       </div>
       <div className="max-w-6xl mx-auto px-4 pb-8">
         {lang === "c" ? (
-          <CCodeRunner initialCode={initialCode || "#include <stdio.h>\n\nint main(){\n  printf(\"Hello C\\n\");\n  return 0;\n}"} height={600} />
+          <CCodeRunner initialCode={initialCode || "#include <stdio.h>\n\nint main(){\n  printf(\"Hello C\\n\");\n  return 0;\n}"} height={420} />
         ) : (
-          <PythonCodeRunner initialCode={initialCode || "print('Hello, Python!')"} height={600} />
+          <PythonCodeRunner initialCode={initialCode || "print('Hello, Python!')"} height={420} />
         )}
       </div>
     </div>
