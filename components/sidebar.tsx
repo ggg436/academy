@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { FirebaseUserButton } from "@/components/firebase-user-button";
+
 import { cn } from "@/lib/utils";
 import { SidebarItem } from "./sidebar-item";
 import { memo } from "react";
+import { Logo } from "./logo";
 
 type Props = {
   className?: string;
@@ -17,9 +17,9 @@ const SidebarComp = ({ className }: Props) => {
       "hidden lg:flex h-full lg:w-[256px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col",
       className,
     )}>
-      <Link href="/learn" prefetch={false}>
-        <div className="pt-8 pb-7 flex items-center gap-x-3 -ml-2">
-          <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">Gharti Academy</h1>
+      <Link href="/learn">
+        <div className="pt-8 pl-4 pb-4">
+          <Logo />
         </div>
       </Link>
       <div className="flex flex-col gap-y-2 flex-1">
@@ -68,9 +68,6 @@ const SidebarComp = ({ className }: Props) => {
           href="/feeds"
           iconSrc="/learn.svg"
         />
-      </div>
-      <div className="p-4 pt-2 mb-6">
-        <FirebaseUserButton />
       </div>
     </div>
   );

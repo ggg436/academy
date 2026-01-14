@@ -41,6 +41,20 @@ export function FirebaseUserButton() {
       .slice(0, 2);
   };
 
+  // Generate random avatar for anonymous users using DiceBear API
+  const getAvatarUrl = () => {
+    if (user.photoURL) {
+      return user.photoURL;
+    }
+    // For anonymous users, generate a random avatar based on their UID
+    // This ensures the same user always gets the same avatar
+    if (user.isAnonymous && user.uid) {
+      // Using DiceBear's avataaars style - you can change 'avataaars' to other styles like 'adventurer', 'big-smile', etc.
+      return `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`;
+    }
+    return undefined;
+  };
+
   return (
     <div className="relative" ref={dropdownRef}>
       <Button
@@ -50,8 +64,8 @@ export function FirebaseUserButton() {
         onClick={() => setShowDropdown(!showDropdown)}
       >
         <Avatar className="h-8 w-8">
-          <AvatarImage src={user.photoURL || undefined} alt={user.displayName || "User"} />
-          <AvatarFallback className="bg-green-100 text-green-600 text-xs font-semibold">
+          <AvatarImage src={getAvatarUrl()} alt={user.displayName || "User"} />
+          <AvatarFallback className="bg-gray-100 text-gray-600 text-xs font-semibold">
             {getInitials(user.displayName)}
           </AvatarFallback>
         </Avatar>

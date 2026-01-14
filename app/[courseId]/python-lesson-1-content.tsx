@@ -1066,15 +1066,41 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
               </h3>
 
               {/* Learning Objectives */}
-              <section className="space-y-3">
-                <h4 className="text-2xl font-semibold text-neutral-800">🎯 Learning Objectives</h4>
-                <ul className="list-disc pl-6 text-neutral-700 space-y-2">
-                  <li>Understand what programming actually means in simple terms</li>
-                  <li>Learn how computers "think" vs how humans think</li>
-                  <li>Discover why programming is like giving perfect instructions</li>
-                  <li>Get excited about the problems YOU will solve with code</li>
-                </ul>
-              </section>
+              {/* Learning Objectives */}
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="p-2 bg-indigo-100 rounded-lg text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>
+                  </div>
+                  <h3 className="text-xl font-bold text-neutral-800">Learning Objectives</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-green-500"><polyline points="20 6 9 17 4 12" /></svg>
+                    </div>
+                    <span className="text-neutral-700 font-medium text-sm">Understand programming in simple terms</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-green-500"><polyline points="20 6 9 17 4 12" /></svg>
+                    </div>
+                    <span className="text-neutral-700 font-medium text-sm">Computers "think" vs human thinking</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-green-500"><polyline points="20 6 9 17 4 12" /></svg>
+                    </div>
+                    <span className="text-neutral-700 font-medium text-sm">Giving perfect instructions</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-100">
+                    <div className="h-6 w-6 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-green-500"><polyline points="20 6 9 17 4 12" /></svg>
+                    </div>
+                    <span className="text-neutral-700 font-medium text-sm">Solving problems with code</span>
+                  </div>
+                </div>
+              </div>
 
               {/* Quick Motivation Boost */}
               <section className="space-y-3 bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border border-blue-200">
@@ -1215,7 +1241,7 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
                       ))}
                     </div>
                     <div className="mt-6 p-4 rounded-xl border border-slate-200 bg-slate-50">
-                      <p className="text-sm text-neutral-700 flex items-start gap-3">
+                      <div className="text-sm text-neutral-700 flex items-start gap-3">
                         <span className="text-lg">💡</span>
                         <span>
                           <strong className="text-neutral-800">Think:</strong> Are your instructions clear enough?
@@ -1225,7 +1251,7 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
                             <li>What if the robot doesn't know what "square" means?</li>
                           </ul>
                         </span>
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -3826,8 +3852,8 @@ print("TOTAL: $", total)`}
                             <div
                               key={i}
                               className={`p-4 rounded-xl border-2 transition-all ${item.isCorrect
-                                  ? 'bg-green-50 border-green-300'
-                                  : 'bg-slate-50 border-slate-200'
+                                ? 'bg-green-50 border-green-300'
+                                : 'bg-slate-50 border-slate-200'
                                 }`}
                             >
                               <div className="flex items-center justify-between">
@@ -3860,8 +3886,8 @@ print("TOTAL: $", total)`}
                             <div
                               key={i}
                               className={`p-4 rounded-xl border-2 transition-all ${item.isCorrect
-                                  ? 'bg-purple-50 border-purple-300'
-                                  : 'bg-slate-50 border-slate-200'
+                                ? 'bg-purple-50 border-purple-300'
+                                : 'bg-slate-50 border-slate-200'
                                 }`}
                             >
                               <div className="flex items-center justify-between">
@@ -3894,15 +3920,15 @@ print("TOTAL: $", total)`}
                             <div
                               key={i}
                               className={`p-4 rounded-xl border-2 ${item.isTrue
-                                  ? 'bg-green-50 border-green-200'
-                                  : 'bg-red-50 border-red-200'
+                                ? 'bg-green-50 border-green-200'
+                                : 'bg-red-50 border-red-200'
                                 }`}
                             >
                               <div className="flex items-center justify-between">
                                 <span className="text-neutral-700">{item.statement}</span>
                                 <span className={`font-bold px-3 py-1 rounded-full text-sm ${item.isTrue
-                                    ? 'bg-green-200 text-green-800'
-                                    : 'bg-red-200 text-red-800'
+                                  ? 'bg-green-200 text-green-800'
+                                  : 'bg-red-200 text-red-800'
                                   }`}>
                                   {item.isTrue ? '✅ TRUE' : '❌ FALSE'}
                                 </span>

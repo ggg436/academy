@@ -3,7 +3,6 @@ import Image from "next/image";
 import { InfinityIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import UserRingClient from "@/components/user-ring.client";
 
 type Course = {
   id: string;
@@ -38,7 +37,6 @@ export const UserProgress = ({
         </Button>
       </Link>
       <div className="flex items-center gap-3">
-        <UserRingClient courseId={activeCourse.id} />
         <Link href="/shop">
           <Button variant="ghost" className="text-orange-500">
             <Image src="/points.svg" height={28} width={28} alt="Points" className="mr-2" />

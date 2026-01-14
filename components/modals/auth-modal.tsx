@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuthModal } from "@/store/use-auth-modal";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
+import { Logo } from "@/components/logo";
 
 export const AuthModal = () => {
   const [isClient, setIsClient] = useState(false);
@@ -101,9 +102,8 @@ export const AuthModal = () => {
       <DialogContent className="max-w-md">
         <DialogHeader>
           <div className="flex items-center justify-center mb-4">
-            <div className="flex items-center gap-2">
-              <Image src="/logo.svg" alt="Mascot" height={32} width={32} />
-              <span className="text-lg font-bold text-green-600">Gharti Academy</span>
+            <div className="flex items-center gap-2 justify-center">
+              <Logo />
             </div>
           </div>
 

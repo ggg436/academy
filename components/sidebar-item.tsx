@@ -19,7 +19,11 @@ const SidebarItemComp = ({
   href,
 }: Props) => {
   const pathname = usePathname();
-  const active = pathname === href;
+  // For /learn, match /learn and any sub-paths like /learn/...
+  // For other paths, use exact match
+  const active = href === "/learn" 
+    ? pathname === href || pathname?.startsWith(`${href}/`)
+    : pathname === href;
 
   return (
     <Button

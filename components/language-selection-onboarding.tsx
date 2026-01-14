@@ -11,30 +11,16 @@ const languages = [
   { 
     code: "en", 
     name: "English", 
-    flag: "🇺🇸",
+    flagClass: "fi fi-us",
     learners: "49M learners",
     description: "Learn programming in English"
   },
   { 
     code: "ne", 
     name: "Nepali", 
-    flag: "🇳🇵",
+    flagClass: "fi fi-np",
     learners: "12M learners",
     description: "नेपालीमा प्रोग्रामिङ सिक्नुहोस्"
-  },
-  { 
-    code: "mai", 
-    name: "Maithili", 
-    flag: "🇮🇳",
-    learners: "8M learners",
-    description: "मैथिलीमा प्रोग्रामिङ सिक्नुहोस्"
-  },
-  { 
-    code: "new", 
-    name: "Newari", 
-    flag: "🇳🇵",
-    learners: "5M learners",
-    description: "नेवारीमा प्रोग्रामिङ सिक्नुहोस्"
   },
 ];
 
@@ -132,7 +118,7 @@ export function LanguageSelectionOnboarding() {
                     }`}
                   >
                     <div className="flex items-start gap-3">
-                      <span className="text-4xl">{lang.flag}</span>
+                      <span className={`${lang.flagClass} text-4xl`}></span>
                       <div className="flex-1">
                         <h3 className="font-bold text-lg text-gray-800 mb-1">
                           {lang.name}

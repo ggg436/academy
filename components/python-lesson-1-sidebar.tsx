@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FirebaseUserButton } from "@/components/firebase-user-button";
+import { Logo } from "@/components/logo";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -42,9 +43,9 @@ export const PythonLesson1Sidebar = ({ className, courseId, lessonId }: Props) =
       "hidden lg:flex h-full lg:w-[280px] lg:fixed left-0 top-0 px-6 border-r-2 flex-col",
       className,
     )}>
-      <Link href="/learn" prefetch={false}>
-        <div className="pt-8 pb-7 flex items-center gap-x-3 -ml-2">
-          <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">Gharti Academy</h1>
+      <Link href="/learn">
+        <div className="pt-8 pl-4 pb-4">
+          <Logo />
         </div>
       </Link>
       <div className="flex flex-col gap-y-3 flex-1 px-2">

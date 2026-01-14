@@ -99,6 +99,18 @@ export default function SettingsPage() {
       .slice(0, 2);
   };
 
+  // Generate random avatar for anonymous users using DiceBear API
+  const getAvatarUrl = () => {
+    if (user?.photoURL) {
+      return user.photoURL;
+    }
+    // For anonymous users, generate a random avatar based on their UID
+    if (user?.isAnonymous && user?.uid) {
+      return `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`;
+    }
+    return undefined;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 py-8 px-4 flex items-center justify-center">
@@ -138,7 +150,7 @@ export default function SettingsPage() {
           <CardContent className="space-y-6">
             <div className="flex items-center gap-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage src={user.photoURL || undefined} alt={user.displayName || "User"} />
+                <AvatarImage src={getAvatarUrl()} alt={user.displayName || "User"} />
                 <AvatarFallback className="bg-green-100 text-green-600 text-lg font-semibold">
                   {getInitials(user.displayName)}
                 </AvatarFallback>
@@ -169,10 +181,18 @@ export default function SettingsPage() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="en">English</SelectItem>
-                    <SelectItem value="ne">नेपाली (Nepali)</SelectItem>
-                    <SelectItem value="mai">मैथिली (Maithili)</SelectItem>
-                    <SelectItem value="new">नेवारी (Newari)</SelectItem>
+                    <SelectItem value="en">
+                      <span className="flex items-center gap-2">
+                        <span className="fi fi-us"></span>
+                        <span>English</span>
+                      </span>
+                    </SelectItem>
+                    <SelectItem value="ne">
+                      <span className="flex items-center gap-2">
+                        <span className="fi fi-np"></span>
+                        <span>नेपाली (Nepali)</span>
+                      </span>
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>

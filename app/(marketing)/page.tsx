@@ -372,7 +372,7 @@ function FirebaseAuthWrapper({ continueLabel, getStartedLabel }: { continueLabel
   if (user) {
     return (
       <Button size="lg" variant="secondary" className="w-full" asChild>
-        <Link href="/learn">
+        <Link href="/learn" prefetch={false}>
           {continueLabel}
         </Link>
       </Button>

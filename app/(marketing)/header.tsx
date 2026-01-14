@@ -2,13 +2,15 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Loader, ChevronDown, Menu, X, BookOpen, Gamepad2, Trophy, ShoppingBag, Target, Rss, GraduationCap, Code, Video, FileText } from "lucide-react";
+import { Loader, ChevronDown, Menu, X, BookOpen, Gamepad2, Trophy, ShoppingBag, Target, Rss, GraduationCap, Code, Video, FileText, Users } from "lucide-react";
 import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import { FirebaseUserButton } from "@/components/firebase-user-button";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/language-selector";
 import { useAuthModal } from "@/store/use-auth-modal";
+import { useTeamModal } from "@/store/use-team-modal";
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,6 +31,7 @@ import { getCourses } from "@/lib/data";
 export const Header = () => {
   const { user, loading } = useFirebaseAuth();
   const { open } = useAuthModal();
+  const { open: openTeam } = useTeamModal();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const courses = getCourses();
@@ -55,7 +58,7 @@ export const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-[100] h-20 w-full px-4 sm:px-6 transition-shadow duration-300 bg-white ${scrolled ? 'shadow-md' : 'border-b border-slate-200'
         }`}
-      style={{ 
+      style={{
         position: 'fixed',
         top: 0,
         left: 0,
@@ -70,9 +73,7 @@ export const Header = () => {
       <div className="max-w-screen-xl mx-auto flex items-center justify-between h-full relative w-full">
         {/* Logo and Brand */}
         <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-          <h1 className="text-xl sm:text-2xl font-bold text-green-600 tracking-tight">
-            Gharti Academy
-          </h1>
+          <Logo />
         </Link>
 
         {/* Center Navigation - Hidden on mobile */}
@@ -80,7 +81,7 @@ export const Header = () => {
           {/* Courses Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button 
+              <button
                 className="flex items-center gap-1 text-neutral-700 hover:text-neutral-900 font-medium transition-colors outline-none focus:outline-none focus-visible:outline-none"
                 type="button"
               >
@@ -111,7 +112,7 @@ export const Header = () => {
           {/* Learn Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button 
+              <button
                 className="flex items-center gap-1 text-neutral-700 hover:text-neutral-900 font-medium transition-colors outline-none focus:outline-none focus-visible:outline-none"
                 type="button"
               >
@@ -150,11 +151,14 @@ export const Header = () => {
           <Link href="/leaderboard" className="text-neutral-700 hover:text-neutral-900 font-medium transition-colors">
             Leaderboard
           </Link>
+          <Link href="/team" className="text-neutral-700 hover:text-neutral-900 font-medium transition-colors">
+            Our Team
+          </Link>
 
           {/* Resources Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button 
+              <button
                 className="flex items-center gap-1 text-neutral-700 hover:text-neutral-900 font-medium transition-colors outline-none focus:outline-none focus-visible:outline-none"
                 type="button"
               >
@@ -203,9 +207,9 @@ export const Header = () => {
           {/* Mobile Menu Button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild className="lg:hidden">
-              <Button 
-                variant="ghost" 
-                size="sm" 
+              <Button
+                variant="ghost"
+                size="sm"
                 className="p-2 outline-none focus:outline-none focus-visible:outline-none"
                 type="button"
               >
@@ -274,6 +278,12 @@ export const Header = () => {
                         <span>Quizzes</span>
                       </div>
                     </Link>
+                    <Link href="/team" onClick={() => setMobileMenuOpen(false)}>
+                      <div className="flex items-center gap-2 px-2 py-2 rounded-md hover:bg-neutral-100 transition-colors">
+                        <Users className="h-4 w-4" />
+                        <span>Our Team</span>
+                      </div>
+                    </Link>
                   </div>
                 </div>
 
@@ -290,7 +300,7 @@ export const Header = () => {
                   ) : (
                     <div className="flex flex-col gap-2">
                       <Button
-                        variant="outline"
+                        variant="primaryOutline"
                         size="sm"
                         onClick={() => {
                           setMobileMenuOpen(false);

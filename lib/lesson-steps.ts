@@ -2,10 +2,6 @@ export function getTotalStepsForLesson(lessonId: string): number {
   // Known step counts for current curriculum
   if (lessonId === "lesson-1") return 10; // HTML lesson 1
   // Python Lesson 1 overrides handled in page component; default counts remain here
-  if (lessonId === "lesson-2") return 5;
-  if (lessonId === "lesson-3") return 2;
-  if (lessonId === "lesson-4") return 2;
-  if (lessonId === "lesson-5") return 2;
   return 1;
 }
 
@@ -39,29 +35,6 @@ export function getCurrentLessonAndStepFromPath(pathname: string): { lessonId: s
         "c-introduction": 1,
         "c-fundamentals": 2,
       };
-      return { lessonId, step: map[stepId] || 1 };
-    }
-    if (lessonId === "lesson-2") {
-      const map: Record<string, number> = {
-        hi: 1, hlo: 2,
-        "pointers-tutorial": 1,
-        "examples-in-each-chapter": 2,
-        "pointers-exercises": 3,
-        "pointers-quiz": 4,
-        "pointers-reference": 5,
-      };
-      return { lessonId, step: map[stepId] || 1 };
-    }
-    if (lessonId === "lesson-3") {
-      const map: Record<string, number> = { we: 1, gue: 2 };
-      return { lessonId, step: map[stepId] || 1 };
-    }
-    if (lessonId === "lesson-4") {
-      const map: Record<string, number> = { "html-attributes": 1, "html-attributes-advanced": 2 };
-      return { lessonId, step: map[stepId] || 1 };
-    }
-    if (lessonId === "lesson-5") {
-      const map: Record<string, number> = { "html-structure": 1, "html-structure-advanced": 2 };
       return { lessonId, step: map[stepId] || 1 };
     }
     return { lessonId, step: 1 };

@@ -1,14 +1,12 @@
 "use client";
 import { useState } from "react";
-import { ChevronDown, Globe } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/language-context";
 
 const languages = [
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "ne", name: "Nepali", flag: "🇳🇵" },
-  { code: "mai", name: "Maithili", flag: "🇮🇳" },
-  { code: "new", name: "Newari", flag: "🇳🇵" },
+  { code: "en", name: "English", flagClass: "fi fi-us" },
+  { code: "ne", name: "Nepali", flagClass: "fi fi-np" },
 ];
 
 export const LanguageSelector = () => {
@@ -29,11 +27,14 @@ export const LanguageSelector = () => {
         variant="ghost"
         size="sm"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900"
+        className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-gray-900 normal-case"
       >
-        <Globe className="h-4 w-4" />
-        <span>{selectedLanguage.flag}</span>
-        <span>{selectedLanguage.name}</span>
+        <span 
+          className={`${selectedLanguage.flagClass} text-base`}
+          role="img"
+          aria-label={`${selectedLanguage.name} flag`}
+        />
+        <span className="normal-case">{selectedLanguage.name}</span>
         <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </Button>
       
@@ -44,12 +45,16 @@ export const LanguageSelector = () => {
               <button
                 key={language.code}
                 onClick={() => handleLanguageChange(language.code)}
-                className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-3 ${
+                className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 flex items-center gap-3 normal-case ${
                   selectedLanguage.code === language.code ? 'bg-green-50 text-green-700' : 'text-gray-700'
                 }`}
               >
-                <span className="text-lg">{language.flag}</span>
-                <span>{language.name}</span>
+                <span 
+                  className={`${language.flagClass} text-lg`}
+                  role="img"
+                  aria-label={`${language.name} flag`}
+                />
+                <span className="normal-case">{language.name}</span>
                 {selectedLanguage.code === language.code && (
                   <span className="ml-auto text-green-600">✓</span>
                 )}

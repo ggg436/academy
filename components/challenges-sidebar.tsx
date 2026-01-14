@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FirebaseUserButton } from "@/components/firebase-user-button";
+import { Logo } from "@/components/logo";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -51,8 +52,8 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
       className,
     )}>
       <Link href="/learn">
-        <div className="pt-8 pb-7 flex items-center gap-x-3 -ml-2">
-          <h1 className="text-3xl font-extrabold text-green-600 tracking-wide whitespace-nowrap">Gharti Academy</h1>
+        <div className="pt-8 pl-4 pb-4">
+          <Logo />
         </div>
       </Link>
       <div className="flex flex-col gap-y-3 flex-1 px-2">

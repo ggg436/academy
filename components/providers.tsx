@@ -14,6 +14,7 @@ import FirebaseAnalytics from "@/components/firebase-analytics";
 import { TextSelectionProvider } from "@/hooks/use-text-selection";
 import { TextSelectionInstructions } from "@/components/text-selection-instructions";
 import { LanguageSelector } from "@/components/language-selector";
+import { TeamPopup } from "@/components/modals/team-popup";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -35,6 +36,7 @@ export function Providers({ children }: ProvidersProps) {
           <Chatbot />
           <FirebaseAnalytics />
           <TextSelectionInstructions />
+          <TeamPopup />
           {/* Mobile floating language selector above help button */}
           <div className="fixed bottom-20 left-5 z-40 lg:hidden">
             <LanguageSelector />

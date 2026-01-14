@@ -1,18 +1,20 @@
 ﻿import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics, isSupported, Analytics } from "firebase/analytics";
-import { 
-  getAuth, 
-  Auth, 
-  signInWithPopup, 
-  GoogleAuthProvider, 
-  signOut, 
-  onAuthStateChanged, 
+import {
+  getAuth,
+  Auth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  onAuthStateChanged,
   User,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signInAnonymously,
   updateProfile
 } from "firebase/auth";
+import { getStorage, FirebaseStorage } from "firebase/storage";
+import { getFirestore, Firestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAaoxkTKghZiNxxVzPuk7dPezYG6j50i8E",
@@ -36,6 +38,18 @@ export function getFirebaseAuth(): Auth | null {
   if (typeof window === "undefined") return null;
   const app = getFirebaseApp();
   return app ? getAuth(app) : null;
+}
+
+export function getFirebaseStorage(): FirebaseStorage | null {
+  if (typeof window === "undefined") return null;
+  const app = getFirebaseApp();
+  return app ? getStorage(app) : null;
+}
+
+export function getFirebaseFirestore(): Firestore | null {
+  if (typeof window === "undefined") return null;
+  const app = getFirebaseApp();
+  return app ? getFirestore(app) : null;
 }
 
 export async function signInWithGoogle(): Promise<User | null> {
@@ -71,12 +85,12 @@ export async function signUpWithEmail(email: string, password: string, displayNa
     if (!auth) return null;
 
     const result = await createUserWithEmailAndPassword(auth, email, password);
-    
+
     // Update profile with display name if provided
     if (displayName && result.user) {
       await updateProfile(result.user, { displayName });
     }
-    
+
     return result.user;
   } catch (error) {
     console.error("Email sign-up error:", error);

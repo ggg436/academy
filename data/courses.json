@@ -17,23 +17,8 @@
             },
             {
               "id": "lesson-2",
-              "title": "Syntax & Variables",
+              "title": "Python Basics",
               "order": 2
-            },
-            {
-              "id": "lesson-3",
-              "title": "Control Flow",
-              "order": 3
-            },
-            {
-              "id": "lesson-4",
-              "title": "Python Operators",
-              "order": 4
-            },
-            {
-              "id": "lesson-5",
-              "title": "Data Structures",
-              "order": 5
             }
           ]
         }
