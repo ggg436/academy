@@ -22,6 +22,8 @@ const LessonPage = async ({ params }: Props) => {
       redirect(`/${courseId}/${params.lessonId}/python-variables`);
     } else if (params.lessonId === "lesson-4") {
       redirect(`/${courseId}/${params.lessonId}/python-operators-intro`);
+    } else if (params.lessonId === "lesson-5") {
+      redirect(`/${courseId}/${params.lessonId}/python-comments-intro`);
     } else {
       redirect(`/${courseId}/${params.lessonId}/step-1`);
     }

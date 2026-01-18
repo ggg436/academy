@@ -6,7 +6,7 @@ import { useLanguage } from "@/contexts/language-context";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import CCodeRunner from "@/components/c-code-runner";
 import { CodeSnippet } from "@/components/ui/code-snippet";
-import { saveLessonCompleteServer } from "@/actions/progress";
+import { saveLessonCompleteWithLocal } from "@/lib/progress-client-actions";
 
 export const CLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle: string; currentStep: number }) => {
   const [showCongratulations, setShowCongratulations] = useState(false);
@@ -18,7 +18,8 @@ export const CLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle: str
   const handleFinishLesson = async () => {
     try {
       setIsCompleting(true);
-      await saveLessonCompleteServer("c", "lesson-1", 25);
+      // Mark lesson as completed (saves to both DB and localStorage)
+      await saveLessonCompleteWithLocal("c", "lesson-1", 25);
       setShowCongratulations(true);
     } finally {
       setIsCompleting(false);

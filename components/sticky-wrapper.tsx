@@ -4,8 +4,21 @@ type Props = {
 
 export const StickyWrapper = ({ children }: Props) => {
   return (
-    <div className="hidden lg:block w-[368px] sticky self-end bottom-6">
-      <div className="min-h-[calc(100vh-48px)] sticky top-6 flex flex-col gap-y-4">
+    <div 
+      className="hidden lg:block w-[368px] sticky self-start" 
+      style={{ 
+        top: '24px', 
+        alignSelf: 'flex-start', 
+        position: 'sticky',
+        transform: 'translateZ(0)',
+        WebkitTransform: 'translateZ(0)',
+        backfaceVisibility: 'hidden',
+        WebkitBackfaceVisibility: 'hidden',
+        willChange: 'transform',
+        isolation: 'isolate'
+      }}
+    >
+      <div className="flex flex-col gap-y-4" style={{ position: 'relative' }}>
         {children}
       </div>
     </div>

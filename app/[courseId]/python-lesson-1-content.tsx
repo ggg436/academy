@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { CongratulationPage } from "@/components/congratulation-page";
 import { useLanguage } from "@/contexts/language-context";
-import { saveLessonCompleteServer } from "@/actions/progress";
+import { saveLessonCompleteWithLocal } from "@/lib/progress-client-actions";
 import PythonCodeRunner from "@/components/python-code-runner";
 import { CodeSnippet } from "@/components/ui/code-snippet";
 import { LessonNextButton } from "@/components/lesson-next-button";
@@ -735,8 +735,8 @@ export const PythonLesson1Content = ({ lessonTitle, currentStep }: { lessonTitle
   const handleFinishLesson = async () => {
     try {
       setIsCompleting(true);
-      // Mark lesson as completed in the database
-      await saveLessonCompleteServer("python", "lesson-1", 25);
+      // Mark lesson as completed (saves to both DB and localStorage)
+      await saveLessonCompleteWithLocal("python", "lesson-1", 25);
       setShowCongratulations(true);
     } catch (error) {
       console.error("Error completing lesson:", error);

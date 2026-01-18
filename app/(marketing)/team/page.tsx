@@ -6,34 +6,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Footer } from "../footer";
 import { useEffect, useState, useRef } from "react";
-import {
-    getFirebaseFirestore,
-    getFirebaseStorage
-} from "@/lib/firebase-client";
-import {
-    collection,
-    getDocs,
-    query,
-    orderBy,
-    addDoc,
-    writeBatch,
-    doc,
-    updateDoc,
-    onSnapshot
-} from "firebase/firestore";
-import {
-    ref,
-    uploadBytes,
-    getDownloadURL
-} from "firebase/storage";
-import { toast } from "sonner"; // Assuming sonner or some toast exists, else normal alert
-// If toast is not available in the project, I will use alert or simple console log for now, 
-// but looking at imports in other files, likely ui/use-toast or similar. 
-// I'll stick to basic alerts or conditional rendering for simplicity if I can't find it.
-// Checking previous files: "lucide-react" used. I'll use standard window.alert for critical errors if needed or just console.
+import { getTeamMembers } from "@/actions/team";
+import { toast } from "sonner";
 
 interface TeamMember {
-    id?: string;
+    id: number;
     role: string;
     name: string;
     image: string;
@@ -46,145 +23,32 @@ interface TeamMember {
     };
 }
 
-const initialTeamMembers: TeamMember[] = [
-    {
-        order: 1,
-        role: "CEO & Founder",
-        name: "Sanjok Gharti",
-        image: "/sanjok.png",
-        socials: {
-            facebook: "https://www.facebook.com/profile.php?id=61569939773422",
-            instagram: "https://www.instagram.com/sanjokgc87/",
-            linkedin: "https://www.linkedin.com/in/sanjok-gharti-19516a320/",
-            github: "https://github.com/sanjok-gharti"
-        }
-    },
-    {
-        order: 2,
-        role: "COO",
-        name: "Sangam Gharti",
-        image: "/man.svg", // Placeholder
-        socials: {
-            facebook: "https://www.facebook.com/sangam.gc.965"
-        }
-    },
-    {
-        order: 3,
-        role: "CTO",
-        name: "Prabin K. Yadav",
-        image: "/prabin.png",
-        socials: {
-            facebook: "https://www.facebook.com/BusyToZen"
-        }
-    },
-    {
-        order: 4,
-        role: "Operations Manager",
-        name: "Bal Krishna",
-        image: "/man.svg",
-        socials: {
-            facebook: "https://www.facebook.com/profile.php?id=100057539067167",
-            instagram: "https://www.instagram.com/balkrishna.13/",
-            linkedin: "https://www.linkedin.com/in/bal-krishna-928a23218/"
-        }
-    },
-    {
-        order: 5,
-        role: "Content Writer",
-        name: "Abhishek Sah",
-        image: "/man.svg",
-        socials: {
-            facebook: "https://www.facebook.com/BusyToZen"
-        }
-    },
-    {
-        order: 6,
-        role: "Social Media Manager",
-        name: "Sushant Sah",
-        image: "/man.svg",
-        socials: {}
-    }
-];
-
 const TeamPage = () => {
-    const [members, setMembers] = useState<TeamMember[]>(initialTeamMembers);
+    const [members, setMembers] = useState<TeamMember[]>([]);
     const [loading, setLoading] = useState(true);
-    const [uploadingId, setUploadingId] = useState<string | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
 
     useEffect(() => {
-        const db = getFirebaseFirestore();
-        if (!db) {
-            setLoading(false);
-            return;
-        }
-
-        const q = query(collection(db, "team"), orderBy("order"));
-
-        const unsubscribe = onSnapshot(q, async (snapshot) => {
-            if (snapshot.empty) {
-                // Seed data if empty
-                // Use a flag to prevent double seeding in strict mode if needed, 
-                // but checking empty again inside is safer.
-                // We'll just set loading false and maybe let a manual trigger or auto-seed?
-                // Let's auto-seed for better UX.
-                console.log("Seeding team data...");
-                const batch = writeBatch(db);
-                initialTeamMembers.forEach((member) => {
-                    const docRef = doc(collection(db, "team"));
-                    batch.set(docRef, member);
-                });
-                await batch.commit();
-                // The snapshot listener will fire again with data
-            } else {
-                const fetchedMembers = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    ...doc.data()
-                } as TeamMember));
-                setMembers(fetchedMembers);
+        const fetchMembers = async () => {
+            try {
+                const data = await getTeamMembers();
+                setMembers(data);
+            } catch (error) {
+                console.error("Failed to fetch team members:", error);
+                toast.error("Failed to load team members");
+            } finally {
                 setLoading(false);
             }
-        });
-
-        return () => unsubscribe();
+        };
+        fetchMembers();
     }, []);
 
-    const handleImageClick = (memberId: string) => {
-        if (!memberId) return; // Can't upload strictly for initial data without IDs
-        setSelectedMemberId(memberId);
-        fileInputRef.current?.click();
-    };
-
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file || !selectedMemberId) return;
-
-        try {
-            setUploadingId(selectedMemberId);
-            const storage = getFirebaseStorage();
-            const db = getFirebaseFirestore();
-
-            if (!storage || !db) throw new Error("Firebase not initialized");
-
-            const storageRef = ref(storage, `team-uploads/${selectedMemberId}/${file.name}`);
-            const snapshot = await uploadBytes(storageRef, file);
-            const downloadURL = await getDownloadURL(snapshot.ref);
-
-            await updateDoc(doc(db, "team", selectedMemberId), {
-                image: downloadURL
-            });
-
-            // Optimistic update handled by snapshot listener
-        } catch (error) {
-            console.error("Error uploading image:", error);
-            alert("Failed to upload image. Check console for details.");
-        } finally {
-            setUploadingId(null);
-            setSelectedMemberId(null);
-            if (fileInputRef.current) fileInputRef.current.value = "";
-        }
-    };
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <Loader2 className="w-8 h-8 animate-spin text-slate-500" />
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -198,15 +62,6 @@ const TeamPage = () => {
                     </p>
                 </div>
 
-                <input
-                    type="file"
-                    ref={fileInputRef}
-                    className="hidden"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    aria-label="Upload profile image"
-                />
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 max-w-7xl mx-auto">
                     {members.map((member, index) => (
                         <motion.div
@@ -218,20 +73,8 @@ const TeamPage = () => {
                         >
                             <div className="relative mb-6">
                                 <div
-                                    className="w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:shadow-2xl group-hover:scale-105 transition-all duration-300 relative bg-slate-100 cursor-pointer"
-                                    onClick={() => member.id && handleImageClick(member.id)}
+                                    className="w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl group-hover:shadow-2xl group-hover:scale-105 transition-all duration-300 relative bg-slate-100"
                                 >
-                                    {uploadingId === member.id && (
-                                        <div className="absolute inset-0 z-20 bg-black/50 flex items-center justify-center">
-                                            <Loader2 className="w-8 h-8 text-white animate-spin" />
-                                        </div>
-                                    )}
-
-                                    {/* Overlay for "Upload" hint */}
-                                    <div className="absolute inset-0 z-10 bg-black/0 hover:bg-black/30 flex items-center justify-center transition-colors duration-300 group-hover/image">
-                                        <Upload className="text-white opacity-0 hover:opacity-100 transition-opacity duration-300 w-8 h-8" />
-                                    </div>
-
                                     <Image
                                         src={member.image || "/man.svg"}
                                         alt={member.name}
@@ -280,3 +123,4 @@ const TeamPage = () => {
 }
 
 export default TeamPage;
+

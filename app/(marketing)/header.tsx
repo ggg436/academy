@@ -3,13 +3,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Loader, ChevronDown, Menu, X, BookOpen, Gamepad2, Trophy, ShoppingBag, Target, Rss, GraduationCap, Code, Video, FileText, Users } from "lucide-react";
-import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
-import { FirebaseUserButton } from "@/components/firebase-user-button";
 import { Button } from "@/components/ui/button";
 import { LanguageSelector } from "@/components/language-selector";
-import { useAuthModal } from "@/store/use-auth-modal";
 import { useTeamModal } from "@/store/use-team-modal";
 import Link from "next/link";
+import { logout } from "@/actions/auth";
 import { Logo } from "@/components/logo";
 import {
   DropdownMenu,
@@ -26,15 +24,41 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { getCourses } from "@/lib/data";
+import { useSession } from "next-auth/react";
+import { UserButton } from "@/components/auth/user-button";
 
-export const Header = () => {
-  const { user, loading } = useFirebaseAuth();
-  const { open } = useAuthModal();
+// Auth Buttons Component to handle conditional rendering
+const AuthButtons = () => {
+  const { data: session } = useSession();
+
+  if (session) {
+    return (
+      <div className="hidden lg:flex items-center gap-3">
+        <UserButton />
+      </div>
+    );
+  }
+
+  return (
+    <div className="hidden lg:flex items-center gap-3">
+      <Button
+        size="sm"
+        variant="secondary"
+        className="px-5 relative overflow-hidden animate-air-flow"
+        asChild
+      >
+        <Link href="/learn">
+          <span className="relative z-10">GET STARTED - IT'S FREE</span>
+        </Link>
+      </Button>
+    </div>
+  );
+};
+export const Header = ({ courses = [] }: { courses?: any[] }) => {
   const { open: openTeam } = useTeamModal();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const courses = getCourses();
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -204,6 +228,8 @@ export const Header = () => {
             <LanguageSelector />
           </div>
 
+          <AuthButtons />
+
           {/* Mobile Menu Button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild className="lg:hidden">
@@ -289,72 +315,23 @@ export const Header = () => {
 
                 {/* Mobile Auth Buttons */}
                 <div className="pt-4 border-t">
-                  {loading ? (
-                    <div className="flex justify-center py-2">
-                      <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-                    </div>
-                  ) : user ? (
-                    <div className="flex justify-center">
-                      <FirebaseUserButton />
-                    </div>
-                  ) : (
-                    <div className="flex flex-col gap-2">
-                      <Button
-                        variant="primaryOutline"
-                        size="sm"
-                        onClick={() => {
-                          setMobileMenuOpen(false);
-                          open("login");
-                        }}
-                        className="w-full"
-                      >
-                        Log in
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="secondary"
-                        onClick={() => {
-                          setMobileMenuOpen(false);
-                          open("signup");
-                        }}
-                        className="w-full relative overflow-hidden animate-air-flow"
-                      >
-                        <span className="relative z-10">GET STARTED - IT'S FREE</span>
-                      </Button>
-                    </div>
-                  )}
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      size="sm"
+                      variant="secondary"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full relative overflow-hidden animate-air-flow"
+                      asChild
+                    >
+                      <Link href="/learn">
+                        <span className="relative z-10">GET STARTED - IT'S FREE.</span>
+                      </Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </SheetContent>
           </Sheet>
-
-          {/* Desktop Auth */}
-          <div className="hidden lg:flex items-center gap-3">
-            {loading ? (
-              <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-            ) : user ? (
-              <FirebaseUserButton />
-            ) : (
-              <>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => open("login")}
-                  className="font-medium"
-                >
-                  Log in
-                </Button>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  onClick={() => open("signup")}
-                  className="px-5 relative overflow-hidden animate-air-flow"
-                >
-                  <span className="relative z-10">GET STARTED - IT'S FREE</span>
-                </Button>
-              </>
-            )}
-          </div>
         </div>
       </div>
     </header>

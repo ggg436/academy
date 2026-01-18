@@ -68,6 +68,14 @@ const SidebarComp = ({ className }: Props) => {
           href="/feeds"
           iconSrc="/learn.svg"
         />
+        <SidebarItem
+          label="sliders"
+          href="/sliders"
+          iconSrc="/shop.svg"
+        />
+      </div>
+      <div className="p-4">
+        {/* User Profile removed for guest mode */}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { Quests } from "@/components/quests";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { UserProgress } from "@/components/user-progress";
 import { StickyWrapper } from "@/components/sticky-wrapper";
-import { getCourseById, getCourses } from "@/lib/data";
+import { getCourseById, getCourses } from "@/actions/courses";
 import { getUserProgress } from "@/actions/user-progress";
 import { getUserSubscription } from "@/actions/user-subscription";
 
@@ -14,18 +14,21 @@ import { Header } from "./header";
 import { Course, Unit as UnitType } from "./types";
 
 const LearnPage = async () => {
+  // Guest mode: automatically authenticated
+  const userId = "guest";
+
   const [userProgress, userSubscription] = await Promise.all([
     getUserProgress(),
     getUserSubscription(),
   ]);
 
   // Allow access without authentication - show default course if no progress
-  const activeCourseId = userProgress?.activeCourseId || "python";
-  const course = getCourseById(activeCourseId);
-  
+  const activeCourseId = (userProgress as any)?.activeCourseId || "python";
+  const course = await getCourseById(activeCourseId);
+
   if (!course) {
     // If no course found, show first available course
-    const courses = getCourses();
+    const courses = await getCourses();
     const defaultCourse = courses[0];
     if (!defaultCourse) {
       return <div>No courses available</div>;
@@ -38,9 +41,9 @@ const LearnPage = async () => {
         percentage: 0,
       })),
     }));
-    
+
     return (
-      <div className="flex flex-row-reverse gap-[48px] px-6">
+      <div className="flex flex-row-reverse gap-[48px] px-6" style={{ alignItems: 'flex-start', position: 'relative' }}>
         <StickyWrapper>
           <UserProgress
             activeCourse={defaultCourse}
@@ -55,7 +58,7 @@ const LearnPage = async () => {
           <Header title={defaultCourse.title} />
           <div className="space-y-4">
             {defaultUnits.map((unit) => (
-              <div 
+              <div
                 key={unit.id}
                 className="border-2 border-b-4 border-background rounded-xl p-4 hover:bg-gray-75"
               >
@@ -87,7 +90,7 @@ const LearnPage = async () => {
   const units = course.units.map(unit => ({
     ...unit,
     lessons: unit.lessons.map(lesson => {
-      const completed = userProgress?.completedLessons?.includes(lesson.id) ?? false;
+      const completed = (userProgress as any)?.completedLessons?.includes(lesson.id) ?? false;
       return {
         ...lesson,
         completed,
@@ -98,28 +101,28 @@ const LearnPage = async () => {
 
   // Calculate course progress
   const totalLessons = units.reduce((acc, unit) => acc + unit.lessons.length, 0);
-  const completedLessons = userProgress?.completedLessons?.length ?? 0;
+  const completedLessons = (userProgress as any)?.completedLessons?.length ?? 0;
   const courseProgress = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
 
   const isPro = !!userSubscription?.isActive;
 
   return (
-    <div className="flex flex-row-reverse gap-[48px] px-6">
+    <div className="flex flex-row-reverse gap-[48px] px-6" style={{ alignItems: 'flex-start', position: 'relative' }}>
       <StickyWrapper>
         <UserProgress
           activeCourse={course}
-          hearts={userProgress?.hearts ?? 5}
-          points={userProgress?.points ?? 0}
+          hearts={(userProgress as any)?.hearts ?? 5}
+          points={(userProgress as any)?.points ?? 0}
           hasActiveSubscription={isPro}
         />
         <Promo />
-        <Quests points={userProgress?.points || 0} />
+        <Quests points={(userProgress as any)?.points || 0} />
       </StickyWrapper>
       <FeedWrapper>
         <Header title={course.title} />
         <div className="space-y-4">
           {units.map((unit) => (
-            <div 
+            <div
               key={unit.id}
               className="border-2 border-b-4 border-background rounded-xl p-4 hover:bg-gray-75"
             >

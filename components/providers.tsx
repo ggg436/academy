@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import { FirebaseAuthProvider } from "@/contexts/firebase-auth-context";
 import { LanguageProvider } from "@/contexts/language-context";
 import { SettingsProvider } from "@/contexts/settings-context";
 import { Toaster } from "@/components/ui/sonner";
@@ -9,20 +8,26 @@ import { ExitModal } from "@/components/modals/exit-modal";
 import { HeartsModal } from "@/components/modals/hearts-modal";
 import { PracticeModal } from "@/components/modals/practice-modal";
 import { AuthModal } from "@/components/modals/auth-modal";
+import { SaveProgressModal } from "@/components/modals/save-progress-modal";
+import { SaveProgressPrompt } from "@/components/save-progress-prompt";
 import Chatbot from "@/components/chatbot";
-import FirebaseAnalytics from "@/components/firebase-analytics";
+
 import { TextSelectionProvider } from "@/hooks/use-text-selection";
 import { TextSelectionInstructions } from "@/components/text-selection-instructions";
 import { LanguageSelector } from "@/components/language-selector";
 import { TeamPopup } from "@/components/modals/team-popup";
 
+import { SessionProvider } from "next-auth/react";
+import { type Session } from "next-auth";
+
 interface ProvidersProps {
   children: ReactNode;
+  session?: Session | null;
 }
 
-export function Providers({ children }: ProvidersProps) {
+export function Providers({ children, session }: ProvidersProps) {
   return (
-    <FirebaseAuthProvider>
+    <SessionProvider session={session}>
       <LanguageProvider>
         <SettingsProvider>
           <Toaster />
@@ -30,11 +35,12 @@ export function Providers({ children }: ProvidersProps) {
           <HeartsModal />
           <PracticeModal />
           <AuthModal />
+          <SaveProgressModal />
+          <SaveProgressPrompt />
           <TextSelectionProvider>
             {children}
           </TextSelectionProvider>
           <Chatbot />
-          <FirebaseAnalytics />
           <TextSelectionInstructions />
           <TeamPopup />
           {/* Mobile floating language selector above help button */}
@@ -43,6 +49,6 @@ export function Providers({ children }: ProvidersProps) {
           </div>
         </SettingsProvider>
       </LanguageProvider>
-    </FirebaseAuthProvider>
+    </SessionProvider>
   );
 }

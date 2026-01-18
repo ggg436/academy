@@ -71,8 +71,44 @@
     @apply border-border;
   }
 
+  html {
+    zoom: 0.8;
+  }
+
+  @-moz-document url-prefix() {
+    html {
+      zoom: 1;
+      transform: scale(0.8);
+      transform-origin: center top;
+      width: 125%;
+      margin-left: -12.5%;
+    }
+  }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Fix sticky positioning with zoom */
+  [style*="position: sticky"],
+  .sticky {
+    position: sticky !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform;
+  }
+
+  /* Ensure flex containers work properly with zoom */
+  .flex {
+    position: relative;
+  }
+
+  /* Fix for sticky wrapper parent containers */
+  [class*="flex"][class*="flex-row"] {
+    align-items: flex-start;
+    position: relative;
   }
 
   /* Prevent header from moving on click */

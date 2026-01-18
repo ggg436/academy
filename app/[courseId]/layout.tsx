@@ -9,11 +9,15 @@ type Props = {
   };
 };
 
+import { getCourseById } from "@/actions/courses";
+
 const LessonLayout = async ({ children, params }: Props) => {
   const courseId = params.courseId || "";
-  return ( 
+  const course = await getCourseById(courseId);
+
+  return (
     <div className="flex h-full">
-      <SidebarWrapper courseId={courseId} />
+      <SidebarWrapper courseId={courseId} course={course} />
       <div className="flex flex-col h-full w-full lg:ml-[280px]">
         <MobileHeader />
         {children}
@@ -21,5 +25,5 @@ const LessonLayout = async ({ children, params }: Props) => {
     </div>
   );
 };
- 
+
 export default LessonLayout;

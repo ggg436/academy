@@ -1,14 +1,14 @@
 import { getUserProgress } from "@/actions/user-progress";
-import { getCourses } from "@/lib/data";
+import { getCourses } from "@/actions/courses";
 import { List } from "./list";
 
 const CoursesPage = async () => {
   const userProgress = await getUserProgress();
-  const courses = getCourses();
+  const courses = await getCourses();
 
   return (
     <div className="h-full max-w-[912px] mx-auto">
-      <List 
+      <List
         courses={courses}
         activeCourseId={userProgress?.activeCourseId}
       />

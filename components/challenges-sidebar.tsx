@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FirebaseUserButton } from "@/components/firebase-user-button";
 import { Logo } from "@/components/logo";
 
 import { cn } from "@/lib/utils";
@@ -169,7 +168,7 @@ export const ChallengesSidebar = ({ className, courseId, lessonId }: Props) => {
         </Button>
       </div>
       <div className="p-4">
-        <FirebaseUserButton />
+        {/* Guest Mode */}
       </div>
     </div>
   );

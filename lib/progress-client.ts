@@ -1,9 +1,7 @@
 "use client";
 
-import { getFirebaseApp } from "@/lib/firebase-client";
-import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, increment } from "firebase/firestore";
 import { getLocalStorage, setLocalStorage } from "@/lib/localStorage";
-import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
+
 
 export type CourseProgress = {
   courseId: string;
@@ -45,9 +43,9 @@ export async function saveLessonComplete(
     const app = getFirebaseApp();
     if (!app) return;
     const db = getFirestore(app);
-    // Note: This function is called outside of React context, so we can't use useFirebaseAuth here
-    // The uid will be passed from the calling component or we'll need to restructure this
-    const uid = null; // TODO: Pass uid as parameter or restructure
+    // Note: This function is called outside of React context, so we cannot use Clerk hooks here.
+    // The uid must be passed from the calling component.
+    const uid = null; // TODO: Pass uid as parameter
     if (!uid) return;
 
     const ref = doc(db, "userProgress", uid);

@@ -2,25 +2,23 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { FirebaseUserButton } from "@/components/firebase-user-button";
 import { LanguageSelector } from "@/components/language-selector";
 import { Logo } from "@/components/logo";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { getCourseById } from "@/lib/data";
-
 type Props = {
   className?: string;
   courseId: string;
   lessonId: string;
+  course: any; // Using any for now to match explicit structure, strictly should be Course type
 };
 
-export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) => {
+export const DynamicLessonSidebar = ({ className, courseId, lessonId, course }: Props) => {
   const pathname = usePathname();
 
   // Get lesson data to determine steps
-  const course = getCourseById(courseId);
+  // const course = getCourseById(courseId); // Removed
   const lesson = course
     ? course.units.flatMap((u: any) => u.lessons || []).find((l: any) => l.id === lessonId)
     : undefined;
@@ -146,7 +144,9 @@ export const DynamicLessonSidebar = ({ className, courseId, lessonId }: Props) =
         ))}
       </div>
       <div className="px-6 pb-2"><LanguageSelector /></div>
-      <div className="p-6 pt-2"><FirebaseUserButton /></div>
+      <div className="p-4">
+        {/* Guest mode */}
+      </div>
     </div>
   );
-}; 
+};

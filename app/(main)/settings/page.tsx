@@ -1,23 +1,27 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import { useSettings } from "@/contexts/settings-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Settings, User, Bell, Globe, Palette, Shield, Trash2, Save, Lock, AlertTriangle } from "lucide-react";
-import { changePassword, deleteAccount } from "@/actions/user-actions";
+import { Settings, Palette, Shield, Trash2, Save, Lock, AlertTriangle } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function SettingsPage() {
-  const { user, signOut } = useFirebaseAuth();
+  // Guest user mock
+  const user = {
+    id: "guest",
+    imageUrl: "/mascot.svg",
+    delete: async () => { console.log("Guest delete"); return; }
+  };
+  const isSignedIn = true;
+  const isLoaded = true;
+
   const { settings, updateSetting, loading } = useSettings();
   const router = useRouter();
   const [saving, setSaving] = useState(false);
@@ -27,13 +31,6 @@ export default function SettingsPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [changingPassword, setChangingPassword] = useState(false);
   const [deletingAccount, setDeletingAccount] = useState(false);
-
-  useEffect(() => {
-    if (!user && !loading) {
-      router.push("/");
-      return;
-    }
-  }, [user, loading, router]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -47,71 +44,25 @@ export default function SettingsPage() {
     }
   };
 
-  const handleLanguageChange = (value: string) => {
-    updateSetting("language", value);
-  };
-
   const handleChangePassword = async () => {
-    if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    if (newPassword.length < 6) {
-      toast.error("Password must be at least 6 characters");
-      return;
-    }
-
-    setChangingPassword(true);
-    try {
-      await changePassword(newPassword);
-      toast.success("Password changed successfully!");
-      setChangePasswordOpen(false);
-      setNewPassword("");
-      setConfirmPassword("");
-    } catch (error: any) {
-      toast.error(error.message || "Failed to change password");
-    } finally {
-      setChangingPassword(false);
-    }
+    toast.info("Password change not available in guest mode.");
+    setChangePasswordOpen(false);
   };
 
   const handleDeleteAccount = async () => {
     setDeletingAccount(true);
     try {
-      await deleteAccount();
-      toast.success("Account deleted successfully");
-      await signOut();
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Mock delay
+      toast.success("Guest account reset successfully");
       router.push("/");
     } catch (error: any) {
-      toast.error(error.message || "Failed to delete account");
+      toast.error("Failed to delete account");
+    } finally {
       setDeletingAccount(false);
     }
   };
 
-  const getInitials = (displayName: string | null) => {
-    if (!displayName) return "U";
-    return displayName
-      .split(" ")
-      .map(name => name[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
-
-  // Generate random avatar for anonymous users using DiceBear API
-  const getAvatarUrl = () => {
-    if (user?.photoURL) {
-      return user.photoURL;
-    }
-    // For anonymous users, generate a random avatar based on their UID
-    if (user?.isAnonymous && user?.uid) {
-      return `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.uid}`;
-    }
-    return undefined;
-  };
-
-  if (loading) {
+  if (loading || !isLoaded) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50 py-8 px-4 flex items-center justify-center">
         <div className="text-center">
@@ -120,10 +71,6 @@ export default function SettingsPage() {
         </div>
       </div>
     );
-  }
-
-  if (!user) {
-    return null;
   }
 
   return (
@@ -138,89 +85,16 @@ export default function SettingsPage() {
           <p className="text-neutral-600">Manage your account settings and preferences</p>
         </div>
 
-        {/* Account Section */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <User className="h-5 w-5 text-green-600" />
-              Account Information
-            </CardTitle>
-            <CardDescription>Your account details and profile information</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="flex items-center gap-4">
-              <Avatar className="h-16 w-16">
-                <AvatarImage src={getAvatarUrl()} alt={user.displayName || "User"} />
-                <AvatarFallback className="bg-green-100 text-green-600 text-lg font-semibold">
-                  {getInitials(user.displayName)}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex-1">
-                <p className="font-semibold text-neutral-800">{user.displayName || "User"}</p>
-                <p className="text-sm text-neutral-600">{user.email}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Language & Region */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Globe className="h-5 w-5 text-green-600" />
-              Language & Region
-            </CardTitle>
-            <CardDescription>Choose your preferred language</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="language">Site Language</Label>
-                <Select value={settings.language || "en"} onValueChange={handleLanguageChange}>
-                  <SelectTrigger id="language">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="en">
-                      <span className="flex items-center gap-2">
-                        <span className="fi fi-us"></span>
-                        <span>English</span>
-                      </span>
-                    </SelectItem>
-                    <SelectItem value="ne">
-                      <span className="flex items-center gap-2">
-                        <span className="fi fi-np"></span>
-                        <span>नेपाली (Nepali)</span>
-                      </span>
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         {/* Notifications */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Bell className="h-5 w-5 text-green-600" />
+              <BellIcon className="h-5 w-5 text-green-600" />
               Notifications
             </CardTitle>
             <CardDescription>Manage how you receive notifications</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label htmlFor="notifications">Push Notifications</Label>
-                <p className="text-sm text-neutral-600">Receive notifications about your progress</p>
-              </div>
-              <Switch
-                id="notifications"
-                checked={settings.notifications}
-                onCheckedChange={(checked) => updateSetting("notifications", checked)}
-              />
-            </div>
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label htmlFor="email-notifications">Email Notifications</Label>
@@ -282,7 +156,7 @@ export default function SettingsPage() {
           <CardContent className="space-y-4">
             <Dialog open={changePasswordOpen} onOpenChange={setChangePasswordOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" className="w-full justify-start">
+                <Button variant="secondary" className="w-full justify-start">
                   <Lock className="h-4 w-4 mr-2" />
                   Change Password
                 </Button>
@@ -317,7 +191,7 @@ export default function SettingsPage() {
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setChangePasswordOpen(false)}>
+                  <Button variant="secondary" onClick={() => setChangePasswordOpen(false)}>
                     Cancel
                   </Button>
                   <Button onClick={handleChangePassword} disabled={changingPassword}>
@@ -329,7 +203,7 @@ export default function SettingsPage() {
 
             <Dialog open={deleteAccountOpen} onOpenChange={setDeleteAccountOpen}>
               <DialogTrigger asChild>
-                <Button variant="outline" className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50">
+                <Button variant="secondary" className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50">
                   <Trash2 className="h-4 w-4 mr-2" />
                   Delete Account
                 </Button>
@@ -345,13 +219,13 @@ export default function SettingsPage() {
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
-                  <Button variant="outline" onClick={() => setDeleteAccountOpen(false)}>
+                  <Button variant="secondary" onClick={() => setDeleteAccountOpen(false)}>
                     Cancel
                   </Button>
-                  <Button 
-                    onClick={handleDeleteAccount} 
+                  <Button
+                    onClick={handleDeleteAccount}
                     disabled={deletingAccount}
-                    className="bg-red-600 hover:bg-red-700"
+                    className="bg-red-600 hover:bg-red-700 text-white"
                   >
                     {deletingAccount ? "Deleting..." : "Delete Account"}
                   </Button>
@@ -363,10 +237,10 @@ export default function SettingsPage() {
 
         {/* Save Button */}
         <div className="flex justify-end gap-4">
-          <Button variant="outline" onClick={() => router.back()}>
+          <Button variant="secondary" onClick={() => router.back()}>
             Cancel
           </Button>
-          <Button onClick={handleSave} disabled={saving} className="bg-green-600 hover:bg-green-700">
+          <Button onClick={handleSave} disabled={saving} className="bg-green-600 hover:bg-green-700 text-white">
             <Save className="h-4 w-4 mr-2" />
             {saving ? "Saving..." : "Save Changes"}
           </Button>
@@ -376,3 +250,22 @@ export default function SettingsPage() {
   );
 }
 
+function BellIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+    </svg>
+  )
+}

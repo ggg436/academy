@@ -23,6 +23,12 @@ interface LanguageProviderProps {
   children: ReactNode;
 }
 
+const VALID_LANGUAGES: Language[] = ["en", "ne", "mai", "new"];
+
+const isValidLanguage = (lang: string | null | undefined): lang is Language => {
+  return lang !== null && lang !== undefined && VALID_LANGUAGES.includes(lang as Language);
+};
+
 export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   const [language, setLanguageState] = useState<Language>("en");
 
@@ -31,8 +37,8 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
     (async () => {
       try {
         const settings = await getUserSettings();
-        if (settings?.language) {
-          setLanguageState(settings.language as Language);
+        if (settings?.language && isValidLanguage(settings.language)) {
+          setLanguageState(settings.language);
           localStorage.setItem("site-language", settings.language);
           return;
         }
@@ -42,12 +48,19 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
       }
       try {
         const local = localStorage.getItem("site-language");
-        if (local) setLanguageState(local as Language);
+        if (local && isValidLanguage(local)) {
+          setLanguageState(local);
+        }
       } catch {}
     })();
   }, []);
 
   const setLanguage = (lang: Language) => {
+    // Validate language before setting
+    if (!isValidLanguage(lang)) {
+      console.warn(`Invalid language: ${lang}, defaulting to "en"`);
+      lang = "en";
+    }
     setLanguageState(lang);
     try { localStorage.setItem("site-language", lang); } catch {}
     updateUserSettings({ language: lang }).catch(() => {});

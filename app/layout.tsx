@@ -10,15 +10,19 @@ export const metadata: Metadata = {
   description: "Gharti Academy – Learn, practice, and master web development.",
 };
 
-export default function RootLayout({
+import { auth } from "@/auth";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body className={font.className}>
-        <Providers>
+        <Providers session={session}>
           {children}
         </Providers>
       </body>

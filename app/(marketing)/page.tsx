@@ -1,11 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useFirebaseAuth } from "@/contexts/firebase-auth-context";
 import { Loader, Sparkles, Users, Code, Rocket, BookOpen, Trophy, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useAuthModal } from "@/store/use-auth-modal";
 import { Testimonials } from "@/components/testimonials";
 import { useLanguage } from "@/contexts/language-context";
 import { Footer } from "./footer";
@@ -14,6 +12,7 @@ import { TypingEffect } from "@/components/typing-effect";
 const strings: Record<string, {
   heroTitle: string;
   heroSubtitle: string;
+  learnCodingBadge: string;
   continue: string;
   getStarted: string;
   trustBadge1: string;
@@ -43,6 +42,7 @@ const strings: Record<string, {
   en: {
     heroTitle: "Master Coding in Your Native Language",
     heroSubtitle: "Learn programming through interactive lessons, gamified challenges, and real-world projects - all in Nepali, Maithili, or Newari.",
+    learnCodingBadge: "Learn Coding in Your Language",
     continue: "Continue Learning",
     getStarted: "Start Learning Free",
     trustBadge1: "Join 5K+ learners",
@@ -72,6 +72,7 @@ const strings: Record<string, {
   ne: {
     heroTitle: "आफ्नै भाषामा कोडिङ सिक्नुहोस्",
     heroSubtitle: "अन्तरक्रियात्मक पाठ, खेलीकृत चुनौती र वास्तविक परियोजनाहरू मार्फत प्रोग्रामिङ सिक्नुहोस् - सबै नेपाली, मैथिली वा नेवारीमा।",
+    learnCodingBadge: "आफ्नै भाषामा कोडिङ सिक्नुहोस्",
     continue: "सिक्न जारी राख्नुहोस्",
     getStarted: "निःशुल्क सुरु गर्नुहोस्",
     trustBadge1: "5K+ विद्यार्थी",
@@ -101,6 +102,7 @@ const strings: Record<string, {
   mai: {
     heroTitle: "अपन भासामे कोडिंग सिखू",
     heroSubtitle: "इंटरएक्टिव पाठ, गेमिफाइड चुनौती आ वास्तविक परियोजना सं प्रोग्रामिंग सिखू - सब नेपाली, मैथिली वा नेवारीमे।",
+    learnCodingBadge: "अपन भासामे कोडिंग सिखू",
     continue: "सिखब जारी राखू",
     getStarted: "निःशुल्क शुरू करू",
     trustBadge1: "5K+ विद्यार्थी",
@@ -130,6 +132,7 @@ const strings: Record<string, {
   new: {
     heroTitle: "थ्व भायेया कोडिङ ज्या",
     heroSubtitle: "इन्टरएक्टिभ पाठ, गेमिफाइड च्यालेन्ज व वास्तविक परियोजना न्ह्याः प्रोग्रामिङ ज्या - सकल नेपाली, मैथिली वा नेवारीया।",
+    learnCodingBadge: "थ्व भायेया कोडिङ ज्या",
     continue: "ज्याये जुइगु यायेगु",
     getStarted: "निःशुल्क शुरु यानां",
     trustBadge1: "5K+ विद्यार्थी",
@@ -168,7 +171,7 @@ export default function Home() {
       <div className="relative bg-gradient-radial min-h-[90vh] flex items-center overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute top-20 right-10 w-72 h-72 bg-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse [animation-delay:2s]"></div>
 
         <div className="max-w-[1200px] mx-auto w-full px-4 py-16 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
@@ -176,7 +179,7 @@ export default function Home() {
             <div className="flex-1 flex flex-col items-center lg:items-start gap-y-8 text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-full animate-fade-in">
                 <Sparkles className="h-4 w-4 text-green-600" />
-                <span className="text-sm font-semibold text-green-700">Learn Coding in Your Language</span>
+                <span className="text-sm font-semibold text-green-700">{t.learnCodingBadge}</span>
               </div>
 
               <h1 className="text-4xl lg:text-6xl font-extrabold max-w-[600px] leading-tight animate-fade-in-up">
@@ -200,16 +203,16 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="text-lg lg:text-xl text-neutral-600 max-w-[550px] animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+              <p className="text-lg lg:text-xl text-neutral-600 max-w-[550px] animate-fade-in-up [animation-delay:0.2s]">
                 {t.heroSubtitle}
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-[400px] animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                <FirebaseAuthWrapper continueLabel={t.continue} getStartedLabel={t.getStarted} />
+              <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-[400px] animate-fade-in-up [animation-delay:0.4s]">
+                <HeroAuthButtons continueLabel={t.continue} getStartedLabel={t.getStarted} />
               </div>
 
               {/* Trust Badges */}
-              <div className="flex items-center gap-6 text-sm text-neutral-600 animate-fade-in" style={{ animationDelay: '0.6s' }}>
+              <div className="flex items-center gap-6 text-sm text-neutral-600 animate-fade-in [animation-delay:0.6s]">
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-green-600" />
                   <span className="font-medium">{t.trustBadge1}</span>
@@ -357,23 +360,21 @@ export default function Home() {
   );
 }
 
-function FirebaseAuthWrapper({ continueLabel, getStartedLabel }: { continueLabel: string; getStartedLabel: string }) {
-  const { user, loading } = useFirebaseAuth();
-  const { open } = useAuthModal();
+import { useSession } from "next-auth/react";
 
-  if (loading) {
-    return (
-      <div className="w-full flex justify-center">
-        <Loader className="h-6 w-6 text-muted-foreground animate-spin" />
-      </div>
-    );
-  }
+function HeroAuthButtons({ continueLabel, getStartedLabel }: { continueLabel: string; getStartedLabel: string }) {
+  const { data: session } = useSession();
 
-  if (user) {
+  if (session) {
     return (
-      <Button size="lg" variant="secondary" className="w-full" asChild>
-        <Link href="/learn" prefetch={false}>
-          {continueLabel}
+      <Button
+        size="lg"
+        variant="secondary"
+        className="w-full relative overflow-hidden animate-air-flow"
+        asChild
+      >
+        <Link href="/learn">
+          <span className="relative z-10">{continueLabel.toUpperCase()}</span>
         </Link>
       </Button>
     );
@@ -384,9 +385,11 @@ function FirebaseAuthWrapper({ continueLabel, getStartedLabel }: { continueLabel
       size="lg"
       variant="secondary"
       className="w-full relative overflow-hidden animate-air-flow"
-      onClick={() => open("signup")}
+      asChild
     >
-      <span className="relative z-10">{getStartedLabel.toUpperCase()}</span>
+      <Link href="/learn">
+        <span className="relative z-10">{getStartedLabel.toUpperCase()}</span>
+      </Link>
     </Button>
   );
 }

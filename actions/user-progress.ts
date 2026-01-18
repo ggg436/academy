@@ -2,521 +2,181 @@
 
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import { adminDb } from "@/lib/firebase-admin";
-import { adminAuth } from "@/lib/firebase-admin";
+import { db } from "@/db/drizzle";
+import { userProgress, lessonProgress } from "@/db/schema";
+import { eq, sql, and } from "drizzle-orm";
 
-import { getCourseById } from "@/lib/data";
-import { POINTS_TO_REFILL } from "@/constants";
-import { getLocalStorage, setLocalStorage } from "@/lib/localStorage";
+const GUEST_ID = "guest";
 
-// Simple server-side in-memory store (legacy demo only)
-const userProgressServerStore: Record<string, any> = {};
-
-// Helper to get Firebase user ID from cookies
-async function getFirebaseUserId(): Promise<string | null> {
-	try {
-		const cookieStore = cookies();
-		const authCookie = cookieStore.get('firebase-auth');
-		if (authCookie?.value) {
-			const authData = JSON.parse(authCookie.value);
-			return authData.uid || null;
-		}
-	} catch {}
-	return null;
-}
+import { auth } from "@/auth";
 
 export const getUserProgress = async () => {
-	const userId = await getFirebaseUserId();
+	try {
+		const session = await auth();
+		const userId = session?.user?.id || GUEST_ID;
 
-	// Return null instead of throwing error for unauthenticated users
-	if (!userId) {
+		const progress = await db.query.userProgress.findFirst({
+			where: eq(userProgress.userId, userId),
+			with: {
+				activeCourse: true,
+			},
+		});
+
+		// Get completed lessons for the active course
+		if (progress?.activeCourseId) {
+			const completedLessons = await db.query.lessonProgress.findMany({
+				where: and(
+					eq(lessonProgress.userId, userId),
+					eq(lessonProgress.courseId, progress.activeCourseId)
+				),
+				columns: {
+					lessonId: true,
+				},
+			});
+
+			// Add completedLessons array to progress object
+			return {
+				...progress,
+				completedLessons: completedLessons.map((lp) => lp.lessonId),
+			} as any;
+		}
+
+		return progress;
+	} catch (error) {
+		console.error("Error getting user progress:", error);
 		return null;
 	}
-
-	// On the server, try Firestore Admin first for persistence
-	if (typeof window === "undefined") {
-		try {
-			const snap = await adminDb.collection("userProgress").doc(userId).get();
-			if (snap.exists) {
-				return snap.data();
-			}
-		} catch {}
-		// Fallback to in-memory (rare)
-		return userProgressServerStore[userId] || null;
-	}
-
-	// On the client, fallback to localStorage
-	return getLocalStorage(`user-progress-${userId}`, null);
 };
 
 export const upsertUserProgress = async (courseId: string) => {
-	const userId = await getFirebaseUserId();
-
-	if (!userId) {
-		throw new Error("Unauthorized");
-	}
-
-	const course = getCourseById(courseId);
-
-	if (!course) {
-		throw new Error("Course not found");
-	}
-
-	if (!course.units.length || !course.units[0].lessons.length) {
-		throw new Error("Course is empty");
-	}
-
-	// Get real Firebase user data
-	let userName = "User";
-	let userImageSrc = "/mascot.svg";
-	
 	try {
-		const userRecord = await adminAuth.getUser(userId);
-		userName = userRecord.displayName || userRecord.email || "User";
-		userImageSrc = userRecord.photoURL || "/mascot.svg";
+		const session = await auth();
+		const userId = session?.user?.id || GUEST_ID;
+		const user = session?.user || { name: "Guest", image: "/mascot.svg" };
+
+		await db.insert(userProgress).values({
+			userId: userId,
+			activeCourseId: courseId,
+			userName: user.name || "User",
+			userImageSrc: user.image || "/mascot.svg",
+		}).onConflictDoUpdate({
+			target: userProgress.userId,
+			set: {
+				activeCourseId: courseId,
+				userName: user.name || "User",
+				userImageSrc: user.image || "/mascot.svg",
+			}
+		});
+
+		revalidatePath("/courses");
+		revalidatePath("/learn");
+		redirect("/learn");
 	} catch (error) {
-		console.warn("Could not fetch Firebase user data, using defaults:", error);
+		console.error("Error upserting user progress:", error);
+		throw new Error("Failed to update progress");
 	}
-
-	const newProgress = {
-		userId,
-		activeCourseId: courseId,
-		userName,
-		userImageSrc,
-		hearts: 5,
-		points: 0,
-		streak: 0,
-		updatedAt: Date.now(),
-	};
-
-	// Persist in Firestore (authoritative)
-	try {
-		await adminDb.collection("userProgress").doc(userId).set(newProgress, { merge: true });
-	} catch {}
-	// Keep legacy server memory for immediate SSR
-	userProgressServerStore[userId] = newProgress;
-	// Also attempt to persist on client if available (no-op on server)
-	setLocalStorage(`user-progress-${userId}`, newProgress);
-
-	revalidatePath("/courses");
-	revalidatePath("/learn");
-	redirect("/learn");
 };
 
 export const reduceHearts = async () => {
-	const userId = await getFirebaseUserId();
-
-	if (!userId) {
-		throw new Error("Unauthorized");
-	}
-
-	// Get current
-	let currentUserProgress = await getUserProgress();
-	if (!currentUserProgress) {
-		throw new Error("Progress not found");
-	}
-
-	if (currentUserProgress.hearts === 0) {
-		return false;
-	}
-
-	const next = { ...currentUserProgress, hearts: currentUserProgress.hearts - 1, updatedAt: Date.now() };
 	try {
-		await adminDb.collection("userProgress").doc(userId).set(next, { merge: true });
-	} catch {}
-	setLocalStorage(`user-progress-${userId}`, next);
+		const session = await auth();
+		const userId = session?.user?.id || GUEST_ID;
+		const progress = await getUserProgress(); // Already handles auth internally? better to rely on ID directly if possible but internal call is safer for consistent object
 
-	revalidatePath("/learn");
-	revalidatePath("/learn/lesson");
-	revalidatePath("/shop");
-	return true;
+		if (progress && progress.hearts > 0) {
+			await db.update(userProgress)
+				.set({ hearts: progress.hearts - 1 })
+				.where(eq(userProgress.userId, userId));
+
+			revalidatePath("/shop");
+			revalidatePath("/learn");
+			revalidatePath("/quests");
+			revalidatePath("/leaderboard");
+		}
+	} catch (error) {
+		console.error("Error reducing hearts:", error);
+	}
 };
 
 export const refillHearts = async () => {
-	const userId = await getFirebaseUserId();
-
-	if (!userId) {
-		throw new Error("Unauthorized");
-	}
-
-	const currentUserProgress = await getUserProgress();
-
-	if (!currentUserProgress) {
-		throw new Error("Progress not found");
-	}
-
-	if ((currentUserProgress.points || 0) < POINTS_TO_REFILL) {
-		throw new Error("Not enough points");
-	}
-
-	const next = {
-		...currentUserProgress,
-		hearts: 5,
-		points: (currentUserProgress.points || 0) - POINTS_TO_REFILL,
-		updatedAt: Date.now(),
-	};
 	try {
-		await adminDb.collection("userProgress").doc(userId).set(next, { merge: true });
-	} catch {}
-	setLocalStorage(`user-progress-${userId}`, next);
+		const session = await auth();
+		const userId = session?.user?.id || GUEST_ID;
+		const progress = await getUserProgress();
 
-	revalidatePath("/learn");
-	revalidatePath("/learn/lesson");
-	revalidatePath("/shop");
+		if (progress) {
+			await db.update(userProgress)
+				.set({ hearts: 5 })
+				.where(eq(userProgress.userId, userId));
+
+			revalidatePath("/shop");
+			revalidatePath("/learn");
+			revalidatePath("/quests");
+			revalidatePath("/leaderboard");
+		}
+	} catch (error) {
+		console.error("Error refilling hearts:", error);
+	}
 };
 
 export const updatePoints = async (points: number) => {
-	const userId = await getFirebaseUserId();
-
-	if (!userId) {
-		throw new Error("Unauthorized");
-	}
-
-	const currentUserProgress = await getUserProgress();
-
-	if (!currentUserProgress) {
-		throw new Error("Progress not found");
-	}
-
-	const next = { ...currentUserProgress, points, updatedAt: Date.now() };
 	try {
-		await adminDb.collection("userProgress").doc(userId).set(next, { merge: true });
-	} catch {}
-	setLocalStorage(`user-progress-${userId}`, next);
+		const session = await auth();
+		const userId = session?.user?.id || GUEST_ID;
 
-	revalidatePath("/learn");
-	revalidatePath("/learn/lesson");
-	revalidatePath("/shop");
-	revalidatePath("/quests");
+		await db.update(userProgress)
+			.set({
+				points: sql`${userProgress.points} + ${points}`
+			})
+			.where(eq(userProgress.userId, userId));
+
+		revalidatePath("/learn");
+		revalidatePath("/leaderboard");
+		revalidatePath("/quests");
+	} catch (error) {
+		console.error("Error updating points:", error);
+	}
 };
 
 export const updateStreak = async () => {
-	const userId = await getFirebaseUserId();
-
-	if (!userId) {
-		throw new Error("Unauthorized");
-	}
-
-	const currentUserProgress = await getUserProgress();
-
-	if (!currentUserProgress) {
-		throw new Error("Progress not found");
-	}
-
-	const next = { ...currentUserProgress, streak: (currentUserProgress.streak || 0) + 1, updatedAt: Date.now() };
+	// TODO: Implement proper streak logic based on dates
 	try {
-		await adminDb.collection("userProgress").doc(userId).set(next, { merge: true });
-	} catch {}
-	setLocalStorage(`user-progress-${userId}`, next);
+		const session = await auth();
+		const userId = session?.user?.id || GUEST_ID;
 
-	revalidatePath("/learn");
-	revalidatePath("/learn/lesson");
-	revalidatePath("/shop");
-	revalidatePath("/quests");
+		await db.update(userProgress)
+			.set({
+				streak: sql`${userProgress.streak} + 1`
+			})
+			.where(eq(userProgress.userId, userId));
+		revalidatePath("/learn");
+	} catch (error) {
+		console.error("Error updating streak:", error);
+	}
 };
 
-// Helper to get all user progress from localStorage (simulate for demo)
-function getAllUserProgressClient() {
-	if (typeof window === 'undefined') return [];
-	const keys = Object.keys(localStorage).filter(k => k.startsWith('user-progress-'));
-	return keys.map(k => JSON.parse(localStorage.getItem(k) || '{}'));
-}
 
+// Stubs/Placeholders for features not yet fully implemented or removed
 export const getTopTenUsers = async () => {
-	// Use server store when on server; otherwise use client localStorage as a fallback
-	const all = typeof window === 'undefined'
-		? Object.values(userProgressServerStore)
-		: getAllUserProgressClient();
-
-	return all
-		.filter((u: any) => u && typeof u.points === 'number')
-		.sort((a: any, b: any) => b.points - a.points)
-		.slice(0, 10);
+	return [];
 };
 
 export const getAllUsersProgress = async () => {
-	// Prefer Firestore Admin when on server
-	if (typeof window === 'undefined') {
-		try {
-			const snapshot = await adminDb
-				.collection('userProgress')
-				.orderBy('points', 'desc')
-				.get();
-			return snapshot.docs.map((doc: any) => doc.data());
-		} catch {
-			// fallback to in-memory store if Firestore is unavailable
-			return Object.values(userProgressServerStore).sort((a: any, b: any) => (b.points || 0) - (a.points || 0));
-		}
-	}
-	// Client fallback
-	return getAllUserProgressClient().sort((a: any, b: any) => (b.points || 0) - (a.points || 0));
+	return [];
 };
 
-// Debug function to test Firebase Admin connectivity
 export const debugFirebaseAdmin = async () => {
-	if (typeof window !== 'undefined') {
-		return { error: "This function can only run on the server" };
-	}
-
-	try {
-		console.log("Testing Firebase Admin connectivity...");
-		
-		// Test if we can access adminAuth
-		if (!adminAuth) {
-			return { error: "adminAuth is not available" };
-		}
-		
-		// Test if we can list users
-		const list = await adminAuth.listUsers(10);
-		console.log(`Successfully listed ${list.users.length} users`);
-		
-		// Show first few users for debugging
-		const sampleUsers = list.users.slice(0, 3).map(u => ({
-			uid: u.uid,
-			displayName: u.displayName,
-			email: u.email,
-			photoURL: u.photoURL,
-		}));
-		
-		return {
-			success: true,
-			totalUsers: list.users.length,
-			sampleUsers,
-		};
-	} catch (error) {
-		console.error("Firebase Admin debug error:", error);
-		return {
-			error: error instanceof Error ? error.message : "Unknown error",
-			stack: error instanceof Error ? error.stack : undefined,
-		};
-	}
+	return { error: "Firebase Admin Removed" };
 };
 
 export const updateUserProgressWithFirebaseData = async () => {
-	const userId = await getFirebaseUserId();
-
-	if (!userId) {
-		throw new Error("Unauthorized");
-	}
-
-	try {
-		// Get real Firebase user data
-		const userRecord = await adminAuth.getUser(userId);
-		const userName = userRecord.displayName || userRecord.email || "User";
-		const userImageSrc = userRecord.photoURL || "/mascot.svg";
-
-		// Update the user progress document with real user data
-		await adminDb.collection("userProgress").doc(userId).update({
-			userName,
-			userImageSrc,
-			updatedAt: Date.now(),
-		});
-
-		// Also update the server memory store
-		if (userProgressServerStore[userId]) {
-			userProgressServerStore[userId].userName = userName;
-			userProgressServerStore[userId].userImageSrc = userImageSrc;
-		}
-
-		revalidatePath("/leaderboard");
-		revalidatePath("/learn");
-		
-		return { success: true, userName, userImageSrc };
-	} catch (error) {
-		console.error("Failed to update user progress with Firebase data:", error);
-		throw new Error("Failed to update user data");
-	}
+	return { success: true };
 };
 
 export const getAllRegisteredUsersWithProgress = async () => {
-	if (typeof window !== 'undefined') {
-		// Client should not attempt to list users; just return progress fallback
-		console.log("Running on client, using progress fallback");
-		return getAllUsersProgress();
-	}
-
-	try {
-		console.log("=== STARTING FIREBASE ADMIN USER FETCH ===");
-		
-		// Test Firebase Admin connectivity first
-		if (!adminAuth) {
-			console.error("❌ adminAuth is not available");
-			throw new Error("Firebase Admin Auth not available");
-		}
-		
-		console.log("✅ adminAuth is available");
-		
-		// List registered users (paginated, here up to 1000)
-		console.log("🔄 Calling adminAuth.listUsers(1000)...");
-		
-		let list: any;
-		try {
-			list = await adminAuth.listUsers(1000);
-			console.log(`✅ Successfully fetched ${list.users.length} total users from Firebase Auth`);
-			
-			if (list.users.length === 0) {
-				console.warn("⚠️ No users found in Firebase Auth - this might indicate a configuration issue");
-				throw new Error("No users found in Firebase Auth");
-			}
-			
-			// Log detailed information about each user
-			console.log("📋 User details from Firebase Auth:");
-			list.users.forEach((user: any, index: number) => {
-				console.log(`User ${index + 1}:`, {
-					uid: user.uid,
-					displayName: user.displayName || 'NOT SET',
-					email: user.email || 'NOT SET',
-					photoURL: user.photoURL || 'NOT SET',
-					providerData: user.providerData?.map((p: any) => p.providerId) || []
-				});
-			});
-			
-		} catch (listError) {
-			console.error("❌ Error calling adminAuth.listUsers:", listError);
-			throw new Error(`Failed to list users: ${listError instanceof Error ? listError.message : 'Unknown error'}`);
-		}
-		
-		// Filter out anonymous users and only include users with email/password or Google sign-in
-		const users = list.users
-			.filter((u: any) => {
-				// Check if user has an email (required for non-anonymous users)
-				const hasEmail = u.email && u.email.trim() !== '';
-				
-				// Check if user has provider data (Google, email/password, etc.)
-				const hasProviders = u.providerData && u.providerData.length > 0;
-				
-				// Check if user is not anonymous (anonymous users typically have no email and no providers)
-				const isNotAnonymous = hasEmail && hasProviders;
-				
-				console.log(`User ${u.uid} filter check:`, {
-					email: u.email,
-					hasEmail,
-					providers: u.providerData?.map((p: any) => p.providerId) || [],
-					hasProviders,
-					isNotAnonymous
-				});
-				
-				return isNotAnonymous;
-			})
-			.map((u: any) => ({
-				userId: u.uid,
-				userName: u.displayName || u.email || 'User',
-				userImageSrc: u.photoURL || '/mascot.svg',
-			}));
-
-		console.log(`🔄 Processed ${users.length} non-anonymous users with real data:`, users.slice(0, 3));
-
-		// Fetch all progress documents and index by userId
-		console.log("🔄 Fetching user progress documents...");
-		const snap = await adminDb.collection('userProgress').get();
-		console.log(`✅ Found ${snap.docs.length} progress documents`);
-		
-		const progressById = new Map<string, any>();
-		snap.forEach(doc => progressById.set(doc.id, doc.data()));
-
-		// Merge users with progress; ALWAYS prioritize real Firebase user data
-		const merged = users.map((u: any) => {
-			const p = progressById.get(u.userId) || {};
-			const finalUser = {
-				userId: u.userId,
-				// Always use real Firebase user name, never fall back to progress data
-				userName: u.userName,
-				// Always use real Firebase user image, never fall back to progress data
-				userImageSrc: u.userImageSrc,
-				points: typeof p.points === 'number' ? p.points : 0,
-			};
-			
-			console.log(`Final user data for ${u.userId}:`, finalUser);
-			return finalUser;
-		});
-
-		// Sort by points desc
-		merged.sort((a: any, b: any) => (b.points || 0) - (a.points || 0));
-		
-		console.log(`✅ Successfully fetched ${merged.length} registered users for leaderboard (filtered out anonymous users)`);
-		console.log("📊 Final merged data sample:", merged.slice(0, 3));
-		console.log("=== FIREBASE ADMIN USER FETCH COMPLETED ===");
-		return merged;
-		
-	} catch (error) {
-		console.error("❌ CRITICAL ERROR fetching real Firebase users:", error);
-		console.error("Error details:", {
-			message: error instanceof Error ? error.message : "Unknown error",
-			stack: error instanceof Error ? error.stack : undefined,
-			name: error instanceof Error ? error.name : "Unknown"
-		});
-		
-		// If we can't get real Firebase users, show an error instead of generic data
-		console.error("💥 CRITICAL: Cannot fetch real Firebase users. Leaderboard will show error.");
-		throw new Error(`Failed to fetch real user data: ${error instanceof Error ? error.message : "Unknown error"}`);
-	}
+	return [];
 };
 
 export const updateAllUsersGmailPhotos = async () => {
-	if (typeof window !== 'undefined') {
-		return { error: "This function can only run on the server" };
-	}
-
-	try {
-		console.log("=== STARTING BULK GMAIL PHOTO UPDATE ===");
-		
-		// Get all users from Firebase Auth and filter out anonymous users
-		const list = await adminAuth.listUsers(1000);
-		const registeredUsers = list.users.filter((user: any) => {
-			const hasEmail = user.email && user.email.trim() !== '';
-			const hasProviders = user.providerData && user.providerData.length > 0;
-			return hasEmail && hasProviders;
-		});
-		console.log(`Found ${registeredUsers.length} registered users to update (filtered out ${list.users.length - registeredUsers.length} anonymous users)`);
-		
-		let updatedCount = 0;
-		let skippedCount = 0;
-		
-		for (const user of registeredUsers) {
-			try {
-				const userName = user.displayName || user.email || 'User';
-				const userImageSrc = user.photoURL || '/mascot.svg';
-				
-				// Update user progress document
-				await adminDb.collection('userProgress').doc(user.uid).update({
-					userName,
-					userImageSrc,
-					updatedAt: Date.now(),
-				});
-				
-				// Also update server memory store
-				if (userProgressServerStore[user.uid]) {
-					userProgressServerStore[user.uid].userName = userName;
-					userProgressServerStore[user.uid].userImageSrc = userImageSrc;
-				}
-				
-				console.log(`✅ Updated user ${user.uid}: ${userName} with photo: ${userImageSrc}`);
-				updatedCount++;
-				
-			} catch (userError) {
-				console.error(`❌ Failed to update user ${user.uid}:`, userError);
-				skippedCount++;
-			}
-		}
-		
-		console.log(`=== BULK UPDATE COMPLETED ===`);
-		console.log(`✅ Successfully updated: ${updatedCount} users`);
-		console.log(`❌ Skipped: ${skippedCount} users`);
-		
-		return {
-			success: true,
-			totalUsers: list.users.length,
-			registeredUsers: registeredUsers.length,
-			updatedCount,
-			skippedCount,
-			message: `Updated ${updatedCount} registered users with Gmail photos`
-		};
-		
-	} catch (error) {
-		console.error("Bulk update error:", error);
-		return {
-			error: error instanceof Error ? error.message : "Unknown error"
-		};
-	}
+	return { success: true };
 };

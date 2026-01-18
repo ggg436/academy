@@ -7,7 +7,7 @@ import { PythonLesson2Sidebar } from "@/components/python-lesson-2-sidebar";
 import { CLesson1Sidebar } from "@/components/c-lesson-1-sidebar";
 import { DynamicLessonSidebar } from "@/components/dynamic-lesson-sidebar";
 
-export function SidebarWrapper({ courseId }: { courseId: string }) {
+export function SidebarWrapper({ courseId, course }: { courseId: string; course: any }) {
   const pathname = usePathname();
   let lessonId = "";
   // Match /[courseId]/[lessonId]/... pattern
@@ -31,10 +31,10 @@ export function SidebarWrapper({ courseId }: { courseId: string }) {
     if (courseId === "python") {
       return <PythonLesson2Sidebar courseId={courseId} lessonId={lessonId} />;
     }
-    return <DynamicLessonSidebar courseId={courseId} lessonId={lessonId} />;
+    return <DynamicLessonSidebar courseId={courseId} lessonId={lessonId} course={course} />;
   } else if (lessonId && lessonId.startsWith("lesson-")) {
     // For any future lessons, use the dynamic sidebar
-    return <DynamicLessonSidebar courseId={courseId} lessonId={lessonId} />;
+    return <DynamicLessonSidebar courseId={courseId} lessonId={lessonId} course={course} />;
   }
 
   return <ChallengesSidebar courseId={courseId} lessonId={lessonId} />;

@@ -1,18 +1,18 @@
 import { redirect } from "next/navigation";
 
 import { getUserProgress } from "@/actions/user-progress";
-import { getCourseById, getCourses } from "@/lib/data";
+import { getCourseById, getCourses } from "@/actions/courses";
 
 const LessonPage = async () => {
   const userProgress = await getUserProgress();
 
   // Allow access without authentication - use default course
   const activeCourseId = userProgress?.activeCourseId || "python";
-  const course = getCourseById(activeCourseId);
-  
+  const course = await getCourseById(activeCourseId);
+
   if (!course || !course.units.length) {
     // Fallback to first available course
-    const courses = getCourses();
+    const courses = await getCourses();
     const defaultCourse = courses[0];
     if (!defaultCourse || !defaultCourse.units.length) {
       redirect("/courses");

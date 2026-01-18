@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
-import { FirebaseUserButton } from "@/components/firebase-user-button";
 
 type Props = {
     className?: string;
@@ -24,8 +23,8 @@ export const PythonLesson2Sidebar = ({ className, courseId, lessonId }: Props) =
             <div className="flex flex-col gap-y-3 flex-1 px-2">
                 {/* Empty sidebar */}
             </div>
-            <div className="p-6">
-                <FirebaseUserButton />
+            <div className="p-4">
+                {/* Guest Mode */}
             </div>
         </div>
     );

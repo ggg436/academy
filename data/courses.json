@@ -19,6 +19,21 @@
               "id": "lesson-2",
               "title": "Python Basics",
               "order": 2
+            },
+            {
+              "id": "lesson-3",
+              "title": "Python Variables",
+              "order": 3
+            },
+            {
+              "id": "lesson-4",
+              "title": "Python Operators",
+              "order": 4
+            },
+            {
+              "id": "lesson-5",
+              "title": "Python Comments",
+              "order": 5
             }
           ]
         }
