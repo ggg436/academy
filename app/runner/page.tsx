@@ -6,8 +6,6 @@ import PythonCodeRunner from "@/components/python-code-runner";
 import CCodeRunner from "@/components/c-code-runner";
 import { Button } from "@/components/ui/button";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 function safeDecodeBase64Utf8(input: string | null): string {
   if (!input) return "";
@@ -53,7 +51,7 @@ function RunnerInner() {
 
 export default function RunnerPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen w-full bg-white" />}> 
+    <Suspense fallback={<div className="min-h-screen w-full bg-white" />}>
       <RunnerInner />
     </Suspense>
   );
