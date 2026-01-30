@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:team": "dotenv -e .env.local -- tsx ./scripts/seed_team.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.1",
