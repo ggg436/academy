@@ -23,6 +23,62 @@ interface TeamMember {
     };
 }
 
+// Fallback team members data when database is empty
+const FALLBACK_TEAM_MEMBERS: TeamMember[] = [
+    {
+        id: 1,
+        name: "Sanjog Gharti Magar",
+        role: "Full Stack Developer",
+        image: "/man.svg",
+        order: 1,
+        socials: {
+            facebook: "https://facebook.com",
+            instagram: "https://instagram.com",
+            linkedin: "https://linkedin.com",
+            github: "https://github.com",
+        },
+    },
+    {
+        id: 2,
+        name: "Aayush Khadka",
+        role: "UI/UX Designer",
+        image: "/man.svg",
+        order: 2,
+        socials: {
+            facebook: "https://facebook.com",
+            instagram: "https://instagram.com",
+            linkedin: "https://linkedin.com",
+            github: "https://github.com",
+        },
+    },
+    {
+        id: 3,
+        name: "Samyog Tiwari",
+        role: "Backend Engineer",
+        image: "/man.svg",
+        order: 3,
+        socials: {
+            facebook: "https://facebook.com",
+            instagram: "https://instagram.com",
+            linkedin: "https://linkedin.com",
+            github: "https://github.com",
+        },
+    },
+    {
+        id: 4,
+        name: "Sumit Adhikari",
+        role: "Product Manager",
+        image: "/man.svg",
+        order: 4,
+        socials: {
+            facebook: "https://facebook.com",
+            instagram: "https://instagram.com",
+            linkedin: "https://linkedin.com",
+            github: "https://github.com",
+        },
+    },
+];
+
 const TeamPage = () => {
     const [members, setMembers] = useState<TeamMember[]>([]);
     const [loading, setLoading] = useState(true);
@@ -31,10 +87,13 @@ const TeamPage = () => {
         const fetchMembers = async () => {
             try {
                 const data = await getTeamMembers();
-                setMembers(data);
+                // Use fallback data if database is empty
+                setMembers(data.length > 0 ? data : FALLBACK_TEAM_MEMBERS);
             } catch (error) {
                 console.error("Failed to fetch team members:", error);
                 toast.error("Failed to load team members");
+                // Use fallback data on error
+                setMembers(FALLBACK_TEAM_MEMBERS);
             } finally {
                 setLoading(false);
             }
