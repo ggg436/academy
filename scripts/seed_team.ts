@@ -21,9 +21,9 @@ const main = async () => {
         // Insert team members
         const teamData = [
             {
-                name: "Sanjog Gharti Magar",
-                role: "Full Stack Developer",
-                image: "/man.svg",
+                name: "Sanjok Gharti",
+                role: "CEO & FOUNDER",
+                image: "/sanjok.png",
                 order: 1,
                 socials: {
                     facebook: "https://facebook.com",
@@ -33,8 +33,8 @@ const main = async () => {
                 },
             },
             {
-                name: "Aayush Khadka",
-                role: "UI/UX Designer",
+                name: "Sangam Gharti",
+                role: "COO",
                 image: "/man.svg",
                 order: 2,
                 socials: {
@@ -45,9 +45,9 @@ const main = async () => {
                 },
             },
             {
-                name: "Samyog Tiwari",
-                role: "Backend Engineer",
-                image: "/man.svg",
+                name: "Prabin K. Yadav",
+                role: "CTO",
+                image: "/prabin.png",
                 order: 3,
                 socials: {
                     facebook: "https://facebook.com",
@@ -57,10 +57,34 @@ const main = async () => {
                 },
             },
             {
-                name: "Sumit Adhikari",
-                role: "Product Manager",
+                name: "Bal Krishna",
+                role: "OPERATIONS MANAGER",
                 image: "/man.svg",
                 order: 4,
+                socials: {
+                    facebook: "https://facebook.com",
+                    instagram: "https://instagram.com",
+                    linkedin: "https://linkedin.com",
+                    github: "https://github.com",
+                },
+            },
+            {
+                name: "Abhishek Sah",
+                role: "BACKEND DEVELOPER",
+                image: "/man.svg",
+                order: 5,
+                socials: {
+                    facebook: "https://facebook.com",
+                    instagram: "https://instagram.com",
+                    linkedin: "https://linkedin.com",
+                    github: "https://github.com",
+                },
+            },
+            {
+                name: "Sushant Sah",
+                role: "FRONTEND DEVELOPER",
+                image: "/man.svg",
+                order: 6,
                 socials: {
                     facebook: "https://facebook.com",
                     instagram: "https://instagram.com",

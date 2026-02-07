@@ -27,9 +27,9 @@ interface TeamMember {
 const FALLBACK_TEAM_MEMBERS: TeamMember[] = [
     {
         id: 1,
-        name: "Sanjog Gharti Magar",
-        role: "Full Stack Developer",
-        image: "/man.svg",
+        name: "Sanjok Gharti",
+        role: "CEO & FOUNDER",
+        image: "/sanjok.png",
         order: 1,
         socials: {
             facebook: "https://facebook.com",
@@ -40,8 +40,8 @@ const FALLBACK_TEAM_MEMBERS: TeamMember[] = [
     },
     {
         id: 2,
-        name: "Aayush Khadka",
-        role: "UI/UX Designer",
+        name: "Sangam Gharti",
+        role: "COO",
         image: "/man.svg",
         order: 2,
         socials: {
@@ -53,9 +53,9 @@ const FALLBACK_TEAM_MEMBERS: TeamMember[] = [
     },
     {
         id: 3,
-        name: "Samyog Tiwari",
-        role: "Backend Engineer",
-        image: "/man.svg",
+        name: "Prabin K. Yadav",
+        role: "CTO",
+        image: "/prabin.png",
         order: 3,
         socials: {
             facebook: "https://facebook.com",
@@ -66,10 +66,36 @@ const FALLBACK_TEAM_MEMBERS: TeamMember[] = [
     },
     {
         id: 4,
-        name: "Sumit Adhikari",
-        role: "Product Manager",
+        name: "Bal Krishna",
+        role: "OPERATIONS MANAGER",
         image: "/man.svg",
         order: 4,
+        socials: {
+            facebook: "https://facebook.com",
+            instagram: "https://instagram.com",
+            linkedin: "https://linkedin.com",
+            github: "https://github.com",
+        },
+    },
+    {
+        id: 5,
+        name: "Abhishek Sah",
+        role: "BACKEND DEVELOPER",
+        image: "/man.svg",
+        order: 5,
+        socials: {
+            facebook: "https://facebook.com",
+            instagram: "https://instagram.com",
+            linkedin: "https://linkedin.com",
+            github: "https://github.com",
+        },
+    },
+    {
+        id: 6,
+        name: "Sushant Sah",
+        role: "FRONTEND DEVELOPER",
+        image: "/man.svg",
+        order: 6,
         socials: {
             facebook: "https://facebook.com",
             instagram: "https://instagram.com",
